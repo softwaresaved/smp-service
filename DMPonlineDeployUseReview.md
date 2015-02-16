@@ -49,19 +49,17 @@ These are inconsistent e.g. the wiki page recommends MySQL server v5.1+, README.
 Provide a list of all the yum/apt-get installs needed since both README.rdoc and Ruby on Rails documentation are missing some (e.g. nodejs).
 
 Document how to create a secret token e.g. from this [blog post](http://www.jamesbadger.ca/2012/12/18/generate-new-secret-token/):
-<pre>
-$ irb
-2.2.0 :001 > require 'securerandom'
- => true 
-2.2.0 :002 > SecureRandom.hex(64)
- => "bfe98e994ee0416218f638f1fd2f4b8857e63fcd6f6bd3c2b6df25fd5b5362efe3ed90fd6624ddcda9cd90b98ebe42a0d44d0c0b4f41396d2ba56d9476602ee1" 
-2.2.0 :003 > 
-</pre>
+
+    $ irb
+    2.2.0 :001 > require 'securerandom'
+     => true 
+    2.2.0 :002 > SecureRandom.hex(64)
+     => "bfe98e994ee0416218f638f1fd2f4b8857e63fcd6f6bd3c2b6df25fd5b5362efe3ed90fd6624ddcda9cd90b98ebe42a0d44d0c0b4f41396d2ba56d9476602ee1" 
+    2.2.0 :003 > 
 
 Alternatively:
-<pre>
-$ rake secret
-</pre>
+
+    $ rake secret
 
 Describe what the 'pepper' is, a "random string unique to application appended to password before hashing".
 
@@ -168,23 +166,20 @@ I edited the page and added, at the top:
     <p>project.plans: <%= project.plans %></p>
 
 The page showed:
-<pre>
-project: #&lt;Project:0x00000009ad6250&gt;
-project.name: My plan (DCC Template)
-project.plans: []
-</pre>
+
+    project: #&lt;Project:0x00000009ad6250&gt;
+    project.name: My plan (DCC Template)
+    project.plans: []
 
 MySQL listed no plans:
-<pre>
-> use dmpdev4;
-> select * from plans;
-Empty set (0.00 sec)
-</pre>
+
+    > use dmpdev4;
+    > select * from plans;
+    Empty set (0.00 sec)
 
 I inserted an entry into plans:
-<pre>
-> insert into plans values(1,NULL,1,1,"2014-01-01 14:00","2014-01-01 14:00");
-</pre>
+
+    > insert into plans values(1,NULL,1,1,"2014-01-01 14:00","2014-01-01 14:00");
 
 Refreshing the page showed the DCC Template tab but it had no content.
 
@@ -222,11 +217,10 @@ I tried to add existing sections:
 * Click Update Section
 
 The section appeared under Plan details but viewing DCC Template gave an error:
-<pre>
-Extracted source (around line #17):
 
-17:                 <% if q_format.title == t("helpers.checkbox") || q_format.title == t("helpers.multi_select_box") || q_format.title == t("helpers.radio_buttons") || q_format.title == t("helpers.dropdown") then%>
-</pre>
+    Extracted source (around line #17):
+    
+    17:                 <% if q_format.title == t("helpers.checkbox") || q_format.title == t("helpers.multi_select_box") || q_format.title == t("helpers.radio_buttons") || q_format.title == t("helpers.dropdown") then%>
 
 So I looked at the questions associated with that section:
 
@@ -273,9 +267,7 @@ Comments and questions arising from use of the DMPonline test service (https://d
 
 Rather than embedding HTML in JSON, parse the HTML into JSON e.g.:
 
-<pre>
-"answer_text":["blah","blah","table":[["1","2"],["a","b"]]]
-</pre>
+    "answer_text":["blah","blah","table":[["1","2"],["a","b"]]]
 
 Add MarkDown as a plain-text Export option.
 
