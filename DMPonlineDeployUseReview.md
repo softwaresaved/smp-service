@@ -83,11 +83,7 @@ If the user runs `rake db:setup` then the existing database tables are recreated
 
 Add documentation on how to make a user an organisational admin and a site admin.
 
-It is unclear to new deployers how to get started using their deployment. A sample template and question set configured and ready for use would provide deployers with a head start.
-
-In addition/or alternatively, how to use the admin or super-admin interfaces to populate a deployment which has no funders, organisations, templates or questions defined would also be useful.
-
-### Problems
+### Problems when creating a plan
 
 After following the above and creating a user, I could log in and create a plan. However there are missing features. I did:
 
@@ -140,7 +136,7 @@ For DMPonline test server:
 		<a href="/projects/my-plan-dcc-template--46">Plan details</a>
 	   		</li>
     <!-- Plans (phases)-->
-			<li>
+			<li>http://www.knowledge.scot.nhs.uk/caldicottguardians/national-scrutiny.aspx
 			<a href="/projects/my-plan-dcc-template--46/plans/1950/edit">Generic DMP</a>
 		</li>
     <!--Share project (project admin only)-->
@@ -181,7 +177,11 @@ I inserted an entry into plans:
 
     > insert into plans values(1,NULL,1,1,"2014-01-01 14:00","2014-01-01 14:00");
 
-Refreshing the page showed the DCC Template tab but it had no content.
+with the project_id and version_id values deduced from the corresponding entries in projects and versions tables.
+
+Refreshing the page showed the DCC Template tab. This differs from the DMPonline test server which names the tab Generic DMP.
+
+Clicking the DCC Template tab showed a tab that had no content.
 
 I tried every version of DMPonline from the current version, 6236385f55189be55f2b470b5ee3563615d964c1 Mon Nov 24 18:27:18 2014, back to 3496975ffed4e4908e268945988a124cd957e4fc Fri Jul 25 10:27:44 2014, with no success.
 
@@ -196,7 +196,7 @@ I added myself as a super-admin and experimented with the super-admin area:
 * Description: SSI advice section
 * Click Create Section
 
-The section appeared under Plan details and DCC Template.
+Once added, the section was visible under the Plan details and DCC Template tabs.
 
 * Select Templates Management => Question
 * Click New Question
@@ -207,40 +207,126 @@ The section appeared under Plan details and DCC Template.
 * Themes: None
 * Click Create Question
 
-The question appeared under DCC Template.
+Once added, question was visible under the DCC Template tab.
 
-I tried to add existing sections:
+I noticed that for all existing sections the Organisation name was undefined.
+
+From looking at the data model, in both the database and db/seeds.py, questions belong to sections which belong to a version of a phase which makes up a template. Both templates and sections can have associated organisations and it looks like if these are out-of-synch then problems arise. Either this is a bug in the implementation of DMPonline or a problem with duplication in the data model, or there is some subtlety or something I have missed.
+
+For each section I changed the organisation from undefined to Digital Curation Centre to be consistent with the organisation of the template to which they belonged:
 
 * Select Templates Management => Sections
 * Click Data Collection Edit
 * Select Organisation: Digital Curation Centre
 * Click Update Section
 
-The section appeared under Plan details but viewing DCC Template gave an error:
+Once done, the sections became visible under the Plan details tab but clicking the DCC Template tab gave an error:
 
     Extracted source (around line #17):
     
     17:                 <% if q_format.title == t("helpers.checkbox") || q_format.title == t("helpers.multi_select_box") || q_format.title == t("helpers.radio_buttons") || q_format.title == t("helpers.dropdown") then%>
 
-So I looked at the questions associated with that section:
+So I looked at the questions associated with that section.
 
 * Select Templates Management => Question
 * Click What data will you collect or create? Edit
-* Select question format: Text area - this was blank
+
+Each question format was empty and, given the nature of the error message, this seemed to be the likely cause. So, for each, I specified a question format:
+
+* Select question format: Text area
 * Click Update question
-* Click How will the data be collected or created? Edit
-* Select question format: Text area - this was blank
-* Click Update question
 
-DCC Template showed the questions.
+The DCC template tab could again be viewed.
 
-At present, I don't know if:
+DCC Template showed the questions which I could complete and export.
 
-* There is a problem with my Ruby or Rails versions.
-* There is a bug in the DMPonline version in GitHub.
-* I have not configured something I should.
+When I tried to create a new plan, the same problem as at the outset arose i.e. missing Plan detals content, missing DCC template tab and missing Export formats. Again, these could be resolved by manually inserting an entry into the plan table.
 
-It is unclear how projects relate to plans. For example, in the super-admin area clicking on Plans shows a list of projects.
+I sought out the code responsible for creating a new project. app/controllers/projects_controller.rb handles the /project/new command:
+
+    # GET /projects/new
+    # GET /projects/new.json
+    def new
+            if user_signed_in? then
+                    @project = Project.new
+
+app/models/project.rb defines the Project class:
+
+    class Project < ActiveRecord::Base
+
+        after_create :create_plans
+
+        def create_plans
+                dmptemplate.phases.each do |phase|
+                        latest_published_version = phase.latest_published_version
+                        unless latest_published_version.nil?
+                                new_plan = Plan.new
+                                new_plan.version = latest_published_version
+                                plans << new_plan
+                        end
+                end
+        end
+end
+
+Printing the value of phase, latest_published_version and latest_published_version.nil? within the loop, and the value of plans on exit, gave:
+
+    DCC Template
+
+    true
+    []
+
+As the problem seemed to be with the published version, I checked out whether any versions were published using the super-admin interface:
+
+* Select Templates management => Version
+* Click DCC Template Version 1 Edit
+
+Published was unchecked, so:
+
+* Check Published 
+* Click Update Version
+
+On creating a plan now, the output from the print statements was:
+
+    DCC Template
+    DCC Template Version 1
+    false
+    [#<Plan id: 3, locked: nil, project_id: 11, version_id: 1, created_at: "2015-02-16 15:36:13", updated_at: "2015-02-16 15:36:13">]
+
+A new entry had also been created in the plans table in the database.
+
+It is unclear, at present, to new deployers how to get started using their deployment. A sample template and question set configured and ready for use would provide deployers with a head start.
+
+In addition/or alternatively, how to use the admin or super-admin interfaces to populate a deployment which has no funders, organisations, templates or questions defined would also be useful.
+
+### Problems when using organisational admin interface
+
+Using a fresh instance of the database, I tried the organisational admin interface.
+
+* Click Templates
+* Click Create a template
+* Title: My template
+* Click Save
+* Click Add new phase:
+* Title: Solo phase
+* Click Save
+
+This gave an error:
+
+    ArgumentError in Dmptemplates#admin_phase
+
+    Showing /disk/ssi-dev0/home/mjj/DMPonline_v4/app/views/dmptemplates/_add_question.html.erb where line #70 raised:
+
+    wrong number of arguments (4 for 5)
+    Extracted source (around line #70):
+
+    67: 							</tbody>
+    68: 							
+    69: 						</table>
+    70: 						<%= link_to_add_object t('org_admin.add_option_label'), f, :options , ''%>	
+    71: 					</div>
+    72: 					<div class="clearfix"></div>	
+    73: 					<!--display for default value for text field label-->
+    Trace of template inclusion: app/views/dmptemplates/_edit_section.html.erb, app/views/dmptemplates/admin_phase.html.erb
 
 ### Code
 
@@ -267,7 +353,7 @@ Comments and questions arising from use of the DMPonline test service (https://d
 
 Rather than embedding HTML in JSON, parse the HTML into JSON e.g.:
 
-    "answer_text":["blah","blah","table":[["1","2"],["a","b"]]]
+    "answer_text":["blah","blah","table":[["header1"," header2"],["a","b"]]]
 
 Add MarkDown as a plain-text Export option.
 
@@ -308,6 +394,6 @@ but there is between
 
 ## Assessing impact
 
-How do you collect your impact data? Harvesting the number of organisations, users, plans from the DMPonline database?
+How is impact data collected for DMPonline? Is this from harvesting the number of organisations, users, plans from the DMPonline database?
 
 What about impact data from third-party deployers e.g. University of Alberta DMP Builder and Consorcio Madrono PGDOnline?

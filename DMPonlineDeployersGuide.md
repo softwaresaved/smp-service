@@ -330,6 +330,37 @@ See:
 
 ---
 
+## Configure DMPonline to allow generic DMPs to be written
+
+* Register as a user belonging to the Digital Curation Centre organisation.
+* Log into the database and query the users table:
+
+<p/>
+
+    $ mysql -u root -p
+    > use database dmpdev4;
+    $ select * from users;
+
+* Add yourself as an organisational admin and super admin
+* Select Signed in as ... => Super-admin area.
+* Select Templates Management => Sections
+* For each section:
+  - Click Edit
+  - Select Organisation: Digital Curation Centre
+  - Click Update Section
+* Select Templates Management => Question
+* For each question:
+  - Click Edit
+  - Select question format: Text area (for example)
+  - Click Update question
+* Select Templates management => Version
+* Click DCC Template Version 1 Edit
+* Check Published 
+* Click Update Version
+
+
+---
+
 ## Backup and restore databases
 
 To backup a database:
@@ -339,7 +370,7 @@ To backup a database:
 To restore a database:
 
     $ mysql -u root -p
-    > create table dmpdev4;
+    > create database dmpdev4;
     > exit
     $ mysql -u root -p dmpdev4 < dmpdev4.sql
 
