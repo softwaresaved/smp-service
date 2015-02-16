@@ -351,10 +351,11 @@ Similarly for dmptest4 and dmptool4.
 
 To create:
 
-    $ cp -r DMPonline_v4 custom
+    $ cp -r DMPonline_v4 local
+    $ rm -rf local/git
     $ git clone https://github.com/DigitalCurationCentre/DMPonline_v4.git original
     $ rm -rf original/.git
-    $ diff -rupN original/ new/ > local_settings.patch
+    $ diff -rupN original/ local/ > local_settings.patch
 
 To apply:
 
