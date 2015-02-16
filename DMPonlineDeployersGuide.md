@@ -40,13 +40,12 @@ Install dependencies for Rails:
     $ sudo apt-get install nodejs
 
 Install dependencies for DMPonline:
-<pre>
+
     $ sudo apt-get install wkhtmltopdf
     $ wkhtmltopdf -V
     Name:
       wkhtmltopdf 0.10.0 rc2
     $ sudo apt-get install libcurl4-openssl-dev
-</pre>
 
 ---
 
