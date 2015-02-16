@@ -83,6 +83,10 @@ If the user runs `rake db:setup` then the existing database tables are recreated
 
 Add documentation on how to make a user an organisational admin and a site admin.
 
+It is unclear, at present, to new deployers how to get started using their deployment. A sample template and question set configured and ready for use would provide deployers with a head start.
+
+In addition/or alternatively, how to use the admin or super-admin interfaces to populate a deployment which has no funders, organisations, templates or questions defined would also be useful.
+
 ### Problems when creating a plan
 
 After following the above and creating a user, I could log in and create a plan. However there are missing features. I did:
@@ -211,7 +215,7 @@ Once added, question was visible under the DCC Template tab.
 
 I noticed that for all existing sections the Organisation name was undefined.
 
-From looking at the data model, in both the database and db/seeds.py, questions belong to sections which belong to a version of a phase which makes up a template. Both templates and sections can have associated organisations and it looks like if these are out-of-synch then problems arise. Either this is a bug in the implementation of DMPonline or a problem with duplication in the data model, or there is some subtlety or something I have missed.
+From looking at the data model, in both the database and db/seeds.rb, questions belong to sections which belong to a version of a phase which makes up a template. Both templates and sections can have associated organisations and it looks like if these are out-of-synch then problems arise (I return to this shortly).
 
 For each section I changed the organisation from undefined to Digital Curation Centre to be consistent with the organisation of the template to which they belonged:
 
@@ -294,9 +298,95 @@ On creating a plan now, the output from the print statements was:
 
 A new entry had also been created in the plans table in the database.
 
-It is unclear, at present, to new deployers how to get started using their deployment. A sample template and question set configured and ready for use would provide deployers with a head start.
+These issues can be fixed by editing db/seeds.rb. organisations have a name and abbreviation e.g.
 
-In addition/or alternatively, how to use the admin or super-admin interfaces to populate a deployment which has no funders, organisations, templates or questions defined would also be useful.
+    organisations = {
+      'DCC' => {
+        name: "Digital Curation Centre",
+        abbreviation: "DCC",
+        sort_name: "Digital Curation Centre",
+        organisation_type: "Organisation"
+      },
+
+Sections refer to the organisation e.g.
+
+    sections = {
+      "Data Collection" => {
+        title: "Data Collection",
+        number: 1,
+        description: "...",
+        version: "DCC Template Version 1",
+        organisation: "DCC"
+      },
+      ...
+    }
+
+These are initialised via:
+
+    sections.each do |s, details|
+      section = Section.new
+      section.organisation = Organisation.find_by_name(details[:organisation])
+      ...
+    end
+
+which means the organisation is not found since, for example, there is no organisation with name "DCC". Changing the initialisation to search on an organisation's abbreviation:
+
+      section.organisation = Organisation.find_by_abbreviation(details[:organisation])
+
+causes the sections to be correctly associated with their organisations.
+
+Versions are initialised in a similar way e.g.
+
+    versions = {
+      "DCC" => {
+        title: "DCC Template Version 1",
+        number: 1,
+        phase: "DCC Template"
+      },
+      ...
+    }
+
+    versions.each do |v, details|
+      version = Version.new
+      version.title = details[:title]
+      ...
+    end
+
+The versions can be set to inherit the published status of their template by adding the line:
+
+    version.published = Phase.find_by_title(details[:phase]).dmptemplate.published
+
+Questions are initialised likewise:
+
+    questions = {
+      "What data will you collect or create?" => {
+        text: "What data will you collect or create?",
+        section: "Data Collection",
+        number: 1,
+        guidance: "....",
+        themes: ["Existing Data", "Data Volumes", "Data Type", "Data Format"],
+        format: "Text area"
+      },
+      ...
+    }
+
+    questions.each do |q, details|
+      question = Question.new
+      question.text = details[:text]
+      ...
+    end
+
+Adding an entry:
+
+    format: "Text area"
+
+to each question and adding the following initialisation code:
+
+    question.question_format = QuestionFormat.find_by_title(details[:format])
+
+allows the question formats to be initialised.
+
+I've produced an example of a fixed version of [db/seeds.rb](https://github.com/softwaresaved/smp-service/blob/065fbd33b758e9b952e2e02cce97f59cb5a4c7b1/db/seeds.rb).
 
 ### Problems when using organisational admin interface
 
