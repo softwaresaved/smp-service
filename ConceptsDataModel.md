@@ -20,6 +20,9 @@
   - Consists of one or more phases.
 * Phase:
   - Type of DMP e.g. outline DMP for proposal, full DMP for project.
+  - May be many versions.
+* Version
+  - Version of a phase.
   - Consists of one or more sections.
 * Section:
   - Consists of one or more questions.
