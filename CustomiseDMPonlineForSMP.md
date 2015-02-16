@@ -151,7 +151,7 @@ The following features are not needed for a prototype:
 * Shibboleth authentication.
 * ORCID.
 
-[code-orcid.shib.txt](./code-orcid/shibb.txt) lists references to "orcid" and "shibboleth" within the DMPonline code. The relevant views/ files can be updated to hide these features from users.
+[code-orcid.shib.txt](./code-orcid-shibb.txt) lists references to "orcid" and "shibboleth" within the DMPonline code. The relevant views/ files can be updated to hide these features from users.
 
 ---
 
