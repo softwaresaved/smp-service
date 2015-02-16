@@ -381,12 +381,10 @@ $ mysqldump -u root -p dmpdev4 > dmpdev4.sql
 
 To restore a database:
 
-<pre>
-$ mysql -u root -p
-> create table dmpdev4;
-$ exit
-$ mysql -u root -p dmpdev4 < dmpdev4.sql
-</pre>
+    $ mysql -u root -p
+    > create table dmpdev4;
+    $ exit
+    $ mysql -u root -p dmpdev4 < dmpdev4.sql
 
 Similarly for dmptest4 and dmptool4.
 
