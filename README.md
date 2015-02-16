@@ -10,9 +10,7 @@ The work seeks to use the [Digital Curation Centre](http://www.dcc.ac.uk)'s [DMP
 * [Sources for service content](./SMPContent.md) for an online SMP service.
 
 * [DMPonline deployment and usage experiences](./DMPonlineDeployUseReview.md)
-* [DMPonline deployer's guide](./DMPonlineDeployersGuide.md)
-  - Written as a side-effect of the above.
+* [DMPonline deployer's guide](./DMPonlineDeployersGuide.md) - written as a side-effect of the above.
 
 * [DMPonline concepts and data model](./ConceptsDataModel.md)
-* [Customing DMPonline into a prototype SMP service](./CustomiseDMPonlineForSMP.md)
-  - Notes to date.
+* [Customing DMPonline into a prototype SMP service](./CustomiseDMPonlineForSMP.md) - notes to date.
