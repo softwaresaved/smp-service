@@ -1,11 +1,11 @@
 
 # DMPonline deployment and usage experiences
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 13/02/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 16/02/2014.
 
 ## Introduction
 
-Experiences in deploying and using DMPonline, between 19/01/14 and 13/02/14.
+Experiences in deploying and using DMPonline, between 19/01/14 and 16/02/14.
 
 ---
 
