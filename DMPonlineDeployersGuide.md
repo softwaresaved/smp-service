@@ -393,3 +393,15 @@ To apply:
     $ git clone https://github.com/DigitalCurationCentre/DMPonline_v4.git
     $ cd DMPonline_v5.git
     $ patch -p1 < ../local_settings.patch
+
+---
+
+## Run tests
+
+Running the unit (model) and functional (controller) tests for DMPonline allows you check that you have the required dependencies and that DMPonline will be able to interact with your database.
+
+To run the unit and functional tests:
+
+    $ rake db:test:load
+    $ rake test:units
+    $ rake test:functionals
