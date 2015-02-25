@@ -1,0 +1,39 @@
+./app/views/existing_users/index.html.erb:3:	<p>Welcome to the new DMPonline!</p>
+
+./app/admin/user.rb:18:         # :other_organisation, :accept_terms, :role_ids, :dmponline3
+
+./app/admin/user.rb:71:                         row :dmponline3
+
+./app/admin/user.rb:9:  filter :dmponline3
+
+./app/controllers/registrations_controller.rb:12:                       if existing_user.dmponline3 && (existing_user.password == "" || existing_user.password.nil?) && existing_user.confirmed_at.nil? then
+
+./app/controllers/sessions_controller.rb:6:             if !existing_user.nil? && existing_user.dmponline3 && (existing_user.password == "" || existing_user.password.nil?) && existing_user.confirmed_at.nil? then
+
+./app/models/user.rb:46:     :accept_terms, :role_ids, :dmponline3
+
+./app/views/layouts/_dmponline_footer.html.erb:10:                  <li><a href="http://dmponline3.dcc.ac.uk/" target='_blank'><%= t('dmponline3_text') %></a></li>
+
+./app/views/layouts/_dmponline_footer.html.erb:10:                  <li><a href="http://dmponline3.dcc.ac.uk/" target='_blank'><%= t('dmponline3_text') %></a></li>
+
+./app/views/projects/index.html.erb:29: <% if current_user.dmponline3 then %>
+
+./app/views/projects/index.html.erb:30:         <p>You can view or edit earlier plans by visiting <%= link_to("the previous version of DMPonline", "http://dmponline3.dcc.ac.uk") %>.</p>
+
+./app/views/projects/index.html.erb:30:         <p>You can view or edit earlier plans by visiting <%= link_to("the previous version of DMPonline", "http://dmponline3.dcc.ac.uk") %>.</p>
+
+./config/locales/en.yml:32:  dmponline3_text: "DMPonline previous version"
+
+./config/locales/en.yml:543:    <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p></div>"
+
+./config/locales/en.yml:543:    <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p></div>"
+
+./config/locales/en.yml:649:    <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p>"
+
+./config/locales/en.yml:649:    <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p>"
+
+./db/migrate/20131126133804_add_dmponline3_to_users.rb:1:class AddDmponline3ToUsers < ActiveRecord::Migration
+
+./db/migrate/20131126133804_add_dmponline3_to_users.rb:3:    add_column :users, :dmponline3, :boolean
+
+./db/schema.rb:428:    t.boolean  "dmponline3"

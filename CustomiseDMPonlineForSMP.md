@@ -1,11 +1,11 @@
 
 # Customing DMPonline into a prototype SMP service
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 16/02/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 25/02/2014.
 
 ## Introduction
 
-This document notes the main changes that need to be made to [DMPonline](https://github.com/DigitalCurationCentre/DMPonline_v4) to use it as a prototype service for software management plans.
+This document notes the main changes that need to be made, and have been made, to [DMPonline](https://github.com/DigitalCurationCentre/DMPonline_v4) to use it as a prototype service for software management plans.
 
 The version of DMPonline used as a basis of this document was the latest at the time of writing, master branch, commit [6236385f55189be55f2b470b5ee3563615d964c1](https://github.com/DigitalCurationCentre/DMPonline_v4/commit/6236385f55189be55f2b470b5ee3563615d964c1) 24 Nov 2014.
 
@@ -110,37 +110,31 @@ The file DesktopDMPquestions_table.sql is ignored as it is unused by the DMPonli
 
 ## DMPonline presentation
 
-[code-dmp-data.txt](./code-dmp-data.txt) lists those files in DMPonline that contain strings or messages that are presented to users and which mention "data" or "DMP". These were identified using:
+The following name replacements in HTML fragments and Ruby strings presented on the user interface, or in e-mails were made:
 
-    $ find . -type f -exec grep -Hin PHRASE {} \;
+* DMPonline => Software Management Plan Service
+* Data Management Plan => Software Management Plan
+* DMP => SMP. 
 
-These files need to be edited so that, for example, references to data management plans and DMPs are replaced by references to software management plans or SMPs.
+config/locales/en.yml was NOT touched as that overlaps with institution-specific branding"
 
-There are a number of DCC and DMPonline-specific images and other media:
+The changes are in commit [24c99223837b694784ac9ac205f518fe4d6cacdf](https://github.com/softwaresaved/smp-service/commit/24c99223837b694784ac9ac205f518fe4d6cacdf).
 
-    ./app/assets/images/dcc_logo.png
-    ./app/assets/images/dmponline_favicon.ico
-    ./app/assets/images/logo.jpg
-    ./app/assets/images/2013_Jisc_Logo_RGB72.png
+There 27 separate places where these replacements had to be made. Holding these values one or more configuration values would make it easier to configure the code from DMPs to SMPs and also, for those deploying DMPonline locally, to change the product name (e.g. to [DMP Builder](https://dmp.library.ualberta.ca/)).
 
-    ./app/assets/images/screencast.jpg
-    ./app/assets/videos/index.files/html5video/screencast.jpg
+---
 
-    ./app/assets/videos/index.files/html5video/fullscreen.png
-    ./app/assets/videos/index.files/html5video/screencast.m4v
-    ./app/assets/videos/index.files/html5video/screencast.ogv
-    ./app/assets/videos/index.files/html5video/screencast.webm
+## DMPonline branding
 
-And, DCC-style orange-branded icons:
+There are a number of DCC and DMPonline-specific images and other media including logos, icons, stylesheets and branding.
 
-    ./app/assets/images/download.png
-    ./app/assets/images/minus_laranja.png
-    ./app/assets/images/plus_laranja.png
-    ./app/assets/images/question-mark.png
+[code-branding.txt](./code-branding.txt) lists these and their usage. 
 
-Their usage is listed in [code-images.txt](./code-images.txt). The relevant views/ files need to be updated to hide these images or media, or present new SMP-specific ones, to the users.
+The relevant views/ files need to be updated to hide these images or media, or present new SMP-specific ones, to the users.
 
 The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
+
+In addition, config/locales/en.yml needs to be updated with SMP-specific and Software Sustainability Institute-specific content.
 
 ---
 
@@ -148,10 +142,23 @@ The DCC and DMPonline logo should be presented in an SMP service, with a 'powere
 
 The following features are not needed for a prototype:
 
-* Shibboleth authentication.
-* ORCID.
+### Shibboleth authentication and ORCID
 
 [code-orcid.shib.txt](./code-orcid-shibb.txt) lists references to "orcid" and "shibboleth" within the DMPonline code. The relevant views/ files can be updated to hide these features from users.
+
+### DMPonline 3
+
+There are a number of references to DMPonline 3 in the code as data from DMPonline 3 can be ported to DMPonline 4 and the DMPonline 3 service is still live for legacy users.
+
+[code-dmponline3.txt](./code-dmponline3.txt) lists references to DMPonline 3 within the DMPonline code. The relevant views/ files can be updated to hide references to this version from users.
+
+---
+
+### DMPonline configuration
+
+There are a number of places where DMPonline needs to be configured with local URLs, e-mail addresses etc. These are listed in [code-local-configuration.txt](./code-local-configuration.txt) divided up into those that are needed for DMPonline to work, those relating to branding (e.g. links to further information), those supporting DMPonline 3 legacy users and those for Shibboleth/ORCID. 
+
+Of these only the core and branding-related configuration needs to be customised for local deployments.
 
 ---
 
