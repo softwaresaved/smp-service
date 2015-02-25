@@ -9,7 +9,6 @@ Core
 ./config/environments/development.rb:58:	    :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
 ./config/environments/development.rb:59:	    :exception_recipients => %w{dmponline@dcc.ac.uk}
 
-./config/environments/production.rb:53:  # config.action_controller.asset_host = "http://assets.example.com"
 ./config/environments/production.rb:76:	    :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
 ./config/environments/production.rb:77:	    :exception_recipients => %w{dmponline@dcc.ac.uk}
 
