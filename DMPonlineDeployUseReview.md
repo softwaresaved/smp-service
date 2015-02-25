@@ -445,6 +445,7 @@ There are a significant number of places where the user has to provide local con
      :exe_path => '/usr/local/bin/wkhtmltopdf'
 
     config/environments/development.rb
+      config.action_mailer.default_url_options = { :host => 'localhost:3000' }
       config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
       ActionMailer::Base.default :from => 'address@example.com'
       ActionMailer::Base.smtp_settings = { :address => "localhost", :port => 1025 }
