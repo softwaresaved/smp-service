@@ -72,7 +72,7 @@ DMPonline4::Application.configure do
 	 # Error notifications by email
 	 config.middleware.use ExceptionNotification::Rack,
 	  :email => {
-	    :email_prefix => "[DMPonline4 ERROR] ",
+	    :email_prefix => "[Software Management Plan Service ERROR] ",
 	    :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
 	    :exception_recipients => %w{dmponline@dcc.ac.uk}
 	  }
