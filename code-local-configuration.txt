@@ -23,13 +23,13 @@ Core
 
 ./app/mailers/user_mailer.rb:2:	default from: 'info@dcc.ac.uk'
 
-./public/403.html:111:	<p>To report this error please contact us on <a href='mailto:dmponline@dcc.ac.uk'>dmponline@dcc.ac.uk</a></p>
-
 ----------
 
 Branding
 
 ./public/_index.html:41:		<p>For more information please visit <a href="www.dcc.ac.uk">DCC website</a></p>
+
+./public/403.html:111:	<p>To report this error please contact us on <a href='mailto:dmponline@dcc.ac.uk'>dmponline@dcc.ac.uk</a></p>
 
 ./app/controllers/static_pages_controller.rb:10:  	dcc_news_feed_url = "http://www.dcc.ac.uk/news/dmponline-0/feed"
 
