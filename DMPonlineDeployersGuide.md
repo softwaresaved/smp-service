@@ -1,7 +1,7 @@
 
 # DMPonline deployer's guide
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 16/02/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 25/02/2014.
 
 ## Introduction
 
@@ -146,6 +146,8 @@ Get DMPonline:
     $ git clone https://github.com/DigitalCurationCentre/DMPonline_v4.git
     $ cd DMPonline_v4
 
+### Configure database
+
 Copy database configuration:
 
     $ cp config/database_example.yml config/database.yml
@@ -156,15 +158,46 @@ Edit config/database.yml and update:
 * username
 * password
 
-Edit the following lines in config/environments/development.rb. Provide your own SMTP server URL and port, e-mail prefix, and e-mail addresses:
+### Configure SMTP server
+
+Edit the following lines in config/environments/development.rb. Provide your own SMTP server URL and port:
 
     config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
-    ActionMailer::Base.default :from => 'address@example.com'
     ActionMailer::Base.smtp_settings = { :address => "localhost", :port => 1025 }
 
-          :email_prefix => "[DMPonline4 ERROR] ",
-          :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
-          :exception_recipients => %w{dmponline@dcc.ac.uk}
+### Configure e-mails
+
+Edit config/initializers/contact_us.rb. Update this value which is used to set the To: field in e-mails sent when the form on the /contact-us page is submitted:
+
+    config.mailer_to = "dmponline@dcc.ac.uk"
+
+Edit app/mailers/user_mailer.rb. Update this value which is used to set the From: field in e-mails sent to users relating to change in their plan permissions (e.g. they are added as a collaborator):
+
+       default from: 'info@dcc.ac.uk'
+
+Edit config/initializers/devise.rb. Update this value which is used to set the Reply-To: field in e-mails sent to users when they register:
+
+    config.mailer_sender = "info@dcc.ac.uk"
+
+Edit config/environments/development.rb. Update these values which are used to set the From:, Subject: and To: fields in error report e-mails:
+
+    :email_prefix => "[DMPonline4 ERROR] ",
+    :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
+    :exception_recipients => %w{dmponline@dcc.ac.uk}
+
+Update this value which is is used to set the From: field in e-mails sent to users when they register:
+
+    ActionMailer::Base.default :from => 'address@example.com'
+
+Update this value which, when running in development-mode, is used in e-mails sent to users when they register or when there are changes in plan permissions, to provide a link to the relevant page of DMPonline:
+
+    config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+Edit config/application.rb. Update this value which, when running in production-mode, is used in e-mails sent to users when they register or when there are changes in plan permissions, to provide a link to the relevant page of DMPonline:
+
+    config.action_mailer.default_url_options = { :host => 'dmponline.example.com' }
+
+### Configure security tokens
 
 Create a security token:
 
@@ -176,10 +209,9 @@ Or:
 
     $ rake secret
 
-Edit config/initializers/devise.rb. Provide your own e-mail address and copy the security token into the pepper:
+Edit config/initializers/devise.rb. Copy the security token into the pepper:
 
-    config.mailer_sender = "info@dcc.ac.uk"
-      config.pepper = "de451fa8d44af2c286d922f753d1b10fd23b99c10747143d9ba118988b9fa9601fea66bfe31266ffc6a331dc7331c71ebe845af8abcdb84c24b42b8063386530"
+    config.pepper = "de451fa8d44af2c286d922f753d1b10fd23b99c10747143d9ba118988b9fa9601fea66bfe31266ffc6a331dc7331c71ebe845af8abcdb84c24b42b8063386530"
 
 Create another security token, as above.
 
@@ -187,33 +219,35 @@ Edit config/initializers/secret_token.rb. Copy in the security token:
 
     DMPonline4::Application.config.secret_token = '4eca200ee84605da3c8b315a127247d1bed3af09740090e559e4df35821fbc013724fbfc61575d612564f8e9c5dbb4b83d02469bfdeb39489151e4f9918598b2'
 
+### Declare path to wkhtmltopdf
+
 Find the path to wkhtmltopdf:
 
     $ which wkhtmltopdf
     /usr/local/bin/wkhtmltopdf
 
-Edit config/application.rb. Update the mailer URL and, if necessary, path to wkhtmltopdf:
-
-    config.action_mailer.default_url_options = { :host => 'dmponline.example.com' }
+Edit config/application.rb. If necessary, update the path to wkhtmltopdf:
 
     WickedPdf.config = {
         :exe_path => '/usr/local/bin/wkhtmltopdf'
     }
 
-Update db/seeds.rb (as recommented on the DMPonline [wiki](https://github.com/DigitalCurationCentre/DMPonline_v4/wiki/1.-Local-Installation):
+### Fix seeds.rb
+
+Update db/seeds.rb with fixed version (as recommended on the DMPonline [wiki](https://github.com/DigitalCurationCentre/DMPonline_v4/wiki/1.-Local-Installation):
 
     $ wget https://raw.githubusercontent.com/DigitalCurationCentre/DMPonline_v4/6791c19e751560ac9a18d3bb80f8ff21bc31ff39/db/seeds.rb
     $ mv seeds.rb db/seeds.rb
 
-Install Ruby gems:
+### Install Ruby gems
 
     $ bundle update
 
-Create the database:
+### Create database
 
     $ rake db:setup
 
-Start the server:
+### Start server
 
     $ rails server
 
@@ -405,3 +439,88 @@ To run the unit and functional tests:
     $ rake db:test:load
     $ rake test:units
     $ rake test:functionals
+
+---
+
+## Configuration and e-mails reference
+
+Configuration settings and how they are used in e-mails.
+
+### Registrations
+
+Configuration files and values:
+
+    config/initializers/devise.rb
+       config.mailer_sender = "info@dcc.ac.uk"
+
+    config/application.rb
+        config.action_mailer.default_url_options = { :host => 'dmponline.example.com' }
+
+    config/environments/development.rb
+        config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+        ActionMailer::Base.default :from => 'address@example.com'
+
+Sample e-mail:
+    
+    From: 	address@example.com
+    Reply-To: 	info@dcc.ac.uk
+    To:         fredbloggs@gmail.com
+    Subject: 	Confirm your DMPonline account
+
+    <p>Welcome to DMPonline, fredbloggs@gmail.com!</p>
+    <p>Thank you for registering at <a href="http://localhost:3000/">DMPonline</a>. Please confirm your email address:</p>
+    <p><a href="http://localhost:3000/users/confirmation?confirmation_token=hYCpqbMu5hi9FbmR6YJe">Click here to confirm your account</a> (or copy http://localhost:3000/users/confirmation?confirmation_token=hYCpqbMu5hi9FbmR6YJe into your browser).</p>
+
+### Permission changes
+
+Configuration files and values:
+
+    app/mailers/user_mailer.rb
+        default from: 'info@dcc.ac.uk'
+
+    config/application.rb
+        config.action_mailer.default_url_options = { :host => 'dmponline.example.com' }
+
+    config/environments/development.rb
+        config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+Sample e-mail:
+
+    From: info@dcc.ac.uk
+    To:         fredbloggs@gmail.com
+    Subject: You have been given access to a Data Management Plan
+
+    <p>Hello Fred Bloggs</p>
+    <p>You have been given read-only access to the DMP "<a href="http://localhost:3000/projects/my-plan-dcc-template">My plan (DCC Template)</a>".</p>
+
+### Error reports
+
+Configuration files and values:
+
+    config/environments/development.rb
+       :email_prefix => "[DMPonline4 ERROR] ",
+       :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
+       :exception_recipients => %w{dmponline@dcc.ac.uk}
+
+Sample e-mail:
+
+    From: No-reply <noreply@software.ac.uk>
+    To: dmponline@dcc.ac.uk
+    Subject: [DMPonline4 ERROR] ...
+
+    ...
+
+### Contact Us form
+
+Configuration files and values:
+
+    config/initializers/contact_us.rb
+        config.mailer_to = "dmponline@dcc.ac.uk"
+
+Sample e-mail:
+
+    From: fredbloggs@gmail.com
+    Reply-To: fredbloggs@gmail.com
+    To: dmponline@dcc.ac.uk
+
+    ...
