@@ -462,8 +462,6 @@ There are a significant number of places where the user has to provide local con
     config/initializers/secret_token.rb
       DMPonline4::Application.config.secret_token = '4eca200ee84605da3c8b315a127247d1bed3af09740090e559e4df35821fbc013724fbfc61575d612564f8e9c5dbb4b83d02469bfdeb39489151e4f9918598b2'
 
-It might be preferable to support one or more YAML configuration files so users deployers provide this information without having to edit the Ruby source code. This would help reduce the risk of a user forgetting to update a value but also remove the risk of them accidently introducing a bug into the Ruby code.
-
 Documentation should be provided as to what each of the e-mail addresses are used for. While, for example, exception_recipients is clear, the distinction between the e-mail addresses in contact_us.rb, devise.rb and user_mailer.rb is less clear.
 
 ---
