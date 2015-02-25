@@ -1,7 +1,7 @@
 
 # DMPonline deployment and usage experiences
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 16/02/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 25/02/2014.
 
 ## Introduction
 
@@ -425,13 +425,45 @@ What is DesktopDMPquestions_table.sql for? It creates a questions table whose sc
 * DesktopDMPquestions_table.sql defines a suggested_answer field.
 * db:setup defines is_expanded, is_text_field, question_format_id fields.
 
-### Back-ups
+### Back-up and restore
 
 Document how users can back-up and restore their deployment e.g. Git can be used for DMPonline configuration files, and mysqldump for MySQL.
 
-### Backwards compatibility
+### Backwards compatibility policy
 
 There should be a process for backwards compatibility and upgrades. For example, users should be warned if the database schema is going to be changed. Scripts should be provided to update their existing databases to conform to the new schema.
+
+### Manual configuration
+
+There are a significant number of places where the user has to provide local configuration options. Leaving aside changing the branding of DMPonline, at a minimum, the files/lines that need edited include:
+
+    app/mailers/user_mailer.rb
+       default from: 'info@dcc.ac.uk'
+
+    config/application.rb
+      config.action_mailer.default_url_options = { :host => 'dmponline.example.com' }
+     :exe_path => '/usr/local/bin/wkhtmltopdf'
+
+    config/environments/development.rb
+      config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
+      ActionMailer::Base.default :from => 'address@example.com'
+      ActionMailer::Base.smtp_settings = { :address => "localhost", :port => 1025 }
+     :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
+     :exception_recipients => %w{dmponline@dcc.ac.uk}
+
+    config/initializers/contact_us.rb
+      config.mailer_to = "dmponline@dcc.ac.uk"
+
+    config/initializers/devise.rb
+     config.mailer_sender = "info@dcc.ac.uk"
+     config.pepper = "de451fa8d44af2c286d922f753d1b10fd23b99c10747143d9ba118988b9fa9601fea66bfe31266ffc6a331dc7331c71ebe845af8abcdb84c24b42b8063386530"
+
+    config/initializers/secret_token.rb
+      DMPonline4::Application.config.secret_token = '4eca200ee84605da3c8b315a127247d1bed3af09740090e559e4df35821fbc013724fbfc61575d612564f8e9c5dbb4b83d02469bfdeb39489151e4f9918598b2'
+
+It might be preferable to support one or more YAML configuration files so users deployers provide this information without having to edit the Ruby source code. This would help reduce the risk of a user forgetting to update a value but also remove the risk of them accidently introducing a bug into the Ruby code.
+
+Documentation should be provided as to what each of the e-mail addresses are used for. While, for example, exception_recipients is clear, the distinction between the e-mail addresses in contact_us.rb, devise.rb and user_mailer.rb is less clear.
 
 ---
 
