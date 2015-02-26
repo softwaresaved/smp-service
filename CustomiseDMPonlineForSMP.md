@@ -1,7 +1,7 @@
 
 # Customing DMPonline into a prototype SMP service
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 25/02/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 26/02/2014.
 
 ## Introduction
 
@@ -142,9 +142,9 @@ In addition, config/locales/en.yml needs to be updated with SMP-specific and Sof
 
 The following features are not needed for a prototype:
 
-### Shibboleth authentication and ORCID
+### Shibboleth authentication
 
-[code-orcid.shib.txt](./code-orcid-shibb.txt) lists references to "orcid" and "shibboleth" within the DMPonline code. The relevant views/ files can be updated to hide these features from users.
+[code-shibboleth.txt](./code-shibboleth.txt) lists references to "shibboleth" within the DMPonline code. The relevant views/ files can be updated to hide these features from users.
 
 ### DMPonline 3
 
@@ -156,7 +156,7 @@ There are a number of references to DMPonline 3 in the code as data from DMPonli
 
 ### DMPonline configuration
 
-There are a number of places where DMPonline needs to be configured with local URLs, e-mail addresses etc. These are listed in [code-local-configuration.txt](./code-local-configuration.txt) divided up into those that are needed for DMPonline to work, those relating to branding (e.g. links to further information), those supporting DMPonline 3 legacy users and those for Shibboleth/ORCID. 
+There are a number of places where DMPonline needs to be configured with local URLs, e-mail addresses etc. These are listed in [code-local-configuration.txt](./code-local-configuration.txt) divided up into those that are needed for DMPonline to work, those relating to branding (e.g. links to further information), those supporting DMPonline 3 legacy users and those for Shibboleth.
 
 Of these only the core and branding-related configuration needs to be customised for local deployments.
 
