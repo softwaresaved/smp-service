@@ -23,6 +23,10 @@ Core
 
 ./app/mailers/user_mailer.rb:2:	default from: 'info@dcc.ac.uk'
 
+config/initializers/recaptcha.rb:2:  config.public_key  = 'replace_this_with_your_public_key'
+
+config/initializers/recaptcha.rb:3:  config.private_key = 'replace_this_with_your_private_key'
+
 ----------
 
 Branding
@@ -44,6 +48,8 @@ config/locales/en.yml:542:<a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%
 config/locales/en.yml:653:    intro_text_html: "<p>DMPonline is provided by the Digital Curation Centre. You can find out more about us on our <a href='http://www.dcc.ac.uk/' target='_blank'>website</a>. If you would like to contact us about DMPonline, please enter your query in the form below or email <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a>.</p>"
 
 config/locales/en.yml:664:     <p>Email <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a></p>"
+
+app/views/contact_us/contacts/new.html.erb:100 <iframe width="90%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=EH8+9LE&amp;aq=&amp;sll=55.85546,-4.232459&amp;sspn=0.195785,0.663986&amp;ie=UTF8&amp;hq=&amp;hnear=EH8+9LE,+United+Kingdom&amp;ll=55.944435,-3.186767&amp;spn=0.006104,0.02075&amp;t=m&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
 
 ----------
 
