@@ -29,7 +29,6 @@ en:
     pm: "pm"
 
   tool_title: "DMPonline"
-  dmponline3_text: "DMPonline previous version"
   dcc_name: "Digital Curation Centre"
   welcome_title: "Welcome."
   welcome_text: "<p>DMPonline has been developed by the <a href='http://dcc.ac.uk' target='_blank'>Digital Curation Centre</a> to help you write data management plans.</p>"
@@ -540,7 +539,7 @@ Select what format you wish to use and click to 'Export'.</p>"
     <p>We are constantly improving the user interface and functionality of DMPonline.
     If you would like to contribute with feedback and suggestions, please contact us by emailing
     <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a>. You can also report bugs and request new features directly on <a href='https://github.com/DigitalCurationCentre/DMPonline_v4' target='_top'>GitHub</a></p>
-    <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p></div>"
+    </div>"
 
 
   help_page:
@@ -644,9 +643,7 @@ Select what format you wish to use and click to 'Export'.</p>"
     <h3>Share plans</h3>
     <p>Insert the email address of any collaborators you would like to invite to read or edit your plan. Set the level of permissions you would like to grant them via the drop-down options and click to 'Add collaborator'</p>
     <h3>Export plans</h3>
-    <p>From here you can download your plan in various formats. This may be useful if you need to submit your plan as part of a grant application. Choose what format you would like to view/download your plan in and click to export. When you login to DMPonline you will be directed to the 'My plans' page. From here you can edit, share, export or delete any of your plans. You will also see plans that have been shared with you by others.</p>
-    <h3>Legacy data</h3>
-    <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p>"
+    <p>From here you can download your plan in various formats. This may be useful if you need to submit your plan as part of a grant application. Choose what format you would like to view/download your plan in and click to export. When you login to DMPonline you will be directed to the 'My plans' page. From here you can edit, share, export or delete any of your plans. You will also see plans that have been shared with you by others.</p>"
 
   contact_page:
     title: "Contact us"
