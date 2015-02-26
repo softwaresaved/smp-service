@@ -9,7 +9,7 @@ It is a customisation of {DMPonline}[https://dmponline.dcc.ac.uk], the {Digital 
 The prerequisites and instructions for deploying Software Management Plan Service is the same as for DMPonline. Please see:
 
 * {DMPonline_v4}[https://github.com/DigitalCurationCentre/DMPonline_v4]
-* {DMPonline deployer's guide}(https://github.com/softwaresaved/smp-service/blob/smp-docs/DMPonlineDeployersGuide.md)
+* {DMPonline deployer's guide}[https://github.com/softwaresaved/smp-service/blob/smp-docs/DMPonlineDeployersGuide.md]
 
 == Support
 
@@ -36,3 +36,6 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.
+
+For complete license text, see LICENSE.txt or {http://www.gnu.org/licenses/agpl-3.0.html}[GNU AFFERO GENERAL PUBLIC LICENSE].
+
