@@ -124,7 +124,7 @@ There 27 separate places where these replacements had to be made. Holding these 
 
 ---
 
-## DMPonline branding
+## DMPonline branding - TODO
 
 There are a number of DCC and DMPonline-specific images and other media including logos, icons, stylesheets and branding.
 
@@ -144,9 +144,34 @@ The following features are not needed for a prototype:
 
 ### Shibboleth authentication
 
-[code-shibboleth.txt](./code-shibboleth.txt) lists references to "shibboleth" within the DMPonline code. The relevant views/ files can be updated to hide these features from users.
+Shibboleth-specific UI content is defined in config/locales/en.yml. These allowed the associated views/ files that present this information to be identified.
 
-### DMPonline 3
+app/views/shared/_login_form.html.erb - login form on the DMPonline front page:
+
+    institution_sing_in_link: "Or, sign in with your institutional credentials"
+    institution_sing_in: " (UK users only)"
+
+app/views/devise/registrations/edit.html.erb - Edit Profile page:
+
+    shibboleth_linked_text: "Your account is linked to your institutional credentials."
+    shibboleth_to_link_text: "Link your DMPonline account to your institutional credentials"
+    shibboleth_unlink_label: "Unlink your institutional credentials"
+    shibboleth_unlink_alert: "Unlink institutional credentials alert"
+    shibboleth_unlink_dialog_text: "<p>You are about to unlink DMPonline of your institutional credentials, would you like to continue?</p>"
+
+app/views/devise/registrations/new.html.erb - callback page when user returns from Shibboleth service:
+
+    sign_up_shibboleth_alert_text_html: "Note: If you have previously created an account in DMPonline, and you want to link this to your institutional credentials, you need to <a href='/' class='a_orange'>Sign in</a> to that existing DMPonline account first. If you have never created a DMPonline account, then please complete the form below."
+
+As config/application.rb defines a config.shibboleth_enabled flag:
+
+    config.shibboleth_enabled = true
+
+_login_form.html.erb and edit.html.erb were updated to present Shibboleth-specific content only if this flag is set to true. There was no need to update new.html.erb as that can only be accessed via the other pages.
+
+The changes are in commit [0bc7b24f560ea8cfaf4fa96b6cc141ca82b4818a](https://github.com/softwaresaved/smp-service/commit/0bc7b24f560ea8cfaf4fa96b6cc141ca82b4818a).
+
+### DMPonline 3 - TODO
 
 There are a number of references to DMPonline 3 in the code as data from DMPonline 3 can be ported to DMPonline 4 and the DMPonline 3 service is still live for legacy users.
 
