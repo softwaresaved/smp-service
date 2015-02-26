@@ -134,7 +134,7 @@ Shibboleth authentication is not required for a prototype SMP service.
 
 Shibboleth-specific user interface content is defined in config/locales/en.yml. These allowed the associated views/ files that present this information within the user interface to be identified.
 
-app/views/shared/_login_form.html.erb - login form on the DMPonline front page:
+app/views/shared/_login_form.html.erb - login form on the DMPonline home page:
 
     institution_sing_in_link: "Or, sign in with your institutional credentials"
     institution_sing_in: " (UK users only)"
@@ -206,9 +206,15 @@ These files were updated to remove this content. The changes are in commit [838b
 
 ---
 
-## DMPonline branding - TODO
+## DMPonline branding - WIP
 
 There are a number of DCC and DMPonline-specific images and other media including logos, icons, stylesheets and branding.
+
+config/locales/en.yml contains text used within numerous places throughout the user interface to provide context and built-in help for using DMPonline, as well as background about DMPonline, contact information and links to other resources. This file has been updated to reflect a prototype SMP service, developed by The Software Sustainability Institute, hosted at The University of Edinburgh, powered by DMPonline.
+
+The changes are in commit [bd65b4873644c2614e9097be1ba53821d6bc50da](https://github.com/softwaresaved/smp-service/commit/bd65b4873644c2614e9097be1ba53821d6bc50da).
+
+TODO
 
 [code-branding.txt](./code-branding.txt) lists these and their usage. 
 
@@ -217,7 +223,6 @@ The relevant views/ files need to be updated to hide these images or media, or p
 The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
 
 In addition, config/locales/en.yml needs to be updated with SMP-specific and Software Sustainability Institute-specific content.
-
 
 ---
 
