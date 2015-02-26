@@ -1,27 +1,9 @@
 ./app/admin/user.rb:16:         # :firstname, :last_login, :login_count, :orcid_id, :password, :shibboleth_id, 
-./app/admin/user.rb:49:                         row :orcid_id
-./app/admin/user.rb:85:                         f.input :orcid_id
 
 ./app/models/user.rb:44:     :login_count, :orcid_id, :password, :shibboleth_id, :user_status_id,
 
-./app/views/devise/registrations/edit.html.erb:55:          <td class="first"><%= t('helpers.orcid_id') %></td>
-./app/views/devise/registrations/edit.html.erb:56:          <td><%= f.text_field :orcid_id ,
-./app/views/devise/registrations/edit.html.erb:59:          :class => 'text_field has-tooltip', 'data-toggle' => "tooltip", 'data-html' => "true", 'title' => t('helpers.orcid_html') %></td>
-
-./config/locales/en.yml:343:    orcid_id: "ORCID number"
-./config/locales/en.yml:344:    orcid_html: "ORCID number is a persistent digital identifier that distinguishes each researcher, <a href='http://orcid.org/content/initiative' target='_blank' rel='external' class='a_orange'>more info</a>."
-./config/locales/en.yml:399:      principal_investigator_id_help_text: "E.g ORCID http://orcid.org/."
-
-./db/migrate/20130611135806_create_users.rb:8:      t.string :user_orcid_id
-./db/migrate/20130621101824_fix_column_names.rb:111:      t.rename :user_orcid_id, :orcid_id
-
-./db/schema.rb:400:    t.string   "orcid_id"
-
 ./test/functional/users_controller_test.rb:21:      post :create, user: { email: @user.email, firstname: @user.firstname, last_login: @user.last_login, login_count: @user.login_count, orcid_id: @user.orcid_id, password: @user.password, shibboleth_id: @user.shibboleth_id, user_status_id: @user.user_status_id, surname: @user.surname, user_type_id: @user.user_type_id }
 ./test/functional/users_controller_test.rb:38:    put :update, id: @user, user: { email: @user.email, firstname: @user.firstname, last_login: @user.last_login, login_count: @user.login_count, orcid_id: @user.orcid_id, password: @user.password, shibboleth_id: @user.shibboleth_id, user_status_id: @user.user_status_id, surname: @user.surname, user_type_id: @user.user_type_id }
-
-./test/fixtures/users.yml:8:#  orcid_id: MyString
-./test/fixtures/users.yml:20:#  orcid_id: MyString
 
 ./app/admin/user.rb:16:		# :firstname, :last_login, :login_count, :orcid_id, :password, :shibboleth_id, 
 ./app/admin/user.rb:72:  			row :shibboleth_id
