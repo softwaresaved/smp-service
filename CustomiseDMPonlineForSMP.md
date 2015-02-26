@@ -9,9 +9,11 @@ This document notes the main changes that need to be made, and have been made, t
 
 The version of DMPonline used as a basis of this document was the latest at the time of writing, master branch, commit [6236385f55189be55f2b470b5ee3563615d964c1](https://github.com/DigitalCurationCentre/DMPonline_v4/commit/6236385f55189be55f2b470b5ee3563615d964c1) 24 Nov 2014.
 
+The prototype SMP service is in the [smp-prototype](https://github.com/softwaresaved/smp-service/tree/smp-prototype) branch of the [smp-service](https://github.com/softwaresaved/smp-service) repository.
+
 ---
 
-## DMPonline concepts and data model
+## Mapping DMPonline concepts and data model to software management plans
 
 DMPonline's concepts are as follows:
 
@@ -72,7 +74,7 @@ We can map concepts from software management plans into the above concepts. So, 
 
 ---
 
-## DMPonline data
+## Populating DMPonline data with software management plan data
 
 Database tables to hold all this information are created by db/schema.rb. 
 
@@ -108,15 +110,17 @@ The file DesktopDMPquestions_table.sql is ignored as it is unused by the DMPonli
 
 ---
 
-## DMPonline presentation
+## Developing a prototype SMP service
 
-The following name replacements in HTML fragments and Ruby strings presented on the user interface, or in e-mails were made:
+### DMPonline presentation
+
+The following name replacements in HTML fragments and Ruby strings presented within the user interface, or in e-mails, were made:
 
 * DMPonline => Software Management Plan Service
 * Data Management Plan => Software Management Plan
 * DMP => SMP. 
 
-config/locales/en.yml was NOT touched as that overlaps with institution-specific branding"
+config/locales/en.yml was *not* touched as that overlaps with institution-specific branding (see below).
 
 The changes are in commit [24c99223837b694784ac9ac205f518fe4d6cacdf](https://github.com/softwaresaved/smp-service/commit/24c99223837b694784ac9ac205f518fe4d6cacdf).
 
@@ -124,27 +128,11 @@ There 27 separate places where these replacements had to be made. Holding these 
 
 ---
 
-## DMPonline branding - TODO
-
-There are a number of DCC and DMPonline-specific images and other media including logos, icons, stylesheets and branding.
-
-[code-branding.txt](./code-branding.txt) lists these and their usage. 
-
-The relevant views/ files need to be updated to hide these images or media, or present new SMP-specific ones, to the users.
-
-The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
-
-In addition, config/locales/en.yml needs to be updated with SMP-specific and Software Sustainability Institute-specific content.
-
----
-
-## Features not required for a prototype
-
-The following features are not needed for a prototype:
-
 ### Shibboleth authentication
 
-Shibboleth-specific UI content is defined in config/locales/en.yml. These allowed the associated views/ files that present this information to be identified.
+Shibboleth authentication is not required for a prototype SMP service.
+
+Shibboleth-specific user interface content is defined in config/locales/en.yml. These allowed the associated views/ files that present this information within the user interface to be identified.
 
 app/views/shared/_login_form.html.erb - login form on the DMPonline front page:
 
@@ -171,11 +159,65 @@ _login_form.html.erb and edit.html.erb were updated to present Shibboleth-specif
 
 The changes are in commit [0bc7b24f560ea8cfaf4fa96b6cc141ca82b4818a](https://github.com/softwaresaved/smp-service/commit/0bc7b24f560ea8cfaf4fa96b6cc141ca82b4818a).
 
-### DMPonline 3 - TODO
+### DMPonline 3
 
-There are a number of references to DMPonline 3 in the code as data from DMPonline 3 can be ported to DMPonline 4 and the DMPonline 3 service is still live for legacy users.
+There are a number of references to DMPonline 3 in the code as data from DMPonline 3 can be ported to DMPonline 4 and the DMPonline 3 service is still live for legacy users. This is not applicable to a prototype SMP service.
 
-[code-dmponline3.txt](./code-dmponline3.txt) lists references to DMPonline 3 within the DMPonline code. The relevant views/ files can be updated to hide references to this version from users.
+Most DMPonline 3-related content is presented within the user interface only if the user has an associated dmponline3 flag set within the database:
+
+    app/controllers/registrations_controller.rb:
+        if existing_user.dmponline3 && (existing_user.password == "" || existing_user.password.nil?) && existing_user.confirmed_at.nil? then
+        ...
+
+    app/controllers/sessions_controller.rb:
+        if !existing_user.nil? && existing_user.dmponline3 && (existing_user.password == "" || existing_user.password.nil?) && existing_user.confirmed_at.nil? then
+            redirect_to :controller => :existing_users, :action => :index, :email => params[:user][:email]
+
+    app/controllers/existing_users_controller.rb
+
+    app/views/existing_users/index.html.erb:
+        ...
+        <p>Welcome to the new DMPonline!</p>
+        ...
+
+    app/views/projects/index.html.erb:
+        <% if current_user.dmponline3 then %>
+        <p>You can view or edit earlier plans by visiting <%= link_to("the previous version of DMPonline", "http://dmponline3.dcc.ac.uk") %>.</p>
+        <p>You can view or edit earlier plans by visiting <%= link_to("the previous version of DMPonline", "http://dmponline3.dcc.ac.uk") %>.</p>
+        ...
+
+The only exceptions are links to the old DMPonline 3 service in the footer:
+
+    app/views/layouts/_dmponline_footer.html.erb:
+        <li><a href="http://dmponline3.dcc.ac.uk/" target='_blank'><%= t('dmponline3_text') %></a></li>
+
+    config/locales/en.yml:
+        dmponline3_text: "DMPonline previous version"
+
+And in the /about_us and /help pages, where the content is defined in:
+
+    config/locales/en.yml:
+        <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p></div>"
+
+        <h3>Legacy data</h3>
+        <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p>"
+
+These files were updated to remove this content. The changes are in commit [838b5638a6a778e2f63cbb17e15fd529a5812350](https://github.com/softwaresaved/smp-service/commit/838b5638a6a778e2f63cbb17e15fd529a5812350).
+
+---
+
+## DMPonline branding - TODO
+
+There are a number of DCC and DMPonline-specific images and other media including logos, icons, stylesheets and branding.
+
+[code-branding.txt](./code-branding.txt) lists these and their usage. 
+
+The relevant views/ files need to be updated to hide these images or media, or present new SMP-specific ones, to the users.
+
+The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
+
+In addition, config/locales/en.yml needs to be updated with SMP-specific and Software Sustainability Institute-specific content.
+
 
 ---
 

@@ -43,14 +43,6 @@ config/locales/en.yml:542:<a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%
 
 ----------
 
-dmponline3
-
-./app/views/projects/index.html.erb:30:		<p>You can view or edit earlier plans by visiting <%= link_to("the previous version of DMPonline", "http://dmponline3.dcc.ac.uk") %>.</p>
-
-./config/locales/en.yml:543:<p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p></div>"
-
-----------
-
 Shibboleth
 
 ./config/application.rb:83:    config.shibboleth_login = 'https://localhost/Shibboleth.sso/Login'
