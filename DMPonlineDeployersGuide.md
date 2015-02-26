@@ -175,7 +175,7 @@ Edit app/mailers/user_mailer.rb. Update this value which is used to set the From
 
        default from: 'info@dcc.ac.uk'
 
-Edit config/initializers/devise.rb. Update this value which is used to set the Reply-To: field in e-mails sent to users when they register:
+Edit config/initializers/devise.rb. Update this value which is used to set the Reply-To: field in e-mails sent to users when they register, or have forgotten their password:
 
     config.mailer_sender = "info@dcc.ac.uk"
 
@@ -185,15 +185,15 @@ Edit config/environments/development.rb. Update these values which are used to s
     :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
     :exception_recipients => %w{dmponline@dcc.ac.uk}
 
-Update this value which is is used to set the From: field in e-mails sent to users when they register:
+Update this value which is is used to set the From: field in e-mails sent to users when they register, or have forgotten their password:
 
     ActionMailer::Base.default :from => 'address@example.com'
 
-Update this value which, when running in development-mode, is used in e-mails sent to users when they register or when there are changes in plan permissions, to provide a link to the relevant page of DMPonline:
+Update this value which, when running in development-mode, is used in e-mails sent to users when they register, have forgotten their password, or when there are changes in plan permissions, to provide a link to the relevant page of DMPonline:
 
     config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
-Edit config/application.rb. Update this value which, when running in production-mode, is used in e-mails sent to users when they register or when there are changes in plan permissions, to provide a link to the relevant page of DMPonline:
+Edit config/application.rb. Update this value which, when running in production-mode, is used in e-mails sent to users when they register, have forgotten their password, or when there are changes in plan permissions, to provide a link to the relevant page of DMPonline:
 
     config.action_mailer.default_url_options = { :host => 'dmponline.example.com' }
 
@@ -470,6 +470,33 @@ Sample e-mail:
     <p>Welcome to DMPonline, fredbloggs@gmail.com!</p>
     <p>Thank you for registering at <a href="http://localhost:3000/">DMPonline</a>. Please confirm your email address:</p>
     <p><a href="http://localhost:3000/users/confirmation?confirmation_token=hYCpqbMu5hi9FbmR6YJe">Click here to confirm your account</a> (or copy http://localhost:3000/users/confirmation?confirmation_token=hYCpqbMu5hi9FbmR6YJe into your browser).</p>
+
+### Passwords
+
+Configuration files and values:
+
+    config/initializers/devise.rb
+       config.mailer_sender = "info@dcc.ac.uk"
+
+    config/application.rb
+        config.action_mailer.default_url_options = { :host => 'dmponline.example.com' }
+
+    config/environments/development.rb
+        config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+        ActionMailer::Base.default :from => 'address@example.com'
+
+Sample e-mail:
+    
+    From: 	address@example.com
+    Reply-To: 	info@dcc.ac.uk
+    To:         fredbloggs@gmail.com
+    Subject: Reset password instructions
+
+    <p>Hello fredbloggs@gmail.com!</p>
+    <p>Someone has requested a link to change your <a href="http://localhost:3000/">DMPonline</a> password. You can do this through the link below.</p>
+    <p><a href="http://localhost:3000/users/password/edit?reset_password_token=DxzhpiTKoSvkpvtXJY3z">Change my password</a></p>
+    <p>If you didn't request this, please ignore this email.</p>
+    <p>Your password won't change until you access the link above and create a new one.</p>
 
 ### Permission changes
 
