@@ -439,45 +439,38 @@ There are a significant number of places where the user has to provide local con
 
     app/mailers/user_mailer.rb
        default from: 'info@dcc.ac.uk'
-
     config/application.rb
       config.action_mailer.default_url_options = { :host => 'dmponline.example.com' }
-     :exe_path => '/usr/local/bin/wkhtmltopdf'
-
+      :exe_path => '/usr/local/bin/wkhtmltopdf'
     config/environments/development.rb
       config.action_mailer.default_url_options = { :host => 'localhost:3000' }
       config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
       ActionMailer::Base.default :from => 'address@example.com'
       ActionMailer::Base.smtp_settings = { :address => "localhost", :port => 1025 }
-     :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
-     :exception_recipients => %w{dmponline@dcc.ac.uk}
-
-    config/environments/production.rb:76
+      :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
+      :exception_recipients => %w{dmponline@dcc.ac.uk}
+    config/environments/production.rb
       sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
       :exception_recipients => %w{dmponline@dcc.ac.uk}
-
     config/initializers/contact_us.rb
       config.mailer_to = "dmponline@dcc.ac.uk"
-
     config/initializers/devise.rb
      config.mailer_sender = "info@dcc.ac.uk"
      config.pepper = "de451fa8d44af2c286d922f753d1b10fd23b99c10747143d9ba118988b9fa9601fea66bfe31266ffc6a331dc7331c71ebe845af8abcdb84c24b42b8063386530"
-
     config/initializers/secret_token.rb
       DMPonline4::Application.config.secret_token = '4eca200ee84605da3c8b315a127247d1bed3af09740090e559e4df35821fbc013724fbfc61575d612564f8e9c5dbb4b83d02469bfdeb39489151e4f9918598b2'
-
     config/initializers/recaptcha.rb
       config.public_key  = 'replace_this_with_your_public_key'
       config.private_key = 'replace_this_with_your_private_key'
-
-Documentation should be provided that covers all of these configuration options. 
-
-Documentation should be provided as to what each of the e-mail addresses are used for. While, for example, exception_recipients is clear, the distinction between the e-mail addresses in contact_us.rb, devise.rb and user_mailer.rb is less clear.
 
 If using Shibboleth then the deployer also needs to configure:
 
     config/application.rb
       config.shibboleth_login = 'https://localhost/Shibboleth.sso/Login'
+
+Documentation should be provided that covers all of these configuration options. 
+
+Documentation should be provided as to what each of the e-mail addresses are used for. While, for example, exception_recipients is clear, the distinction between the e-mail addresses in contact_us.rb, devise.rb and user_mailer.rb is less clear.
 
 ---
 
