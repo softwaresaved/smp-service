@@ -1,15 +1,15 @@
 
 # Customing DMPonline into a prototype SMP service
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 26/02/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 27/02/2014.
 
 ## Introduction
 
 This document notes the main changes that need to be made, and have been made, to [DMPonline](https://github.com/DigitalCurationCentre/DMPonline_v4) to use it as a prototype service for software management plans.
 
-The version of DMPonline used as a basis of this document was the latest at the time of writing, master branch, commit [6236385f55189be55f2b470b5ee3563615d964c1](https://github.com/DigitalCurationCentre/DMPonline_v4/commit/6236385f55189be55f2b470b5ee3563615d964c1) 24 Nov 2014.
+The version of DMPonline used was the latest at the time of writing, master branch, commit [6236385f55189be55f2b470b5ee3563615d964c1](https://github.com/DigitalCurationCentre/DMPonline_v4/commit/6236385f55189be55f2b470b5ee3563615d964c1) 24 Nov 2014.
 
-The prototype SMP service is in the [smp-prototype](https://github.com/softwaresaved/smp-service/tree/smp-prototype) branch of the [smp-service](https://github.com/softwaresaved/smp-service) repository.
+DMPonline was forked into an [smp-service](https://github.com/softwaresaved/smp-service) repository and development then done within an [smp-prototype](https://github.com/softwaresaved/smp-service/tree/smp-prototype) branch of the [smp-service](https://github.com/softwaresaved/smp-service) repository.
 
 ---
 
@@ -112,7 +112,84 @@ The file DesktopDMPquestions_table.sql is ignored as it is unused by the DMPonli
 
 ## Developing a prototype SMP service
 
-### DMPonline presentation
+### Shibboleth authentication
+
+Shibboleth authentication is not required for a prototype SMP service.
+
+Shibboleth-specific user interface content is defined in config/locales/en.yml e.g.
+
+    institution_sing_in_link: "Or, sign in with your institutional credentials"
+    institution_sing_in: " (UK users only)"
+
+    shibboleth_linked_text: "Your account is linked to your institutional credentials."
+    shibboleth_to_link_text: "Link your DMPonline account to your institutional credentials"
+    ...
+
+    sign_up_shibboleth_alert_text_html: "Note: If you have previously created ..."
+
+These allowed the associated views/ files that present this information within the user interface to be identified.
+
+    app/views/shared/_login_form.html.erb:
+    app/views/devise/registrations/edit.html.erb:
+    app/views/devise/registrations/new.html.erb
+
+As config/application.rb defines a config.shibboleth_enabled flag:
+
+    config.shibboleth_enabled = true
+
+_login_form.html.erb and edit.html.erb could be updated to access the value of this flag, via the reference DMPOnline4::Application.config.shibboleth_enable, and so present Shibboleth-specific content only if this flag is set to true. There was no need to update new.html.erb as that can only be accessed via the other pages.
+
+Commit: [0bc7b24f560ea8cfaf4fa96b6cc141ca82b4818a](https://github.com/softwaresaved/smp-service/commit/0bc7b24f560ea8cfaf4fa96b6cc141ca82b4818a).
+
+These two files were then updated to access the flag via Rails.application.config.shibboleth_enabled instead of DMPonline4::Application.config.shibboleth_enabled.
+
+Commit: [af8d9befa11488f4adc1fbb56962b47bf77efc27](https://github.com/softwaresaved/smp-service/commit/af8d9befa11488f4adc1fbb56962b47bf77efc27).
+
+**TODO: rebase these changes and recreate these changes into a branch of DMPonline (due to the way commits have been made elsewhere a simple rebase may be challenging). Feed back required changes to DMPonline. The ability to enable/disable Shibboleth content is applicable there too. Feed back required changes to DMPonline. The ability to enable/disable Shibboleth content is applicable there too.**
+
+### DMPonline 3
+
+There are a number of references to DMPonline 3 in the code as data from DMPonline 3 can be ported to DMPonline 4 and the [DMPonline 3 service](https://dmponline3.dcc.ac.uk/) is still available to legacy users. This versioning is not applicable to a prototype SMP service.
+
+Most DMPonline 3-related content is presented within the user interface only if the user has an associated dmponline3 flag set within the database:
+
+    app/controllers/registrations_controller.rb:
+        if existing_user.dmponline3 && (existing_user.password == "" || existing_user.password.nil?) && existing_user.confirmed_at.nil? then
+
+    app/controllers/sessions_controller.rb:
+        if !existing_user.nil? && existing_user.dmponline3 && (existing_user.password == "" || existing_user.password.nil?) && existing_user.confirmed_at.nil? then
+            redirect_to :controller => :existing_users, :action => :index, :email => params[:user][:email]
+
+    app/controllers/existing_users_controller.rb
+        ...
+
+    app/views/existing_users/index.html.erb:
+        <p>Welcome to the new DMPonline!</p>
+
+    app/views/projects/index.html.erb:
+        <% if current_user.dmponline3 then %>
+        <p>You can view or edit earlier plans by visiting <%= link_to("the previous version of DMPonline", "http://dmponline3.dcc.ac.uk") %>.</p>
+        <p>You can view or edit earlier plans by visiting <%= link_to("the previous version of DMPonline", "http://dmponline3.dcc.ac.uk") %>.</p>
+
+The only exceptions are links to the old DMPonline 3 service in the site-wide page footer, and in config/locales/en.yml content that is presented in the About Us and Help pages: 
+
+    app/views/layouts/_dmponline_footer.html.erb:
+        <li><a href="http://dmponline3.dcc.ac.uk/" target='_blank'><%= t('dmponline3_text') %></a></li>
+
+    config/locales/en.yml:
+        dmponline3_text: "DMPonline previous version"
+
+    config/locales/en.yml:
+        <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p></div>"
+
+        <h3>Legacy data</h3>
+        <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p>"
+
+These files were updated to remove this content.
+
+Commit: [838b5638a6a778e2f63cbb17e15fd529a5812350](https://github.com/softwaresaved/smp-service/commit/838b5638a6a778e2f63cbb17e15fd529a5812350).
+
+### DMPonline, DMP, data management plan references in the user interface
 
 The following name replacements in HTML fragments and Ruby strings presented within the user interface, or in e-mails, were made:
 
@@ -122,115 +199,192 @@ The following name replacements in HTML fragments and Ruby strings presented wit
 
 config/locales/en.yml was *not* touched as that overlaps with institution-specific branding (see below).
 
-The changes are in commit [24c99223837b694784ac9ac205f518fe4d6cacdf](https://github.com/softwaresaved/smp-service/commit/24c99223837b694784ac9ac205f518fe4d6cacdf).
+Commit: [24c99223837b694784ac9ac205f518fe4d6cacdf](https://github.com/softwaresaved/smp-service/commit/24c99223837b694784ac9ac205f518fe4d6cacdf).
 
 There 27 separate places where these replacements had to be made. Holding these values one or more configuration values would make it easier to configure the code from DMPs to SMPs and also, for those deploying DMPonline locally, to change the product name (e.g. to [DMP Builder](https://dmp.library.ualberta.ca/)).
 
----
+HTML anchors in app/views/static_pages/help.html.erb were then edited to make link anchors SMP and DMP agnostic.
+ 
+Commit: [d81af43b30a303e3f7194818b97a3a607b7197af](https://github.com/softwaresaved/smp-service/commit/d81af43b30a303e3f7194818b97a3a607b7197af).
 
-### Shibboleth authentication
+The phrases 'access to the SMP NNNN' in the e-mail content files:
 
-Shibboleth authentication is not required for a prototype SMP service.
+    app/views/user_mailer/permissions_change_notification.html.erb
+    app/views/user_mailer/project_access_removed_notification.html.erb
+    app/views/user_mailer/sharing_notification.html.erb
 
-Shibboleth-specific user interface content is defined in config/locales/en.yml. These allowed the associated views/ files that present this information within the user interface to be identified.
+was then reworded to 'access to NNNN' so these files are SMP and DMP agnostic
 
-app/views/shared/_login_form.html.erb - login form on the DMPonline home page:
+Commit: [84da8b679cfafbfbf7c1a5120844875657c55abc](https://github.com/softwaresaved/smp-service/commit/84da8b679cfafbfbf7c1a5120844875657c55abc).
 
-    institution_sing_in_link: "Or, sign in with your institutional credentials"
-    institution_sing_in: " (UK users only)"
+With an improved understanding of how Ruby on Rails handles internationalisation, further changes were made to allow more configuration of user interface and e-mail text to be done via config/locales/en.yml. The following properties were added to config/locales/en.yml:
 
-app/views/devise/registrations/edit.html.erb - Edit Profile page:
+    tool_product
+    mail.access_granted
+    mail.access_changed
+    mail.access_removed
+    helpers.plan.export.default_title
+    helpers.shibboleth_invite_text
+    helpers.shibboleth_invite_link_text
 
-    shibboleth_linked_text: "Your account is linked to your institutional credentials."
-    shibboleth_to_link_text: "Link your DMPonline account to your institutional credentials"
-    shibboleth_unlink_label: "Unlink your institutional credentials"
-    shibboleth_unlink_alert: "Unlink institutional credentials alert"
-    shibboleth_unlink_dialog_text: "<p>You are about to unlink DMPonline of your institutional credentials, would you like to continue?</p>"
+The following files were updated to use these and existing properties:
 
-app/views/devise/registrations/new.html.erb - callback page when user returns from Shibboleth service:
+    app/controllers/projects_controller.rb
+      helpers.shibboleth_invite_text
+      helpers.shibboleth_invite_link_text
+    app/mailers/user_mailer.rb
+      mail.access_granted
+      mail.access_changed
+      mail.access_removed
+    app/models/plan.rb
+      helpers.plan.export.default_title
+    app/views/devise/mailer/confirmation_instructions.html.erb
+      tool_title
+    app/views/devise/mailer/invitation_instructions.html.erb
+      tool_title
+      tool_product
+    app/views/devise/mailer/reset_password_instructions.html.erb
+      tool_title
+    app/views/devise/mailer/unlock_instructions.html.erb
+      tool_title
 
-    sign_up_shibboleth_alert_text_html: "Note: If you have previously created an account in DMPonline, and you want to link this to your institutional credentials, you need to <a href='/' class='a_orange'>Sign in</a> to that existing DMPonline account first. If you have never created a DMPonline account, then please complete the form below."
+Commit: [b2a41e8c7119f274032ca2601e1db24835a0d629](https://github.com/softwaresaved/smp-service/commit/b2a41e8c7119f274032ca2601e1db24835a0d629).
 
-As config/application.rb defines a config.shibboleth_enabled flag:
+**TODO: recreate these changes into a branch of DMPonline (due to changes made to config/locales/en.yml below a simple rebase may be challenging). These both make it easier to configure DMPonline into a prototype SMP service, by reducing the number of files to be read, but also reduce the number of files to edit if changing deploying DMPonline under another name.**
 
-    config.shibboleth_enabled = true
+With these changes in place, the only remaining references in the user interface to DMP or data management plan or DMPonline are within configuration files:
 
-_login_form.html.erb and edit.html.erb were updated to present Shibboleth-specific content only if this flag is set to true. There was no need to update new.html.erb as that can only be accessed via the other pages.
+    config/environments/development.rb
+    config/environments/production.rb
+    config/initializers/active_admin.rb
+    config/locales/devise.en.yml
+    config/locales/en.yml
+    db/seeds.rb
 
-The changes are in commit [0bc7b24f560ea8cfaf4fa96b6cc141ca82b4818a](https://github.com/softwaresaved/smp-service/commit/0bc7b24f560ea8cfaf4fa96b6cc141ca82b4818a).
+Or files that relate to DMPonline and Digital Curation Centre-specific branding:
 
-### DMPonline 3
+    public/403.html
+    public/_index.html
 
-There are a number of references to DMPonline 3 in the code as data from DMPonline 3 can be ported to DMPonline 4 and the DMPonline 3 service is still live for legacy users. This is not applicable to a prototype SMP service.
+These will be addressed below.
 
-Most DMPonline 3-related content is presented within the user interface only if the user has an associated dmponline3 flag set within the database:
+### DMPonline local configuration - what deployers need to change
 
-    app/controllers/registrations_controller.rb:
-        if existing_user.dmponline3 && (existing_user.password == "" || existing_user.password.nil?) && existing_user.confirmed_at.nil? then
-        ...
+There are a number of places where DMPonline specifies e-mail addresses, URLs, public and private keys, host names etc. Some of these values relate to configuration and which need to be changed by a deployer for DMPonline to run locally. These are:
 
-    app/controllers/sessions_controller.rb:
-        if !existing_user.nil? && existing_user.dmponline3 && (existing_user.password == "" || existing_user.password.nil?) && existing_user.confirmed_at.nil? then
-            redirect_to :controller => :existing_users, :action => :index, :email => params[:user][:email]
+    app/mailers/user_mailer.rb
+       default from: 'info@dcc.ac.uk'
+    config/application.rb
+      config.action_mailer.default_url_options = { :host => 'dmponline.example.com' }
+      :exe_path => '/usr/local/bin/wkhtmltopdf'
+    config/environments/development.rb
+      config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+      config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
+      ActionMailer::Base.default :from => 'address@example.com'
+      ActionMailer::Base.smtp_settings = { :address => "localhost", :port => 1025 }
+      :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
+      :exception_recipients => %w{dmponline@dcc.ac.uk}
+    config/environments/production.rb
+      sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
+      :exception_recipients => %w{dmponline@dcc.ac.uk}
+    config/initializers/contact_us.rb
+      config.mailer_to = "dmponline@dcc.ac.uk"
+    config/initializers/devise.rb
+     config.mailer_sender = "info@dcc.ac.uk"
+     config.pepper = "de451fa8d44af2c286d922f753d1b10fd23b99c10747143d9ba118988b9fa9601fea66bfe31266ffc6a331dc7331c71ebe845af8abcdb84c24b42b8063386530"
+    config/initializers/secret_token.rb
+      DMPonline4::Application.config.secret_token = '4eca200ee84605da3c8b315a127247d1bed3af09740090e559e4df35821fbc013724fbfc61575d612564f8e9c5dbb4b83d02469bfdeb39489151e4f9918598b2'
+    config/initializers/recaptcha.rb
+      config.public_key  = 'replace_this_with_your_public_key'
+      config.private_key = 'replace_this_with_your_private_key'
 
-    app/controllers/existing_users_controller.rb
+If using Shibboleth then the deployer also needs to configure:
 
-    app/views/existing_users/index.html.erb:
-        ...
-        <p>Welcome to the new DMPonline!</p>
-        ...
+    config/application.rb
+      config.shibboleth_login = 'https://localhost/Shibboleth.sso/Login'
 
-    app/views/projects/index.html.erb:
-        <% if current_user.dmponline3 then %>
-        <p>You can view or edit earlier plans by visiting <%= link_to("the previous version of DMPonline", "http://dmponline3.dcc.ac.uk") %>.</p>
-        <p>You can view or edit earlier plans by visiting <%= link_to("the previous version of DMPonline", "http://dmponline3.dcc.ac.uk") %>.</p>
-        ...
+For the prototype SMP service, therefore, no changes will be commited for these files and file updates will be held privately.
 
-The only exceptions are links to the old DMPonline 3 service in the footer:
-
-    app/views/layouts/_dmponline_footer.html.erb:
-        <li><a href="http://dmponline3.dcc.ac.uk/" target='_blank'><%= t('dmponline3_text') %></a></li>
-
-    config/locales/en.yml:
-        dmponline3_text: "DMPonline previous version"
-
-And in the /about_us and /help pages, where the content is defined in:
-
-    config/locales/en.yml:
-        <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p></div>"
-
-        <h3>Legacy data</h3>
-        <p>If you need to access plans from the earlier version of the tool please visit <a href='https://dmponline3.dcc.ac.uk' target='_top'>DMPonline v3</a>.</p>"
-
-These files were updated to remove this content. The changes are in commit [838b5638a6a778e2f63cbb17e15fd529a5812350](https://github.com/softwaresaved/smp-service/commit/838b5638a6a778e2f63cbb17e15fd529a5812350).
-
----
-
-## DMPonline branding - WIP
-
-There are a number of DCC and DMPonline-specific images and other media including logos, icons, stylesheets and branding.
+### DMPonline local configuration - what deployers should change
 
 config/locales/en.yml contains text used within numerous places throughout the user interface to provide context and built-in help for using DMPonline, as well as background about DMPonline, contact information and links to other resources. This file has been updated to reflect a prototype SMP service, developed by The Software Sustainability Institute, hosted at The University of Edinburgh, powered by DMPonline.
 
-The changes are in commit [bd65b4873644c2614e9097be1ba53821d6bc50da](https://github.com/softwaresaved/smp-service/commit/bd65b4873644c2614e9097be1ba53821d6bc50da).
+Commit: [bd65b4873644c2614e9097be1ba53821d6bc50da](https://github.com/softwaresaved/smp-service/commit/bd65b4873644c2614e9097be1ba53821d6bc50da).
 
-TODO
+There are additional references to URLs, e-mail addresses etc. that deployers should change to reflect a local deployment of DMPonline. This includes:
 
-[code-branding.txt](./code-branding.txt) lists these and their usage. 
+    app/views/contact_us/contacts/new.html.erb
+      <iframe width="90%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=EH8+9LE&amp;aq=&amp;sll=55.85546,-4.232459&amp;sspn=0.195785,0.663986&amp;ie=UTF8&amp;hq=&amp;hnear=EH8+9LE,+United+Kingdom&amp;ll=55.944435,-3.186767&amp;spn=0.006104,0.02075&amp;t=m&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
+    app/views/layouts/_dmponline_footer.html.erb
+      <p id="dcc_link">&copy; 2004 - <%= Time.now.year %><%= link_to ' Digital Curation Centre (DCC)', 'http://www.dcc.ac.uk'%>
+    app/views/static_pages/news.html.erb
+      <h2>DMPonline stories from the DCC website</h2>
+      <p>Read more on the <%= link_to "DCC Website", entry.url %></p>
+    app/controllers/static_pages_controller.rb
+      dcc_news_feed_url = "http://www.dcc.ac.uk/news/dmponline-0/feed"
+    config/locales/en.yml
+      generated_by: This document was generated by DMPonline (http://dmponline.dcc.ac.uk)
+      <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a>. You can also report bugs and request new features directly on <a href='https://github.com/DigitalCurationCentre/DMPonline_v4' target='_top'>GitHub</a></p>
+      intro_text_html: "<p>DMPonline is provided by the Digital Curation Centre. You can find out more about us on our <a href='http://www.dcc.ac.uk/' target='_blank'>website</a>. If you would like to contact us about DMPonline, please enter your query in the form below or email <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a>.</p>"
+      <p>Email <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a></p>"
+    public/403.html
+      <p>To report this error please contact us on <a href='mailto:dmponline@dcc.ac.uk'>dmponline@dcc.ac.uk</a></p>
+    public/_index.html
+      <p>For more information please visit <a href="www.dcc.ac.uk">DCC website</a></p>
+      <p><img src="http://dmponline-beta.dcc.ac.uk/assets/logo-0ec5a8a171db942f9b452733c53d3263.jpg" /> will be back soon.</p>
+      src: url('http://dmponline-beta.dcc.ac.uk/assets/GillSansLight-559cc79d847cc0364fd43d2f4766d6ed.ttf') format('truetype');
 
-The relevant views/ files need to be updated to hide these images or media, or present new SMP-specific ones, to the users.
+There are a number of DCC, and related, logos:
+
+    app/assets/images/dcc_logo.png
+    app/assets/images/dmponline_favicon.ico
+    app/assets/images/logo.jpg
+    app/assets/images/2013_Jisc_Logo_RGB72.png
+
+The relevant files need to be updated to hide these images or media, or present new SMP-specific ones, to the users:
+
+    app/views/layouts/_dmponline_footer.html.erb
+      <p><%= link_to( image_tag('dcc_logo.png', :class => 'footer_logo'), 'http://www.dcc.ac.uk/', :id => 'footer_right_dcc')%>
+      <%= link_to( image_tag('2013_Jisc_Logo_RGB72.png', :class => 'footer_logo'), 'http://www.jisc.ac.uk/', :id => 'footer_right_jisc')%></p>
+    app/views/layouts/_dmponline_header.html.erb
+      <%= link_to( image_tag('logo.jpg'), root_path)%>
+    app/views/layouts/application.html.erb
+      <%= favicon_link_tag 'dmponline_favicon.ico' %>
+    config/initializers/active_admin.rb
+      # config.favicon = '/assets/favicon.ico'
+    config/initializers/active_admin.rb
+      # config.site_title_image = "/images/logo.png"
+
+There are a number of DCC, and related, videos:
+
+    app/assets/images/screencast.jpg
+    app/assets/videos/index.files/html5video/screencast.jpg
+    app/assets/videos/index.files/html5video/fullscreen.png
+    app/assets/videos/index.files/html5video/screencast.m4v
+    app/assets/videos/index.files/html5video/screencast.ogv
+    app/assets/videos/index.files/html5video/screencast.webm
+
+The relevant files need to be updated to hide these images or media, or present new SMP-specific ones, to the users:
+
+    app/views/home/index.html.erb
+      <video controls="controls" poster="<%= asset_path('screencast.jpg')%>" style="width:100%; height:200" title="1662">
+      <source src="<%= asset_path('index.files/html5video/screencast.ogv')%>" type="video/ogg" />
+      <param name="flashVars" value="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster=<%= asset_path('screencast.jpg')%>&amp;src=<%= asset_path('index.files/html5video/screencast.mp4')%>" />
+      <embed src="<%= asset_path('index.files/html5video/flashfox.swf')%>" width="100%" height="200" style="position:relative;"  flashVars="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster=<%= asset_path('screencast.jpg')%>&amp;src=<%= asset_path('index.files/html5video/screencast.mp4')%>"	allowFullScreen="true" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer_en" />
+      <img alt="screencast" src="<%= asset_path('screencast.jpg')%>" style="position:absolute;left:0;" width="100%" title="<%= t('screencast_error_text')%>" />
+
+There are also DCC-style orange-branded icons:
+
+    app/assets/images/download.png
+    app/assets/images/minus_laranja.png
+    app/assets/images/plus_laranja.png
+    app/assets/images/question-mark.png
+
+And a DCC-specific stylesheet:
+
+    app/assets/stylesheets/bootstrap_and_overrides.css.less 
 
 The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
-
-In addition, config/locales/en.yml needs to be updated with SMP-specific and Software Sustainability Institute-specific content.
-
----
-
-### DMPonline configuration
-
-There are a number of places where DMPonline needs to be configured with local URLs, e-mail addresses etc. These are listed in [code-local-configuration.txt](./code-local-configuration.txt) divided up into those that are needed for DMPonline to work, those relating to branding (e.g. links to further information), those supporting DMPonline 3 legacy users and those for Shibboleth.
-
-Of these only the core and branding-related configuration needs to be customised for local deployments.
 
 ---
 
