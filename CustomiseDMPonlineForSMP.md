@@ -11,6 +11,8 @@ The version of DMPonline used was the latest at the time of writing, master bran
 
 DMPonline was forked into an [smp-service](https://github.com/softwaresaved/smp-service) repository and development then done within an [smp-prototype](https://github.com/softwaresaved/smp-service/tree/smp-prototype) branch of the [smp-service](https://github.com/softwaresaved/smp-service) repository.
 
+Where possible changes have been made that minimize the divergence from the DMPonline code and could also be ingested back into DMPonline.
+
 ---
 
 ## Mapping DMPonline concepts and data model to software management plans
@@ -112,7 +114,7 @@ The file DesktopDMPquestions_table.sql is ignored as it is unused by the DMPonli
 
 ## Developing a prototype SMP service
 
-### Shibboleth authentication
+### Make Shibboleth authentication user interface content configurable
 
 Shibboleth authentication is not required for a prototype SMP service.
 
@@ -145,9 +147,9 @@ These two files were then updated to access the flag via Rails.application.confi
 
 Commit: [af8d9befa11488f4adc1fbb56962b47bf77efc27](https://github.com/softwaresaved/smp-service/commit/af8d9befa11488f4adc1fbb56962b47bf77efc27).
 
-**TODO: rebase these changes and recreate these changes into a branch of DMPonline (due to the way commits have been made elsewhere a simple rebase may be challenging). Feed back required changes to DMPonline. The ability to enable/disable Shibboleth content is applicable there too. Feed back required changes to DMPonline. The ability to enable/disable Shibboleth content is applicable there too.**
+**TODO: rebase these changes and recreate these changes into a branch of DMPonline (due to the way commits have been made elsewhere a simple rebase may be challenging) and create a pull request to DMPonline_v4. Ability to enable/disable Shibboleth content could be useful to DMPonline deployers.**
 
-### DMPonline 3
+### Remove references to DMPonline 3
 
 There are a number of references to DMPonline 3 in the code as data from DMPonline 3 can be ported to DMPonline 4 and the [DMPonline 3 service](https://dmponline3.dcc.ac.uk/) is still available to legacy users. This versioning is not applicable to a prototype SMP service.
 
@@ -189,7 +191,9 @@ These files were updated to remove this content.
 
 Commit: [838b5638a6a778e2f63cbb17e15fd529a5812350](https://github.com/softwaresaved/smp-service/commit/838b5638a6a778e2f63cbb17e15fd529a5812350).
 
-### DMPonline, DMP, data management plan references in the user interface
+**TODO: Could remove all trace of dmponline3 in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK.**
+
+### Change DMPonline, DMP, data management plan references in the user interface
 
 The following name replacements in HTML fragments and Ruby strings presented within the user interface, or in e-mails, were made:
 
@@ -250,7 +254,7 @@ The following files were updated to use these and existing properties:
 
 Commit: [b2a41e8c7119f274032ca2601e1db24835a0d629](https://github.com/softwaresaved/smp-service/commit/b2a41e8c7119f274032ca2601e1db24835a0d629).
 
-**TODO: recreate these changes into a branch of DMPonline (due to changes made to config/locales/en.yml below a simple rebase may be challenging). These both make it easier to configure DMPonline into a prototype SMP service, by reducing the number of files to be read, but also reduce the number of files to edit if changing deploying DMPonline under another name.**
+**TODO: rebase these changes and recreate these changes into a branch of DMPonline (due to the way commits have been made elsewhere a simple rebase may be challenging) and create a pull request to DMPonline_v4. Additional configurability could be useful to those rebranding DMPonline too.**
 
 With these changes in place, the only remaining references in the user interface to DMP or data management plan or DMPonline are within configuration files:
 
@@ -268,7 +272,147 @@ Or files that relate to DMPonline and Digital Curation Centre-specific branding:
 
 These will be addressed below.
 
-### DMPonline local configuration - what deployers need to change
+### Make Google Map configurable
+
+app/views/contact_us/contacts/new.html.erb contains a link to a GoogleMap showing the DCC:
+
+      <iframe width="90%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=EH8+9LE&amp;aq=&amp;sll=55.85546,-4.232459&amp;sspn=0.195785,0.663986&amp;ie=UTF8&amp;hq=&amp;hnear=EH8+9LE,+United+Kingdom&amp;ll=55.944435,-3.186767&amp;spn=0.006104,0.02075&amp;t=m&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
+
+This has been changed to point to EPCC, The University of Edinburgh.
+
+Commit: [66ce99ecf778ec9514f2ebced82dc26b0d9759f2](https://github.com/softwaresaved/smp-service/commit/66ce99ecf778ec9514f2ebced82dc26b0d9759f2).
+
+As this Google Map link is the only DCC-specific part of app/views/contact_us/contacts/new.html.erb that is hard-coded, the rest of the content being provided via config/locales/en.yml, introducing a map_url configuration value removes all DCC-specific content from new.html.erb.
+
+Commit: [2f6d48e653b53726d43880c26e16d233cd474702](https://github.com/softwaresaved/smp-service/commit/2f6d48e653b53726d43880c26e16d233cd474702).
+
+**TODO: rebase these changes and recreate these changes into a branch of DMPonline (due to the way commits have been made elsewhere a simple rebase may be challenging) and create a pull request to DMPonline_v4. Additional configurability could be useful to those rebranding DMPonline too.**
+
+### Remove link to DMPonline News
+
+DMPonline has a news page accessed by a News button in every page's header. The files associated with this are:
+
+    config/locales/en.yml
+      news_label: "News"
+    app/views/layouts/_dmponline_header.html.erb
+      <%= link_to t('helpers.news_label'), '/news', :class => "btn header_button btn-grey"%>
+    app/views/static_pages/news.html.erb
+      <h2>DMPonline stories from the DCC website</h2>
+      <p>Read more on the <%= link_to "DCC Website", entry.url %></p>
+    app/controllers/static_pages_controller.rb
+      dcc_news_feed_url = "http://www.dcc.ac.uk/news/dmponline-0/feed"
+
+_dmponline_header.html.erb was edited to remove the link.
+
+Commit: [6d691d6ebb7ff4d4cf823605f6734801a872875c](https://github.com/softwaresaved/smp-service/commit/6d691d6ebb7ff4d4cf823605f6734801a872875c).
+
+This means that the news page is still available if someone views news.html directly. They would see news from the DCC as for DMPonline.
+
+[DMP Builder](https://dmp.library.ualberta.ca) adopted a similar solution, commenting out the link with the [news.html](https://dmp.library.ualberta.ca/news.html) page still being accessible.
+
+**TODO: Could remove all trace of News in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK.**
+
+### Remove screencast
+
+There are a number of DCC, and related, videos:
+
+    app/assets/images/screencast.jpg
+    app/assets/videos/index.files/html5video/flashfox.swf
+    app/assets/videos/index.files/html5video/fullscreen.png
+    app/assets/videos/index.files/html5video/screencast.jpg
+    app/assets/videos/index.files/html5video/screencast.m4v
+    app/assets/videos/index.files/html5video/screencast.mp4
+    app/assets/videos/index.files/html5video/screencast.ogv
+    app/assets/videos/index.files/html5video/screencast.webm
+
+These are used within app/views/home/index.html.erb:
+
+    <video controls="controls" poster="<%= asset_path('screencast.jpg')%>" style="width:100%; height:200" title="1662">
+    <source src="<%= asset_path('index.files/html5video/screencast.mp4')%>" type="video/mp4" />
+    <source src="<%= asset_path('index.files/html5video/screencast.webm')%>" type="video/webm" />
+    <source src="<%= asset_path('index.files/html5video/screencast.ogv')%>" type="video/ogg" />
+    <param name="flashVars" value="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster=<%= asset_path('screencast.jpg')%>&amp;src=<%= asset_path('index.files/html5video/screencast.mp4')%>" />
+    <embed src="<%= asset_path('index.files/html5video/flashfox.swf')%>" width="100%" height="200" style="position:relative;"  flashVars="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster=<%= asset_path('screencast.jpg')%>&amp;src=<%= asset_path('index.files/html5video/screencast.mp4')%>"	allowFullScreen="true" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer_en" />
+    <img alt="screencast" src="<%= asset_path('screencast.jpg')%>" style="position:absolute;left:0;" width="100%" title="<%= t('screencast_error_text')%>" />
+
+indes.html.erb was edited to remove screencast.
+
+Commit: [820ef77e150d93f1bcdcb87db78373b910534f28](https://github.com/softwaresaved/smp-service/commit/820ef77e150d93f1bcdcb87db78373b910534f28).
+
+The video files are still present, for now.
+
+**TODO: Could remove all trace of these videos in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK. Alternatively, update the screencast with an SMP service-specific one.**
+
+### WIP
+
+config/locales/en.yml contains text used within numerous places throughout the user interface to provide context and built-in help for using DMPonline, as well as background about DMPonline, and links to other resources. This file has been updated to reflect a prototype SMP service, developed by The Software Sustainability Institute, hosted at The University of Edinburgh, powered by DMPonline. This includes changes to URLs and e-mails:
+
+    config/locales/en.yml
+      generated_by: This document was generated by DMPonline (http://dmponline.dcc.ac.uk)
+      <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a>. You can also report bugs and request new features directly on <a href='https://github.com/DigitalCurationCentre/DMPonline_v4' target='_top'>GitHub</a></p>
+      intro_text_html: "<p>DMPonline is provided by the Digital Curation Centre. You can find out more about us on our <a href='http://www.dcc.ac.uk/' target='_blank'>website</a>. If you would like to contact us about DMPonline, please enter your query in the form below or email <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a>.</p>"
+      <p>Email <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a></p>"
+
+Commit: [bd65b4873644c2614e9097be1ba53821d6bc50da](https://github.com/softwaresaved/smp-service/commit/bd65b4873644c2614e9097be1ba53821d6bc50da).
+
+public/403.html provides a contact e-mail if problems arise:
+
+      <p>To report this error please contact us on <a href='mailto:dmponline@dcc.ac.uk'>dmponline@dcc.ac.uk</a></p>
+
+This has been (temporarily) updated to my e-mail address. 
+
+Commit: [ded693cae486fe84efdc43edce6b6a4e0bd4bb41](https://github.com/softwaresaved/smp-service/commit/ded693cae486fe84efdc43edce6b6a4e0bd4bb41).
+
+### TODO
+
+There are additional references to URLs, e-mail addresses etc. that deployers should change to reflect a local deployment of DMPonline. This includes:
+
+    app/views/layouts/_dmponline_footer.html.erb
+      <p id="dcc_link">&copy; 2004 - <%= Time.now.year %><%= link_to ' Digital Curation Centre (DCC)', 'http://www.dcc.ac.uk'%>
+
+This file is used if Ruby on Rails is down for some reason and can be served up by a web server:
+
+    public/_index.html
+      <p>For more information please visit <a href="www.dcc.ac.uk">DCC website</a></p>
+      <p><img src="http://dmponline-beta.dcc.ac.uk/assets/logo-0ec5a8a171db942f9b452733c53d3263.jpg" /> will be back soon.</p>
+      src: url('http://dmponline-beta.dcc.ac.uk/assets/GillSansLight-559cc79d847cc0364fd43d2f4766d6ed.ttf') format('truetype');
+
+There are a number of DCC, and related, logos:
+
+    app/assets/images/dcc_logo.png
+    app/assets/images/dmponline_favicon.ico
+    app/assets/images/logo.jpg
+    app/assets/images/2013_Jisc_Logo_RGB72.png
+
+The relevant files need to be updated to hide these images or media, or present new SMP-specific ones, to the users:
+
+    app/views/layouts/_dmponline_footer.html.erb
+      <p><%= link_to( image_tag('dcc_logo.png', :class => 'footer_logo'), 'http://www.dcc.ac.uk/', :id => 'footer_right_dcc')%>
+      <%= link_to( image_tag('2013_Jisc_Logo_RGB72.png', :class => 'footer_logo'), 'http://www.jisc.ac.uk/', :id => 'footer_right_jisc')%></p>
+    app/views/layouts/_dmponline_header.html.erb
+      <%= link_to( image_tag('logo.jpg'), root_path)%>
+    app/views/layouts/application.html.erb
+      <%= favicon_link_tag 'dmponline_favicon.ico' %>
+
+    config/initializers/active_admin.rb
+      # config.favicon = '/assets/favicon.ico'
+    config/initializers/active_admin.rb
+      # config.site_title_image = "/images/logo.png"
+
+There are also DCC-style orange-branded icons:
+
+    app/assets/images/download.png
+    app/assets/images/minus_laranja.png
+    app/assets/images/plus_laranja.png
+    app/assets/images/question-mark.png
+
+And a DCC-specific stylesheet:
+
+    app/assets/stylesheets/bootstrap_and_overrides.css.less 
+
+The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
+
+### Don't commit local configuration changes that are provided by deployers
 
 There are a number of places where DMPonline specifies e-mail addresses, URLs, public and private keys, host names etc. Some of these values relate to configuration and which need to be changed by a deployer for DMPonline to run locally. These are:
 
@@ -304,90 +448,3 @@ If using Shibboleth then the deployer also needs to configure:
       config.shibboleth_login = 'https://localhost/Shibboleth.sso/Login'
 
 For the prototype SMP service, therefore, no changes will be commited for these files and file updates will be held privately.
-
-### DMPonline local configuration - what deployers should change
-
-config/locales/en.yml contains text used within numerous places throughout the user interface to provide context and built-in help for using DMPonline, as well as background about DMPonline, contact information and links to other resources. This file has been updated to reflect a prototype SMP service, developed by The Software Sustainability Institute, hosted at The University of Edinburgh, powered by DMPonline.
-
-Commit: [bd65b4873644c2614e9097be1ba53821d6bc50da](https://github.com/softwaresaved/smp-service/commit/bd65b4873644c2614e9097be1ba53821d6bc50da).
-
-There are additional references to URLs, e-mail addresses etc. that deployers should change to reflect a local deployment of DMPonline. This includes:
-
-    app/views/contact_us/contacts/new.html.erb
-      <iframe width="90%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=EH8+9LE&amp;aq=&amp;sll=55.85546,-4.232459&amp;sspn=0.195785,0.663986&amp;ie=UTF8&amp;hq=&amp;hnear=EH8+9LE,+United+Kingdom&amp;ll=55.944435,-3.186767&amp;spn=0.006104,0.02075&amp;t=m&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
-    app/views/layouts/_dmponline_footer.html.erb
-      <p id="dcc_link">&copy; 2004 - <%= Time.now.year %><%= link_to ' Digital Curation Centre (DCC)', 'http://www.dcc.ac.uk'%>
-    app/views/static_pages/news.html.erb
-      <h2>DMPonline stories from the DCC website</h2>
-      <p>Read more on the <%= link_to "DCC Website", entry.url %></p>
-    app/controllers/static_pages_controller.rb
-      dcc_news_feed_url = "http://www.dcc.ac.uk/news/dmponline-0/feed"
-    config/locales/en.yml
-      generated_by: This document was generated by DMPonline (http://dmponline.dcc.ac.uk)
-      <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a>. You can also report bugs and request new features directly on <a href='https://github.com/DigitalCurationCentre/DMPonline_v4' target='_top'>GitHub</a></p>
-      intro_text_html: "<p>DMPonline is provided by the Digital Curation Centre. You can find out more about us on our <a href='http://www.dcc.ac.uk/' target='_blank'>website</a>. If you would like to contact us about DMPonline, please enter your query in the form below or email <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a>.</p>"
-      <p>Email <a href='mailto:dmponline@dcc.ac.uk?Subject=DMPonline%20inquiry' target='_top'>dmponline@dcc.ac.uk</a></p>"
-    public/403.html
-      <p>To report this error please contact us on <a href='mailto:dmponline@dcc.ac.uk'>dmponline@dcc.ac.uk</a></p>
-    public/_index.html
-      <p>For more information please visit <a href="www.dcc.ac.uk">DCC website</a></p>
-      <p><img src="http://dmponline-beta.dcc.ac.uk/assets/logo-0ec5a8a171db942f9b452733c53d3263.jpg" /> will be back soon.</p>
-      src: url('http://dmponline-beta.dcc.ac.uk/assets/GillSansLight-559cc79d847cc0364fd43d2f4766d6ed.ttf') format('truetype');
-
-There are a number of DCC, and related, logos:
-
-    app/assets/images/dcc_logo.png
-    app/assets/images/dmponline_favicon.ico
-    app/assets/images/logo.jpg
-    app/assets/images/2013_Jisc_Logo_RGB72.png
-
-The relevant files need to be updated to hide these images or media, or present new SMP-specific ones, to the users:
-
-    app/views/layouts/_dmponline_footer.html.erb
-      <p><%= link_to( image_tag('dcc_logo.png', :class => 'footer_logo'), 'http://www.dcc.ac.uk/', :id => 'footer_right_dcc')%>
-      <%= link_to( image_tag('2013_Jisc_Logo_RGB72.png', :class => 'footer_logo'), 'http://www.jisc.ac.uk/', :id => 'footer_right_jisc')%></p>
-    app/views/layouts/_dmponline_header.html.erb
-      <%= link_to( image_tag('logo.jpg'), root_path)%>
-    app/views/layouts/application.html.erb
-      <%= favicon_link_tag 'dmponline_favicon.ico' %>
-    config/initializers/active_admin.rb
-      # config.favicon = '/assets/favicon.ico'
-    config/initializers/active_admin.rb
-      # config.site_title_image = "/images/logo.png"
-
-There are a number of DCC, and related, videos:
-
-    app/assets/images/screencast.jpg
-    app/assets/videos/index.files/html5video/screencast.jpg
-    app/assets/videos/index.files/html5video/fullscreen.png
-    app/assets/videos/index.files/html5video/screencast.m4v
-    app/assets/videos/index.files/html5video/screencast.ogv
-    app/assets/videos/index.files/html5video/screencast.webm
-
-The relevant files need to be updated to hide these images or media, or present new SMP-specific ones, to the users:
-
-    app/views/home/index.html.erb
-      <video controls="controls" poster="<%= asset_path('screencast.jpg')%>" style="width:100%; height:200" title="1662">
-      <source src="<%= asset_path('index.files/html5video/screencast.ogv')%>" type="video/ogg" />
-      <param name="flashVars" value="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster=<%= asset_path('screencast.jpg')%>&amp;src=<%= asset_path('index.files/html5video/screencast.mp4')%>" />
-      <embed src="<%= asset_path('index.files/html5video/flashfox.swf')%>" width="100%" height="200" style="position:relative;"  flashVars="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster=<%= asset_path('screencast.jpg')%>&amp;src=<%= asset_path('index.files/html5video/screencast.mp4')%>"	allowFullScreen="true" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer_en" />
-      <img alt="screencast" src="<%= asset_path('screencast.jpg')%>" style="position:absolute;left:0;" width="100%" title="<%= t('screencast_error_text')%>" />
-
-There are also DCC-style orange-branded icons:
-
-    app/assets/images/download.png
-    app/assets/images/minus_laranja.png
-    app/assets/images/plus_laranja.png
-    app/assets/images/question-mark.png
-
-And a DCC-specific stylesheet:
-
-    app/assets/stylesheets/bootstrap_and_overrides.css.less 
-
-The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
-
----
-
-## Evaluating the prototype 
-
-In any evaluation, users should be asked to inform us of any stray references to DMPs or data management plans that may have slipped through.
