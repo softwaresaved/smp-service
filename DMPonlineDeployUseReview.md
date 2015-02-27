@@ -1,7 +1,7 @@
 
 # DMPonline deployment and usage experiences
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 25/02/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 27/02/2014.
 
 ## Introduction
 
@@ -386,7 +386,7 @@ to each question and adding the following initialisation code:
 
 allows the question formats to be initialised.
 
-I've produced an example of a fixed version of [db/seeds.rb](https://github.com/softwaresaved/smp-service/blob/065fbd33b758e9b952e2e02cce97f59cb5a4c7b1/db/seeds.rb).
+I've produced an example of a fixed version of [db/seeds.rb](https://github.com/softwaresaved/smp-service/blob/eaea66804be50feaab12a5b01b58a6121eef94c2/db/seeds.rb). This fixes the [6791c19e751560ac9a18d3bb80f8ff21bc31ff39](https://github.com/DigitalCurationCentre/DMPonline_v4/blob/6791c19e751560ac9a18d3bb80f8ff21bc31ff39/db/seeds.rb) seeds.rb file and also includes the AHRC additions from [419adebe0f01877f78984d4e3c64168dd4565019](https://github.com/DigitalCurationCentre/DMPonline_v4/blob/419adebe0f01877f78984d4e3c64168dd4565019/db/seeds.rb).
 
 ### Problems when using organisational admin interface
 
@@ -452,6 +452,10 @@ There are a significant number of places where the user has to provide local con
      :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
      :exception_recipients => %w{dmponline@dcc.ac.uk}
 
+    config/environments/production.rb:76
+      sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
+      :exception_recipients => %w{dmponline@dcc.ac.uk}
+
     config/initializers/contact_us.rb
       config.mailer_to = "dmponline@dcc.ac.uk"
 
@@ -462,7 +466,18 @@ There are a significant number of places where the user has to provide local con
     config/initializers/secret_token.rb
       DMPonline4::Application.config.secret_token = '4eca200ee84605da3c8b315a127247d1bed3af09740090e559e4df35821fbc013724fbfc61575d612564f8e9c5dbb4b83d02469bfdeb39489151e4f9918598b2'
 
+    config/initializers/recaptcha.rb
+      config.public_key  = 'replace_this_with_your_public_key'
+      config.private_key = 'replace_this_with_your_private_key'
+
+Documentation should be provided that covers all of these configuration options. 
+
 Documentation should be provided as to what each of the e-mail addresses are used for. While, for example, exception_recipients is clear, the distinction between the e-mail addresses in contact_us.rb, devise.rb and user_mailer.rb is less clear.
+
+If using Shibboleth then the deployer also needs to configure:
+
+    config/application.rb
+      config.shibboleth_login = 'https://localhost/Shibboleth.sso/Login'
 
 ---
 
