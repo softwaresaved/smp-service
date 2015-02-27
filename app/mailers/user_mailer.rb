@@ -3,17 +3,17 @@ class UserMailer < ActionMailer::Base
 	
 	def sharing_notification(project_group)
 		@project_group = project_group
-		mail(to: @project_group.user.email, subject: "You have been given access to a Software Management Plan")
+		mail(to: @project_group.user.email, subject: t('mail.access_granted'))
 	end
 	
 	def permissions_change_notification(project_group)
 		@project_group = project_group
-		mail(to: @project_group.user.email, subject: "SMP permissions changed")
+		mail(to: @project_group.user.email, subject: t('mail.access_changed'))
 	end
 	
 	def project_access_removed_notification(user, project)
 		@user = user
 		@project = project
-		mail(to: @user.email, subject: "SMP access removed")
+		mail(to: @user.email, subject: t('mail.access_removed'))
 	end
 end
