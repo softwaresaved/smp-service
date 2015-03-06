@@ -343,7 +343,7 @@ The video files are still present, for now.
 
 **TODO: Could remove all trace of these videos in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK. Alternatively, update the screencast with an SMP service-specific one.**
 
-### WIP
+### Other updates
 
 config/locales/en.yml contains text used within numerous places throughout the user interface to provide context and built-in help for using DMPonline, as well as background about DMPonline, and links to other resources. This file has been updated to reflect a prototype SMP service, developed by The Software Sustainability Institute, hosted at The University of Edinburgh, powered by DMPonline. This includes changes to URLs and e-mails:
 
@@ -355,20 +355,15 @@ config/locales/en.yml contains text used within numerous places throughout the u
 
 Commit: [bd65b4873644c2614e9097be1ba53821d6bc50da](https://github.com/softwaresaved/smp-service/commit/bd65b4873644c2614e9097be1ba53821d6bc50da).
 
+There are additional references to URLs, e-mail addresses etc. that deployers should change to reflect a local deployment of DMPonline which includes the following...
+
 public/403.html provides a contact e-mail if problems arise:
 
       <p>To report this error please contact us on <a href='mailto:dmponline@dcc.ac.uk'>dmponline@dcc.ac.uk</a></p>
 
 This has been (temporarily) updated to my e-mail address. 
 
-Commit: [ded693cae486fe84efdc43edce6b6a4e0bd4bb41](https://github.com/softwaresaved/smp-service/commit/ded693cae486fe84efdc43edce6b6a4e0bd4bb41).
-
-### TODO
-
-There are additional references to URLs, e-mail addresses etc. that deployers should change to reflect a local deployment of DMPonline. This includes:
-
-    app/views/layouts/_dmponline_footer.html.erb
-      <p id="dcc_link">&copy; 2004 - <%= Time.now.year %><%= link_to ' Digital Curation Centre (DCC)', 'http://www.dcc.ac.uk'%>
+Commit: [ded693cae486fe84efdc43edce6b6a4e0bd4bb41](https://github.com/softwaresaved/smp-service/commit/ded693cae486fe84efdc43edce6b6a4e0bd4bb41). Removed redundant quote symbol.[5c645a327b3e16ec60141a00347da4b1bb4193e1](https://github.com/softwaresaved/smp-service/commit/5c645a327b3e16ec60141a00347da4b1bb4193e1)
 
 This file is used if Ruby on Rails is down for some reason and can be served up by a web server:
 
@@ -376,6 +371,26 @@ This file is used if Ruby on Rails is down for some reason and can be served up 
       <p>For more information please visit <a href="www.dcc.ac.uk">DCC website</a></p>
       <p><img src="http://dmponline-beta.dcc.ac.uk/assets/logo-0ec5a8a171db942f9b452733c53d3263.jpg" /> will be back soon.</p>
       src: url('http://dmponline-beta.dcc.ac.uk/assets/GillSansLight-559cc79d847cc0364fd43d2f4766d6ed.ttf') format('truetype');
+
+This page shows a broken image link and the text:
+
+    will be back soon.
+
+    For more information please visit DCC website
+
+This has been updated to be consistent in appearence and content to public/403.html. This also removes dependence on the external img resources that it linked to. This (temporarily) refers to my e-mail address. 
+
+Commit: [bd14437b7edea5ff154eb753c06fd9dd66d9323e](https://github.com/softwaresaved/smp-service/commit/bd14437b7edea5ff154eb753c06fd9dd66d9323e).
+
+app/views/layouts/_dmponline_footer.html.erb has a copyright statement and link:
+
+      <p id="dcc_link">&copy; 2004 - <%= Time.now.year %><%= link_to ' Digital Curation Centre (DCC)', 'http://www.dcc.ac.uk'%>
+
+This has been extended to include The University of Edinburgh as copyright holder for 2015 content.
+
+Commit: [e0c804e5dc87213fb6e4a686801d588df4817885](https://github.com/softwaresaved/smp-service/commit/e0c804e5dc87213fb6e4a686801d588df4817885).
+
+### TODO
 
 There are a number of DCC, and related, logos:
 
@@ -409,6 +424,8 @@ There are also DCC-style orange-branded icons:
 And a DCC-specific stylesheet:
 
     app/assets/stylesheets/bootstrap_and_overrides.css.less 
+
+And public/_index.html and public/403.html use orange branding too.
 
 The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
 
