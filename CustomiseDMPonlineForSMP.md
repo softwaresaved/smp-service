@@ -390,7 +390,54 @@ This has been extended to include The University of Edinburgh as copyright holde
 
 Commit: [e0c804e5dc87213fb6e4a686801d588df4817885](https://github.com/softwaresaved/smp-service/commit/e0c804e5dc87213fb6e4a686801d588df4817885).
 
-### TODO
+The DCC-specific stylesheet:
+
+    app/assets/stylesheets/bootstrap_and_overrides.css.less 
+
+and public/_index.html and public/403.html customised for consistency with SSI colors:
+
+* White background
+* Black headings and text
+* Red hyperlinks, which are underlined when the cursor hovers over them
+* Red menu bars and menu items
+* White menu bar and item text
+* Black selected menu items
+
+I found [HTML Color Codes](http://html-color-codes.info/) useful in determining existing colours.
+
+Commit: [5cd58d0c073fd4fa4ed2593c36bae7abe70506f1](https://github.com/softwaresaved/smp-service/commit/5cd58d0c073fd4fa4ed2593c36bae7abe70506f1).
+
+There are issues with some styles having colours within their names:
+
+    a.a-orange.hover
+    hr.orange_break_line
+    .btn-grey and variants
+    .white_background
+
+There are also some embedded colours:
+
+    #error_explanation {
+      border: 2px solid red;
+
+      background-color: #f0f0f0;
+
+      h2 {
+        background-color: #c00;
+        color: #fff;
+    }
+
+It is time consuming to update all the styles as the whole of DMPonline must be explored to ensure nothing has been missed.
+
+There was a lingering orange in "Not Answered" tags (Orange #f89406) which looks similar to DCC branding. However, this was a [Twitter Bootstrap Label](http://cssdeck.com/labs/twitter-bootstrap-labels).
+
+There also DCC-style orange-branded icons:
+
+    app/assets/images/download.png
+    app/assets/images/minus_laranja.png
+    app/assets/images/plus_laranja.png
+    app/assets/images/question-mark.png
+
+These do not seem to be used in DMPonline.
 
 There are a number of DCC, and related, logos:
 
@@ -409,25 +456,11 @@ The relevant files need to be updated to hide these images or media, or present 
     app/views/layouts/application.html.erb
       <%= favicon_link_tag 'dmponline_favicon.ico' %>
 
-    config/initializers/active_admin.rb
-      # config.favicon = '/assets/favicon.ico'
-    config/initializers/active_admin.rb
-      # config.site_title_image = "/images/logo.png"
-
-There are also DCC-style orange-branded icons:
-
-    app/assets/images/download.png
-    app/assets/images/minus_laranja.png
-    app/assets/images/plus_laranja.png
-    app/assets/images/question-mark.png
-
-And a DCC-specific stylesheet:
-
-    app/assets/stylesheets/bootstrap_and_overrides.css.less 
-
-And public/_index.html and public/403.html use orange branding too.
-
 The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
+
+A new app/assets/images/logo.png with the SSI logo was added as was a smaller version of the DMPonline logo, DMPonlineLogo.jpg. _dmponline_header_html.erb and _dmponline_footer_html.erb were updated to show the SSI logo in the header, with a "Software Management Plan Service" title (from config/locales/en.yml) and to show "Powered by" and the DMPonline and DCC logos in the footer.
+
+Commit:[db7feaa994a7f9ada433edb12b59c3b3c44b4b21](https://github.com/softwaresaved/smp-service/commit/db7feaa994a7f9ada433edb12b59c3b3c44b4b21).
 
 ### Don't commit local configuration changes that are provided by deployers
 
