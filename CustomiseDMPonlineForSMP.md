@@ -373,7 +373,7 @@ and running:
 
 sorted this problem.
 
-Another user of htmltoword 0.2.0 has raised this as an [issue]()https://github.com/nickfrandsen/htmltoword/issues/33).
+Another user of htmltoword 0.2.0 has raised this as an [issue](https://github.com/nickfrandsen/htmltoword/issues/33).
 
 Commit: [3ddd70fa0f68e7fecb9ce0463d3ab4b84ca73ecc](https://github.com/softwaresaved/smp-service/commit/3ddd70fa0f68e7fecb9ce0463d3ab4b84ca73ecc)
 
@@ -440,7 +440,7 @@ This has been updated to be consistent in appearence and content to public/403.h
 
 Commit: [bd14437b7edea5ff154eb753c06fd9dd66d9323e](https://github.com/softwaresaved/smp-service/commit/bd14437b7edea5ff154eb753c06fd9dd66d9323e).
 
-403.html and _index.html have since been updated to cite info@software.ac.uk [3a75c77f2d88bcd2dd77a9cf529b63a34e41b3c9]((https://github.com/softwaresaved/smp-service/commit/ 3a75c77f2d88bcd2dd77a9cf529b63a34e41b3c9)
+403.html and _index.html have since been updated to cite info@software.ac.uk [3a75c77f2d88bcd2dd77a9cf529b63a34e41b3c9](https://github.com/softwaresaved/smp-service/commit/3a75c77f2d88bcd2dd77a9cf529b63a34e41b3c9).
 
 app/views/layouts/_dmponline_footer.html.erb has a copyright statement and link:
 
