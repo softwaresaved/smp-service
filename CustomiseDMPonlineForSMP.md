@@ -1,7 +1,7 @@
 
 # Customing DMPonline into a prototype SMP service
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 27/02/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 11/03/2014.
 
 ## Introduction
 
@@ -343,7 +343,55 @@ The video files are still present, for now.
 
 **TODO: Could remove all trace of these videos in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK. Alternatively, update the screencast with an SMP service-specific one.**
 
-### Other updates
+### Resolve Export as docx and htmltoword 0.2.0 gem issue
+
+Exporting as a Word document (docx) raised the error:
+
+    No such file or directory - /disk/ssi-dev0/home/mjj/.rvm/gems/ruby-2.0.0-p247/gems/htmltoword-0.2.0/lib/htmltoword/xslt/html_to_wordml.xslt    
+
+Looking at the gem on both SL6, and a fresh Ruby and gem install under an Ubuntu server, showed there was no xslt file e.g. for Ubuntu:
+
+    $ ls /var/lib/gems/1.9.1/gems/htmltoword-0.2.0/lib/
+    lib  Rakefile  README.md    $ ls /var/lib/gems/1.9.1/gems/htmltoword-0.2.0/lib/htmltoword
+    action_controller.rb  document.rb           version.rb
+    configuration.rb      htmltoword_helper.rb
+
+However, the [0.2.0 tag](https://github.com/nickfrandsen/htmltoword/tree/v0.2.0/lib/htmltoword/xslt) on GitHub and the [0.2.0 zip](https://github.com/nickfrandsen/htmltoword/archive/v0.2.0.zip) both have htmltoword-0.2.0/lib/htmltoword/xslt with the xslt file.
+
+Trying with the previous version, 0.1.8, gives:
+
+    $ ls /var/lib/gems/1.9.1/gems/htmltoword-0.1.8/xslt/
+    html_to_wordml.xslt  style2.xslt
+
+Updating the DMPonline Gemfile to specifically use 0.1.8
+
+    gem 'htmltoword', '0.1.8'
+
+and running:
+
+    $ bundle update
+
+sorted this problem.
+
+Another user of htmltoword 0.2.0 has raised this as an [issue]()https://github.com/nickfrandsen/htmltoword/issues/33).
+
+Commit: [3ddd70fa0f68e7fecb9ce0463d3ab4b84ca73ecc](https://github.com/softwaresaved/smp-service/commit/3ddd70fa0f68e7fecb9ce0463d3ab4b84ca73ecc)
+
+**TODO: recreate this change into a branch of DMPonline.**
+
+### Resolve flash not showing for reCAPTCHA failures
+
+If the user does not enter a valid reCAPTCHA then no message is displayed. The problem seemed to be with app/controllers/contacts_controller.rb which sets flash values with the key :error. According to the Rails documentation on the [flash](http://guides.rubyonrails.org/action_controller_overview.html#the-flash), only :notice and :alert are supported:
+
+> Note that it is also possible to assign a flash message as part of the redirection. You can assign :notice, :alert or the general purpose :flash:
+
+Changing :error to :alert solves this problem.
+
+Commit: [d550325c55b40fa0d8a1319d65a25ddf9559d10a](https://github.com/softwaresaved/smp-service/commit/d550325c55b40fa0d8a1319d65a25ddf9559d10a)
+
+**TODO: recreate this change into a branch of DMPonline.**
+
+### Update branding
 
 config/locales/en.yml contains text used within numerous places throughout the user interface to provide context and built-in help for using DMPonline, as well as background about DMPonline, and links to other resources. This file has been updated to reflect a prototype SMP service, developed by The Software Sustainability Institute, hosted at The University of Edinburgh, powered by DMPonline. This includes changes to URLs and e-mails:
 
@@ -355,6 +403,16 @@ config/locales/en.yml contains text used within numerous places throughout the u
 
 Commit: [bd65b4873644c2614e9097be1ba53821d6bc50da](https://github.com/softwaresaved/smp-service/commit/bd65b4873644c2614e9097be1ba53821d6bc50da).
 
+Removed port number from URL in generated_by value:
+
+Commit [926c58ff3d752a31733c4393696bc2c64888ad65](https://github.com/softwaresaved/smp-service/commit/926c58ff3d752a31733c4393696bc2c64888ad65)
+
+Added information on why we developed the service and disclaimers to config/locales/en.yml, and an alert flash to app/views/layouts/application.html.erb:
+
+    <p class="alert alert-notice">Please be aware this is a prototype service. Data may be lost or errors might occur. Thank you. </p>			
+
+Commit: [06e753e4b41d9088d5036acb57366ee24364b102](https://github.com/softwaresaved/smp-service/commit/06e753e4b41d9088d5036acb57366ee24364b102)
+
 There are additional references to URLs, e-mail addresses etc. that deployers should change to reflect a local deployment of DMPonline which includes the following...
 
 public/403.html provides a contact e-mail if problems arise:
@@ -363,7 +421,7 @@ public/403.html provides a contact e-mail if problems arise:
 
 This has been (temporarily) updated to my e-mail address. 
 
-Commit: [ded693cae486fe84efdc43edce6b6a4e0bd4bb41](https://github.com/softwaresaved/smp-service/commit/ded693cae486fe84efdc43edce6b6a4e0bd4bb41). Removed redundant quote symbol.[5c645a327b3e16ec60141a00347da4b1bb4193e1](https://github.com/softwaresaved/smp-service/commit/5c645a327b3e16ec60141a00347da4b1bb4193e1)
+Commit: [ded693cae486fe84efdc43edce6b6a4e0bd4bb41](https://github.com/softwaresaved/smp-service/commit/ded693cae486fe84efdc43edce6b6a4e0bd4bb41). Removed redundant quote symbol [5c645a327b3e16ec60141a00347da4b1bb4193e1](https://github.com/softwaresaved/smp-service/commit/5c645a327b3e16ec60141a00347da4b1bb4193e1).
 
 This file is used if Ruby on Rails is down for some reason and can be served up by a web server:
 
@@ -381,6 +439,8 @@ This page shows a broken image link and the text:
 This has been updated to be consistent in appearence and content to public/403.html. This also removes dependence on the external img resources that it linked to. This (temporarily) refers to my e-mail address. 
 
 Commit: [bd14437b7edea5ff154eb753c06fd9dd66d9323e](https://github.com/softwaresaved/smp-service/commit/bd14437b7edea5ff154eb753c06fd9dd66d9323e).
+
+403.html and _index.html have since been updated to cite info@software.ac.uk [3a75c77f2d88bcd2dd77a9cf529b63a34e41b3c9]((https://github.com/softwaresaved/smp-service/commit/ 3a75c77f2d88bcd2dd77a9cf529b63a34e41b3c9)
 
 app/views/layouts/_dmponline_footer.html.erb has a copyright statement and link:
 
@@ -461,6 +521,30 @@ The DCC and DMPonline logo should be presented in an SMP service, with a 'powere
 A new app/assets/images/logo.png with the SSI logo was added as was a smaller version of the DMPonline logo, DMPonlineLogo.jpg. _dmponline_header_html.erb and _dmponline_footer_html.erb were updated to show the SSI logo in the header, with a "Software Management Plan Service" title (from config/locales/en.yml) and to show "Powered by" and the DMPonline and DCC logos in the footer.
 
 Commit:[db7feaa994a7f9ada433edb12b59c3b3c44b4b21](https://github.com/softwaresaved/smp-service/commit/db7feaa994a7f9ada433edb12b59c3b3c44b4b21).
+
+Updated public/favicon.ico with SSI favicon.ico.
+
+Commit: [7e5180c032bd889a45f9a58056e676465a862a47](https://github.com/softwaresaved/smp-service/commit/7e5180c032bd889a45f9a58056e676465a862a47)
+
+Added app/assets/images/favicon.ico, copy of favicon.ico.
+
+Commit: [683250843fccafb308e240b4ff6b733b77f5f02e](https://github.com/softwaresaved/smp-service/commit/683250843fccafb308e240b4ff6b733b77f5f02e)
+
+Updated app/views/layouts/application.html.erb:
+
+    <%= favicon_link_tag 'dmponline_favicon.ico' %>
+
+with:
+
+    <%= favicon_link_tag 'favicon.ico' %>
+
+Commit: [0e29256e38486ea86342dcaa461cdccc04594d5b](https://github.com/softwaresaved/smp-service/commit/0e29256e38486ea86342dcaa461cdccc04594d5b)
+
+**TODO: DMPonline should use this generic icon name to make rebranding easier.**
+
+
+
+
 
 ### Don't commit local configuration changes that are provided by deployers
 
