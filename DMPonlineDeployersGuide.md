@@ -1,7 +1,7 @@
 
 # DMPonline deployer's guide
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 25/02/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 11/03/2014.
 
 ## Introduction
 
