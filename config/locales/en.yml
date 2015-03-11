@@ -28,7 +28,7 @@ en:
     am: "am"
     pm: "pm"
 
-  tool_title: "Software Management Plan Service"
+  tool_title: "Software Management Plan Service Prototype"
   tool_product: "Software Management Plan"
   welcome_title: "Welcome."
   welcome_text: "<p>Software Management Plan Service has been developed by the <a href='http://www.software.ac.uk' target='_blank'>The Software Sustainability Institute</a> to help you write software management plans.</p><p>It is powered by <a href='https://dmponline.dcc.ac.uk' target='_blank'>DMPonline</a> developed by the <a href='http://www.dcc.ac.uk' target='_blank'>Digital Curation Centre</a></p>"
@@ -529,27 +529,41 @@ Select what format you wish to use and click to 'Export'.</p>"
     title: "About Software Management Plan Service"
     body_text_html: "<div class='white_background'>
     <p>It is easy to concentrate on the short-term issues when developing research software. Deadlines for publications, collaboration with others and the demands of a daily routine all conspire to prevent proper planning. A software management plan can help to formalise a set of structures and goals that ensure your software is accessible and reusable in the short, medium and long term.</p>
-    <p>At present software management plans are relatively new for research software proposals, though many of the elements discussed below would be expected in standard proposals.</p>
-    <p>Software Management Plan Service was developed by the UK's <a href='http://www.software.ac.uk/' target=_'blank'>Software Sustainability Institute</a>, to help research teams write software management plans.</p>
+    <p>At present software management plans are relatively new for research software proposals, though many of their elements would be expected in standard proposals.</p>
+    <p>Software Management Plan Service is a prototype service developed by the UK's <a href='http://www.software.ac.uk/' target=_'blank'>Software Sustainability Institute</a> to help researchers understand what software management plans involve, why they are important and how to write them. It is also intended to help us gather requirements from researchers, funders and other stakeholders as to what software management plans should include, how they overlap with data management plans, and how to promote their uptake.</p>
     <p>It is powered by <a href='https://dmponline.dcc.ac.uk' target='_blank'>DMPonline</a> developed by the UK's <a href='http://www.dcc.ac.uk' target='_blank'>Digital Curation Centre</a>. The Digital Curation Centre worked closely with research funders and universities to produce DMPonline to help researchers to produce an effective data management plan (DMP) to cater for the whole lifecycle of a project, from bid-preparation stage through to completion.</p>
+    </div>
+    <h3>Why develop this prototype?</h3>
+    <div class='white_background'>
+    <p>In October 2012, we produced a guide to <a target='_blank' href='http://www.software.ac.uk/resources/guides/software-management-plans'>Writing and using a software management plan</a>. This was influenced by work by the Digital Curation Centre on data management plans.</p>
+    <p>We have provided similar advice for doing sustainability evaluations. What was initially a subjective process carried out by staff was documented as a <a target='_blank' href='http://www.software.ac.uk/software-evaluation-guide'>Software Evaluation Guide</a>. This was then implemented as a <a target='_blank' href='http://www.software.ac.uk/online-sustainability-evaluation'>Online Sustainablity Evaluation</a> where a researcher completes a form and gets an auto-generated report containing boiler-plate advice and guidance on how to improve their sustainability .</p>
+    <p>A comparable service, for software management plans, was requested by our advisory board in Autumn 2012 and also by attendees (researchers and leaders) at our <a target='_blank' href='http://www.software.ac.uk/cw12'>Collaborations Workshop 2012</a>.</p>
+    <p>Rather than creating yet another product from scratch, we decided to practice what we preach in terms of reusing research outputs and, after an initial evaluation, decided to rebrand and retask DMPonline.</p>
     </div>
     <h3>How the tool works</h3>
     <div class='white_background'>
     <p>There are a number of templates within the tool that represent the requirements of different funders and institutions. Users are asked three questions at the outset so we can determine the appropriate template to display (e.g. the ESRC template when applying for an ESRC grant). Guidance is provided to help you interpret and answer the questions. This guidance is provided by researcher funders, universities and disciplines.</p>
     </div>
-    <h3>Getting Started</h3>
+    <h3>Getting started</h3>
     <div class='white_background'>
     <p>If you have an account please sign in and start creating or editing your SMP.</p>
     <p>If you do not have a Software Management Plan Service account, click on <a href='/'>'Sign up'</a> on the homepage.</p>
     <p>Please visit the <a href='/help'>'Help'</a> page for guidance.</p>
     </div>
-    <h3>Additional Information</h3>
-    <div class='white_background'>
-    <p>We are constantly improving the user interface and functionality of Software Management Plan Service.
-    If you would like to contribute with feedback and suggestions, please contact us by emailing
-    <a href='mailto:info@software.ac.uk?Subject=Software%20Management%20Plan%20Service%20enquiry' target='_top'>info@software.ac.uk</a>. You can also report bugs and request new features directly on <a href='https://github.com/softwaresaved/smp-service' target='_top'>GitHub</a></p>
-    </div>"
 
+    <h3>Get involved</h3>
+    <div class='white_background'>
+    <p>Software Management Plan Service is a prototype. It is designed to help us gather requirements from researchers, funders and other stakeholders as to what software management plans should include, how they overlap with data management plans, and how to promote their uptake. We welcome any suggestions as to:</p>
+    <ul>
+    <li>What software management plans should include.</li>
+    <li>What advice should be given to researchers to help them understand, and write, effective software management plans.</li>
+    <li>How useful a Software Management Service would be to researchers, funders and other stakeholders.</li>
+    <li>What functionality a service such as the Software Management Service should support.</li>
+    <li>How software and data management plans overlap, what aspects are software-only, what are data-only and how to provide a unified service that supports both software and data management plans. We are working closely with the Digital Curation Centre to understand such issues.</li>
+    </ul>
+    <p>If you would like to contribute with feedback and suggestions, please contact us by emailing <a href='mailto:info@software.ac.uk?Subject=Software%20Management%20Plan%20Service%20enquiry' target='_top'>info@software.ac.uk</a>. Alternatively, use the form on the <a href='/contact-us'>Contact Us</a> page.</p>
+    <p>You can also comment on these questions, as well as report bugs and request new features via our issue tracker on <a href='https://github.com/softwaresaved/smp-service/issues' target='_top'>GitHub</a>.</p>
+    </div>"
 
   help_page:
     title: "Help"
@@ -637,6 +651,11 @@ Planning for the effective creation, management and sharing of your data enables
     <div class='white_background'>
       <p>Software Management Plan Service ('the tool', 'the system') is a tool developed by the Institute, as a shared resource for the research community. It is hosted at the University of Edinburgh. It is powered by DMPonline, developed by the Digital Curation Centre.</p>
     </div>
+    <h3>Service provision</h3>
+    <div class='white_background'>
+    <p>Please be aware this is a prototype service. Data may be lost, errors might occur, and the service may go down without notice.</p>
+    <p>The prototype is provided 'as is', without warranties or conditions of any kind, either express or implied, including, without limitation, any warranties or conditions of title, non-infringement, merchantability, or fitness for a particular purpose. You are solely responsible for determining the appropriateness of using this service and assume any risks associated with your use of this service.</p>
+    </div>
     <h3>Your personal details</h3>
     <div class='white_background'>
       <p>In order to help identify and administer your account with Software Management Plan Service, we need to store your email address. We may also use it to contact you to obtain feedback on your use of the tool, or to inform you of the latest developments or releases. The information may be transferred between the Institute partner institutions but only for legitimate Institute purposes. We will not sell, rent or trade any personal information you provide to us.</p>
@@ -645,7 +664,7 @@ Planning for the effective creation, management and sharing of your data enables
     <div class='white_background'>
       <p>The information you enter into this system can be seen by you, people you have chosen to share access with, and - solely for the purposes of maintaining the service - system administrators at the University of Edinburgh.  We compile anonymised, automated and aggregated information from plans, but we will not directly access, make use of, or share your content with anyone else without your permission. Authorised officers of your home institution may access your plans for specific purposes - for example, to track compliance with funder/institutional requirements or to calculate storage requirements.</p>
     </div>
-    <h3>Freedom of Information</h3>
+    <h3>Freedom of information</h3>
     <div class='white_background'>
       <p>The University of Edinburgh holds your plans on your behalf, but they are your property and responsibility. Any FOI applicants will be referred back to your home institution.</p>
     </div>
