@@ -232,6 +232,25 @@ Edit config/application.rb. If necessary, update the path to wkhtmltopdf:
         :exe_path => '/usr/local/bin/wkhtmltopdf'
     }
 
+### Configure reCAPTCHA
+
+To configure [reCAPTCHA](http://www.google.com/recaptcha/), which is used on the Contact Us page to display letters and numbers users have to enter before submitting a form:
+
+* [Sign up](https://accounts.google.com/SignUp) with Google (if you have not already done so).
+* Go to [reCAPTCHA](http://www.google.com/recaptcha/).
+* Click Get reCAPTCHA
+* Click Register a new site
+* Enter a Label e.g.: myhost.mydomain.ac.uk DMPonline Contact Us
+* Enter the domain where you will host DMPonline e.g. myhost.mydomain.ac.uk
+* Click Register
+* A Site Key and a Secret Key will be created.
+* Edit config/initializers/recaptcha.rb.
+* Replace `'replace_this_with_your_public_key'` with your Site Key.
+* Replace `'replace_this_with_your_private_key'` with your Secret Key.
+* Comment out the `config.proxy`:
+
+    # config.proxy = 'http://someproxy.com:port'
+
 ### Fix seeds.rb
 
 Update db/seeds.rb with fixed version (as recommended on the DMPonline [wiki](https://github.com/DigitalCurationCentre/DMPonline_v4/wiki/1.-Local-Installation):
@@ -314,6 +333,33 @@ If you click View Plans and see:
 
 then check your Ruby version. This problem can arise if you are using Ruby 2.0.0 and not 2.0.0-p247, for example.
 
+### Troubleshooting - `Format of site key was invalid` on /contact-us
+
+If the Contact Us page (/contact-us) shows:
+
+    Security check
+    Input error: k: Format of site key was invalid
+
+Then you have not configured reCAPTCHA.
+
+---
+
+## Configuring DMPonline for production mode
+
+Edit config/environments/production.rb. Update these values which are used to set the From:, Subject: and To: fields in error report e-mails:
+
+    :email_prefix => "[DMPonline4 ERROR] ",
+    :sender_address => %{"No-reply" <noreply@dcc.ac.uk>},
+    :exception_recipients => %w{dmponline@dcc.ac.uk}
+
+Create production database:
+
+    $ rake db:setup RAILS_ENV=production
+
+Pre-compile assets:
+
+    $ RAILS_ENV=production rake assets:precompile
+
 ---
 
 ## Create a DMPonline super-admin
@@ -321,6 +367,7 @@ then check your Ruby version. This problem can arise if you are using Ruby 2.0.0
 To create a super-admin:
 
     $ mysql -u root -p
+    > use dmpdev4
     > insert into roles (id,name) values (1,'admin');
     > insert into users_roles (user_id,role_id) value (1,1);
 
@@ -344,6 +391,7 @@ See:
 To create an organisation admin:
 
     $ mysql -u root -p
+    > use dmpdev4
     > insert into roles (id,name) values (2,'org_admin');
     > insert into users_roles (user_id,role_id) value (1,2);
 
@@ -373,7 +421,7 @@ See:
 
     $ mysql -u root -p
     > use database dmpdev4;
-    $ select * from users;
+    > select * from users;
 
 * Add yourself as an organisational admin and super admin
 * Select Signed in as ... => Super-admin area.
@@ -391,7 +439,6 @@ See:
 * Click DCC Template Version 1 Edit
 * Check Published 
 * Click Update Version
-
 
 ---
 
