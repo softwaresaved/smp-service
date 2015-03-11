@@ -247,9 +247,7 @@ To configure [reCAPTCHA](http://www.google.com/recaptcha/), which is used on the
 * Edit config/initializers/recaptcha.rb.
 * Replace `'replace_this_with_your_public_key'` with your Site Key.
 * Replace `'replace_this_with_your_private_key'` with your Secret Key.
-* Comment out the `config.proxy`:
-
-    # config.proxy = 'http://someproxy.com:port'
+* Comment out the `config.proxy` line.
 
 ### Fix seeds.rb
 
