@@ -49,11 +49,13 @@ Install dependencies for DMPonline:
 
 ---
 
-## RVM and Ruby 2.0.0-p247
+## RVM and Ruby 2.0.0-p643
 
 * Ruby Version Manager
 * https://rvm.io
 * https://rvm.io/rvm/basics
+
+Though Ruby 2.0.0-p247 was originally recommended, these instructions recommend the latest version, [Ruby 2.0.0-p643](https://www.ruby-lang.org/en/news/2015/02/25/ruby-2-0-0-p643-is-released/) which includes a security fix included in [Ruby 2.0.0-p598](https://www.ruby-lang.org/en/news/2014/11/13/ruby-2-0-0-p598-is-released/).
 
 Install RVM:
 
@@ -64,18 +66,18 @@ Dependencies for RVM are installed by RVM itself:
 
     Installing required packages: gawk, g++, libreadline6-dev, zlib1g-dev, libssl-dev, libyaml-dev, libsqlite3-dev, sqlite3, autoconf, libgdbm-dev, libncurses5-dev, automake, libtool, bison, libffi-dev
 
-Install Ruby 2.0.0-p247:
+Install Ruby 2.0.0-p643:
 
     $ source ~/.rvm/scripts/rvm
     $ rvm list known
-    $ rvm install 2.0.0-p247
-    $ rvm use 2.0.0-p247
+    $ rvm install 2.0.0-p643
+    $ rvm use 2.0.0-p643
 
-Set Ruby 2.0.0-p247 as default:
+Set Ruby 2.0.0-p643 as default:
 
-    $ rvm --default use 2.0.0-p247
+    $ rvm --default use 2.0.0-p643
     $ ruby -v
-    ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-linux]
+    ruby 2.0.0p643 (2015-02-25 revision 49749) [x86_64-linux]
 
 ---
 
@@ -329,7 +331,7 @@ If you click View Plans and see:
             format.json { render json: @projects }
     end
 
-then check your Ruby version. This problem can arise if you are using Ruby 2.0.0 and not 2.0.0-p247, for example.
+then check your Ruby version. This problem can arise if you are using Ruby 2.0.0 and not 2.0.0-p247, or later, for example.
 
 ### Troubleshooting - `Format of site key was invalid` on /contact-us
 
