@@ -518,9 +518,13 @@ The relevant files need to be updated to hide these images or media, or present 
 
 The DCC and DMPonline logo should be presented in an SMP service, with a 'powered by DMPonline' statement and associated web-links.
 
-A new app/assets/images/logo.png with the SSI logo was added as was a smaller version of the DMPonline logo, DMPonlineLogo.jpg. _dmponline_header_html.erb and _dmponline_footer_html.erb were updated to show the SSI logo in the header, with a "Software Management Plan Service" title (from config/locales/en.yml) and to show "Powered by" and the DMPonline and DCC logos in the footer.
+A new app/assets/images/logo.png with the SSI logo was added as was a smaller version of the DMPonline logo, DMPonlineLogo.jpg. _dmponline_header_html.erb and _dmponline_footer_html.erb were updated to show the SSI logo in the header, with a "Prototype Software Management Plan Service" title (from config/locales/en.yml) and to show "Powered by" and the DMPonline and DCC logos in the footer.
 
 Commit:[db7feaa994a7f9ada433edb12b59c3b3c44b4b21](https://github.com/softwaresaved/smp-service/commit/db7feaa994a7f9ada433edb12b59c3b3c44b4b21).
+
+Changed title under SSI logo from Courier to Consolas font for consistency with SSI web site and logo:
+
+Commit:[835b1bb56b748e5b7bf2f74905131a2ed2c6639c](https://github.com/softwaresaved/smp-service/commit/835b1bb56b748e5b7bf2f74905131a2ed2c6639c).
 
 Updated public/favicon.ico with SSI favicon.ico.
 
@@ -541,10 +545,6 @@ with:
 Commit: [0e29256e38486ea86342dcaa461cdccc04594d5b](https://github.com/softwaresaved/smp-service/commit/0e29256e38486ea86342dcaa461cdccc04594d5b)
 
 **TODO: DMPonline should use this generic icon name to make rebranding easier.**
-
-
-
-
 
 ### Don't commit local configuration changes that are provided by deployers
 
