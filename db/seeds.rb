@@ -419,7 +419,7 @@ end
 
 phases = {
   "SSI" => {
-    title: "SSI Template",
+    title: "SSI Sample SMP",
     number: 1,
     template: "SSI Template"
   },
@@ -437,7 +437,7 @@ versions = {
   "SSI" => {
     title: "SSI Template Version 1",
     number: 1,
-    phase: "SSI Template"
+    phase: "SSI Sample SMP"
   },
 }
 
