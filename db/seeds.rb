@@ -454,35 +454,42 @@ sections = {
   "Software Assets Used and Produced" => {
     title: "Software Assets Used and Produced",
     number: 1,
-    description: "...",
+    description: "TODO",
     version: "SSI Template Version 1",
     organisation: "SSI"
   },
-  "Intellectual Property and Governance" => {
-    title: "Intellectual Property and Governance",
+  "Intellectual Property" => {
+    title: "Intellectual Property",
     number: 2,
-    description: "...",
+    description: "TODO",
+    version: "SSI Template Version 1",
+    organisation: "SSI"
+  },
+  "Governance" => {
+    title: "Governance",
+    number: 3,
+    description: "TODO",
     version: "SSI Template Version 1",
     organisation: "SSI"
   },
   "Access, Sharing and Reuse" => {
     title:  "Access, Sharing and Reuse",
-    number: 3,
-    description: "...",
+    number: 4,
+    description: "TODO",
     version: "SSI Template Version 1",
     organisation: "SSI"
   },
   "Long-term Preservation" => {
     title: "Long-term Preservation",
-    number: 4,
-    description: "...",
+    number: 5,
+    description: "TODO",
     version: "SSI Template Version 1",
     organisation: "SSI"
   },
   "Resourcing and Responsibility" => {
     title: "Resourcing and Responsibility",
-    number: 5,
-    description: "...",
+    number: 6,
+    description: "TODO",
     version: "SSI Template Version 1",
     organisation: "SSI"
   }
@@ -499,84 +506,119 @@ sections.each do |s, details|
 end
 
 questions = {
-  "What software will be used by your project?" => {
-    text: "What software will be used by your project?",
-    section: "Software Assets Used and Produced",
-    number: 1,
-    guidance: "",
-    themes: [],
-    format: "Text area"
-  },
   "What software will be produced by your project?" => {
     text: "What software will be produced by your project?",
     section: "Software Assets Used and Produced",
-    number: 2,
-    guidance: "",
+    number: 1,
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
-  "What are the dependencies / licenses for third party code, models, tools and libraries used?" => {
-    text: "What are the dependencies / licenses for third party code, models, tools and libraries used?",
+  "What software will be used by your project?" => {
+    text: "What software will be used by your project?",
     section: "Software Assets Used and Produced",
-    number: 3,
-    guidance: "",
+    number: 2,
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
-  "What would be the process for keeping an up to date list of software assets and dependencies?" => {
-    text: "What would be the process for keeping an up to date list of software assets and dependencies?",
+  "What are the third party code, models, tools and libraries used? (if any)" => {
+    text: "What are the third party code, models, tools and libraries used? (if any)",
     section: "Software Assets Used and Produced",
     number: 4,
-    guidance: "",
+    guidance: "TODO - consider and list any suitable alternatives (cf RAPPORT guide)",
+    themes: [],
+    format: "Text area"
+  },
+  "What is the process for keeping an up-to-date list of software assets and dependencies?" => {
+    text: "What would be the process for keeping an up-to-date list of software assets and dependencies?",
+    section: "Software Assets Used and Produced",
+    number: 5,
+    guidance: "TODO - add note about ensuring these will be around",
     themes: [],
     format: "Text area"
   },
 
-  "Have you chosen an appropriate licence for software developed by your project?" => {
-    text: "Have you chosen an appropriate licence for software developed by your project?",
-    section: "Intellectual Property and Governance",
+  "Have you chosen an open source or proprietary licence for your project?" => {
+    text: "Have you chosen an open source or proprietary licence for your project?",
+    section: "Intellectual Property",
     number: 1,
-    guidance: "",
+    guidance: "TODO. If adopting dual licencing then you may select both",
     themes: [],
-    format: "Text area"
+    format: "Check box",
+    options: ["Open source", "Proprietary", "Dual licencing"]
   },
-  "Is your license clearly stated and acceptable to all partners?" => {
-    text: "Is your license clearly stated and acceptable to all partners?",
-    section: "Intellectual Property and Governance",
+  "If open source, then have you chosen an OSI-approved open source licence?" => {
+    text: "If open source, then have you chosen an OSI-approved open source licence?",
+    section: "Intellectual Property",
     number: 2,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
-    format: "Text area"
+    format: "Radio buttons",
+    options: ["Yes", "No"]
   },
-  "Do you have a governance model for your project or product?" => {
-    text: "Do you have a governance model for your project or product?",
-    section: "Intellectual Property and Governance",
+  "What licences have you chosen?" => {
+    text: "What licences have you chosen?",
+    section: "Intellectual Property",
     number: 3,
-    guidance: "",
+    guidance: "TODO Describe your chosen licence(s) here",
     themes: [],
     format: "Text area"
   },
-  "What are the licenses for third party code, models, tools and libraries used?" => {
-    text: "What are the licenses for third party code, models, tools and libraries used?",
-    section: "Intellectual Property and Governance",
+  "Is your licence(s) clearly stated?" => {
+    text: "Is your licence(s) clearly stated?",
+    section: "Intellectual Property",
     number: 4,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
-  "Are there are issues with the compatibility of licenses for third party code, tools or libraries?" => {
-    text: "Are there are issues with the compatibility of licenses for third party code, tools or libraries?",
-    section: "Intellectual Property and Governance",
+  "Is your licence acceptable to all partners?" => {
+    text: "Is your licence acceptable to all partners?",
+    section: "Intellectual Property",
     number: 5,
-    guidance: "",
+    guidance: "TODO",
+    themes: [],
+    format: "Text area"
+  },
+  "What are the licences for third party code, models, tools and libraries used?" => {
+    text: "What are the licences for third party code, models, tools and libraries used?",
+    section: "Intellectual Property",
+    number: 6,
+    guidance: "TODO",
+    themes: [],
+    format: "Text area"
+  },
+  "Are there are issues with the compatibility of licences for third party code, tools or libraries?" => {
+    text: "Are there are issues with the compatibility of licences for third party code, tools or libraries?",
+    section: "Intellectual Property",
+    number: 7,
+    guidance: "TODO",
+    themes: [],
+    format: "Text area"
+  },
+  "Who is the copyright holder for any software you produce" => {
+    text: "Who is the copyright holder for any software you produce",
+    section: "Intellectual Property",
+    number: 8,
+    guidance: "TODO - must be a legal entity",
     themes: [],
     format: "Text area"
   },
   "Are there any issues that you are aware of to do with patents, copyright and other IP restrictions?" => {
     text: "Are there any issues that you are aware of to do with patents, copyright and other IP restrictions?",
-    section: "Intellectual Property and Governance",
-    number: 6,
-    guidance: "",
+    section: "Intellectual Property",
+    number: 9,
+    guidance: "TODO",
+    themes: [],
+    format: "Text area"
+  },
+
+  "Do you have a governance model for your project or product?" => {
+    text: "Do you have a governance model for your project or product?",
+    section: "Governance",
+    number: 1,
+    guidance: "TODO - add link to OSSWatch",
     themes: [],
     format: "Text area"
   },
@@ -585,7 +627,7 @@ questions = {
     text: "Have you identified suitable project infrastructure early, particularly a code repository (either in-house or public)?",
     section: "Access, sharing and reuse",
     number: 1,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -593,7 +635,7 @@ questions = {
     text: "Will your project repository be public or private? Do you have a requirement for private storage?",
     section: "Access, Sharing and Reuse",
     number: 2,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -601,7 +643,7 @@ questions = {
     text: "What is required to be shared between partners / more widely?",
     section: "Access, Sharing and Reuse",
     number: 3,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -609,7 +651,7 @@ questions = {
     text: "How you will manage releases (how often, how delivered, how will you decide when to release)?",
     section: "Access, Sharing and Reuse",
     number: 4,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -617,7 +659,7 @@ questions = {
     text: "How will you ensure you deliver 'what's needed' (e.g. acceptance criteria)?",
     section: "Access, Sharing and Reuse",
     number: 5,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -625,7 +667,7 @@ questions = {
     text: "How will you ensure you deliver 'correct' code (e.g. tests, frameworks, checklists, quality control)?",
     section: "Access, Sharing and Reuse",
     number: 6,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -633,7 +675,7 @@ questions = {
     text: "How you will deliver readable code that can be understood by others (e.g. documentation, coding standards, code reviews, pair programming)?",
     section: "Access, Sharing and Reuse",
     number: 7,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -641,7 +683,7 @@ questions = {
     text: "How will you make it easier for new team members to run and develop the software?",
     section: "Access, Sharing and Reuse",
     number: 8,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -649,7 +691,7 @@ questions = {
     text: "How will you make it easy to write and run new tests?",
     section: "Access, Sharing and Reuse",
     number: 9,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -657,7 +699,7 @@ questions = {
     text: "How will you make it easy to reference and cite the software produced by your project?",
     section: "Access, Sharing and Reuse",
     number: 10,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -666,7 +708,7 @@ questions = {
     text: "Where will you deposit software for long-term preservation/archival?",
     section: "Long-term Preservation",
     number: 1,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -674,7 +716,7 @@ questions = {
     text: "Does your institutional repository allow deposit of software?",
     section: "Long-term Preservation",
     number: 2,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -682,7 +724,7 @@ questions = {
     text: "Does your chosen repository have a clear preservation policy?",
     section: "Long-term Preservation",
     number: 3,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -690,7 +732,7 @@ questions = {
     text: "Is your chosen repository part of a distributed preservation collection?",
     section: "Long-term Preservation",
     number: 4,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -698,7 +740,7 @@ questions = {
     text: "How will you tracking data formats used (related to your data management plan)?",
     section: "Long-term Preservation",
     number: 5,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -706,7 +748,7 @@ questions = {
     text: "How will you record specific and implicit dependencies (e.g. browsers, operating systems, SDKs) required by your software?",
     section: "Long-term Preservation",
     number: 6,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -714,7 +756,7 @@ questions = {
     text: "Do you have a need to record and track versions of service interfaces and any use of open or proprietary standards that may change/become superceded by others?",
     section: "Long-term Preservation",
     number: 7,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -722,7 +764,7 @@ questions = {
     text: "Does your software require access to any public web services / infrastructure / databases that may change or disappear?",
     section: "Long-term Preservation",
     number: 8,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -731,7 +773,7 @@ questions = {
     text: "What software development model will you aim to use?",
     section: "Resourcing and Responsibility",
     number: 1,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -739,7 +781,7 @@ questions = {
     text: "How you will support your software (how much effort is available, what level of service will you offer, how will you interact)? Will this change over time?",
     section: "Resourcing and Responsibility",
     number: 2,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -747,7 +789,7 @@ questions = {
     text: "What effort is available to support the software (funded on your project, unfunded volunteers, temporary, students)?",
     section: "Resourcing and Responsibility",
     number: 3,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -755,7 +797,7 @@ questions = {
     text: "Whose responsibility is it for different roles (e.g. project manager, build manager, technical authority, change board, support requests)?",
     section: "Resourcing and Responsibility",
     number: 4,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -763,7 +805,7 @@ questions = {
     text: "How you will track who does and has done what (e.g. TODOs, issues, bugs and queries)?",
     section: "Resourcing and Responsibility",
     number: 5,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -771,7 +813,7 @@ questions = {
     text: "How do you ensure adequate knowledge exchange within the team to ensure that knowledge is not lost when people leave (e.g. documentation, pair programming, reviews)?",
     section: "Resourcing and Responsibility",
     number: 6,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -779,7 +821,7 @@ questions = {
     text: "How often will you review and revise the software management plan?",
     section: "Resourcing and Responsibility",
     number: 7,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
   },
@@ -787,7 +829,7 @@ questions = {
     text: "How does your software management plan relate to any data management plan?",
     section: "Resourcing and Responsibility",
     number: 8,
-    guidance: "",
+    guidance: "TODO",
     themes: [],
     format: "Text area"
  }
@@ -803,10 +845,21 @@ questions.each do |q, details|
   details[:themes].each do |theme|
     question.themes << Theme.find_by_title(theme)
   end
+  if (details[:format].eql? 'Radio buttons') or (details[:format].eql? 'Check box')
+    i = 1
+    details[:options].each do |opt|
+      option = Option.new
+      option.text = opt
+      option.number = i
+      i += 1
+      option.save!
+      question.options << option
+    end
+    question.options[0].is_default = true
+    question.multiple_choice = true
+  end
   question.save!
 end
-
-#suggested_answers
 
 formatting = {
   'SSI' => {
