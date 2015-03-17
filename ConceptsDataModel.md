@@ -308,3 +308,19 @@ What this sets up:
  - User
 * Themes
 * Plans
+
+---
+
+## DMPonline and configuration
+
+* Select DCC Template
+  - Question guidance is shown but not DCC theme guidance
+* Select AHRC Template
+  - Question guidance is shown
+  - DCC theme guidance is shown if "DCC guidance" checkbox was selected
+* If no Funder or Institution is defined then
+  - Only default template will be offered (defined by templates is_default)
+  - Only question-specific guidance is shown
+* Theme guidance is offered only if Funder or Institution templates are defined
+* Funder and Institution drop-downs are only populated if there are associated templates
+* Default template is defined by templates.is_default
