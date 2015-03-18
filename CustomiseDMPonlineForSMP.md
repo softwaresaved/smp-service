@@ -546,6 +546,33 @@ Commit: [0e29256e38486ea86342dcaa461cdccc04594d5b](https://github.com/softwaresa
 
 **TODO: DMPonline should use this generic icon name to make rebranding easier.**
 
+### Rationalise how seeds.rb is structured
+
+seeds.rb populates the database. Challenges in adding SMP content included:
+
+* Its code did not allow for multiple templates to have sections with the same name.
+* Ordering of sections, or questions within sections, had to be done manually, via a `number:` value. Missing one of these would cause problems when running DMPonline (e.g. a section's questions would not be shown).
+* All the data was provided via Ruby hashes, so keys were often duplicated (e.g. the key for a question duplicated the `text` value for a question).
+
+Commit: [58f9acebf3a8879dac75a0238924f93176246317](https://github.com/softwaresaved/smp-service/commit/58f9acebf3a8879dac75a0238924f93176246317) provides an example of seeds.rb which includes:
+
+* Examples of using lists, rather than hashes (key-value pairs) where appropriate (e.g. for organisation_types, sections, questions etc) so:
+  - There is no need to worry about duplicated keys which may cause configuration issues.
+  - Numbering (e.g. of sections or questions within a section) can be done in-code, where desired.
+* Using nested hashes or hashes with lists as values (e.g. in defining phases of templates, versions of phases, sections of versions or questions of sections) to reduce duplication of configuration information.
+
+### Providing radio-button or check-box options
+
+Commit: [58f9acebf3a8879dac75a0238924f93176246317](https://github.com/softwaresaved/smp-service/commit/58f9acebf3a8879dac75a0238924f93176246317) provides examples of populating a radio-button and check-box.
+
+### Populate roles via seeds.db
+
+Commit: [58f9acebf3a8879dac75a0238924f93176246317](https://github.com/softwaresaved/smp-service/commit/58f9acebf3a8879dac75a0238924f93176246317) provides examples of populating the `roles` table with `admin` and `org_admin` roles.
+
+### User interface suggestion
+
+If there are no funders or institutions configured it may be useful to hide the lists that expect these to be selected from the user.
+
 ### Don't commit local configuration changes that are provided by deployers
 
 There are a number of places where DMPonline specifies e-mail addresses, URLs, public and private keys, host names etc. Some of these values relate to configuration and which need to be changed by a deployer for DMPonline to run locally. These are:
