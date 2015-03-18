@@ -6,6 +6,21 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+roles = [
+  { 
+    name: "admin"
+  },
+  { 
+    name: "org_admin"
+  },
+]
+
+roles.each do |details|
+  role = Role.new
+  role.name = details[:name]
+  role.save!
+end
+
 organisation_types = [
   {
     name: "Organisation"
