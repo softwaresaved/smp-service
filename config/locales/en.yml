@@ -542,7 +542,7 @@ Select what format you wish to use and click to 'Export'.</p>"
     </div>
     <h3>How the tool works</h3>
     <div class='white_background'>
-    <p>There are a number of templates within the tool that represent the requirements of different funders and institutions. Users are asked three questions at the outset so we can determine the appropriate template to display (e.g. the ESRC template when applying for an ESRC grant). Guidance is provided to help you interpret and answer the questions. This guidance is provided by researcher funders, universities and disciplines.</p>
+    <p>There are a number of templates within the service that represent the requirements of different funders and institutions. Users are asked three questions at the outset so we can determine the appropriate template to display (e.g. the ESRC template when applying for an ESRC grant). Guidance is provided to help you interpret and answer the questions. This guidance is provided by researcher funders, universities and disciplines.</p>
     </div>
     <h3>Getting started</h3>
     <div class='white_background'>
@@ -649,16 +649,15 @@ Planning for the effective creation, management and sharing of your data enables
     </div>
     <h3>Software Management Plan Service</h3>
     <div class='white_background'>
-      <p>Software Management Plan Service ('the tool', 'the system') is a tool developed by the Institute, as a shared resource for the research community. It is hosted at the University of Edinburgh. It is powered by DMPonline, developed by the Digital Curation Centre.</p>
+      <p>Software Management Plan Service ('the tool', 'the system', 'the service') is a service developed by the Institute, as a shared resource for the research community. It is hosted at the University of Edinburgh. It is powered by DMPonline, developed by the Digital Curation Centre.</p>
     </div>
-    <h3>Service provision</h3>
+    <h3>Use of the service</h3>
     <div class='white_background'>
-    <p>This is a prototype service. Data may be lost, errors might occur, and the service may go down without notice.</p>
-    <p>The prototype is provided 'as is', without warranties or conditions of any kind, either express or implied, including, without limitation, any warranties or conditions of title, non-infringement, merchantability, or fitness for a particular purpose. You are solely responsible for determining the appropriateness of using this service and assume any risks associated with your use of this service.</p>
+    <p>This is a prototype service. Data may be lost, errors might occur, and the service may go down without notice.</p><p>The service is provided 'as is', without warranties or conditions of any kind, either express or implied, including, without limitation, any warranties or conditions of title, non-infringement, merchantability, or fitness for a particular purpose.</p><p>Advice provided by this service, particularly that relating to intellectual property, copyright, licensing and patents is for information purposes only. It is not, and nor is it intended to be, legal advice. You should not act in any way on the basis of the information without seeking where necessary appropriate professional advice concerning their own individual circumstances.</p><p>You are solely responsible for determining the appropriateness of using this service and assume any risks associated with your use of this service.</p>
     </div>
     <h3>Your personal details</h3>
     <div class='white_background'>
-      <p>In order to help identify and administer your account with Software Management Plan Service, we need to store your email address. We may also use it to contact you to obtain feedback on your use of the tool, or to inform you of the latest developments or releases. The information may be transferred between the Institute partner institutions but only for legitimate Institute purposes. We will not sell, rent or trade any personal information you provide to us.</p>
+      <p>In order to help identify and administer your account with Software Management Plan Service, we need to store your email address. We may also use it to contact you to obtain feedback on your use of the service, or to inform you of the latest developments or releases. The information may be transferred between the Institute partner institutions but only for legitimate Institute purposes. We will not sell, rent or trade any personal information you provide to us.</p>
     </div>
     <h3>Privacy policy</h3>
     <div class='white_background'>
@@ -678,4 +677,4 @@ Planning for the effective creation, management and sharing of your data enables
     </div>
     <br />
     <div class='white_background'>
-    <p>Use of the tool indicates that you understand and agree to these terms and conditions.</p></div>"
+    <p>Use of the service indicates that you understand and agree to these terms and conditions.</p></div>"
