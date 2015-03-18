@@ -8,10 +8,13 @@ Repository for work relating to development of a software management plan servic
 The work seeks to use the [Digital Curation Centre](http://www.dcc.ac.uk)'s [DMPonline](https://github.com/DigitalCurationCentre/DMPonline_v4) as a framework to implement the service.
 
 * [Sources for service content](./SMPContent.md) for an online SMP service.
-
 * [DMPonline deployment and usage experiences](./DMPonlineDeployUseReview.md)
 * [DMPonline testing experiences](./DMPonlineTestReview.md)
-* [DMPonline deployer's guide](./DMPonlineDeployersGuide.md) - written as a side-effect of the above.
+* [Customing DMPonline into a prototype SMP service](./CustomiseDMPonlineForSMP.md) - how DMPonline was customised into a prototype SMP service.
 
+DMPonline documents (produced as a side-effect of the above):
+
+* [DMPonline deployer's guide](./DMPonlineDeployersGuide.md)
+* [DMPonline deployer's guide - Apache deployment](./DMPonlineDeployersGuideApache.md)
+* [DMPonline deployer's guide - reference information](./DMPonlineDeployersGuideReference.md).
 * [DMPonline concepts and data model](./ConceptsDataModel.md)
-* [Customing DMPonline into a prototype SMP service](./CustomiseDMPonlineForSMP.md) - notes to date.
