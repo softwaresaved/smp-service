@@ -1,7 +1,7 @@
 
 # Customing DMPonline into a prototype SMP service
 
-Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 11/03/2014.
+Mike Jackson, [The Software Sustainability Institute](http://www.software.ac.uk), 11/03/2014. Updated 30/03/04.
 
 ## Introduction
 
@@ -145,9 +145,7 @@ Commit: [0bc7b24f560ea8cfaf4fa96b6cc141ca82b4818a](https://github.com/softwaresa
 
 These two files were then updated to access the flag via Rails.application.config.shibboleth_enabled instead of DMPonline4::Application.config.shibboleth_enabled.
 
-Commit: [af8d9befa11488f4adc1fbb56962b47bf77efc27](https://github.com/softwaresaved/smp-service/commit/af8d9befa11488f4adc1fbb56962b47bf77efc27).
-
-**TODO: rebase these changes and recreate these changes into a branch of DMPonline (due to the way commits have been made elsewhere a simple rebase may be challenging) and create a pull request to DMPonline_v4. Ability to enable/disable Shibboleth content could be useful to DMPonline deployers.**
+Recreated in [toggle_shibboleth](https://github.com/softwaresaved/smp-service/tree/toggle_shibboleth) branch. Submitted to DMPonline as [pull request 165](https://github.com/DigitalCurationCentre/DMPonline_v4/pull/165).
 
 ### Remove references to DMPonline 3
 
@@ -191,7 +189,7 @@ These files were updated to remove this content.
 
 Commit: [838b5638a6a778e2f63cbb17e15fd529a5812350](https://github.com/softwaresaved/smp-service/commit/838b5638a6a778e2f63cbb17e15fd529a5812350).
 
-**TODO: Could remove all trace of dmponline3 in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK.**
+One could remove all trace of dmponline3 in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK.
 
 ### Change DMPonline, DMP, data management plan references in the user interface
 
@@ -254,23 +252,39 @@ The following files were updated to use these and existing properties:
 
 Commit: [b2a41e8c7119f274032ca2601e1db24835a0d629](https://github.com/softwaresaved/smp-service/commit/b2a41e8c7119f274032ca2601e1db24835a0d629).
 
-**TODO: rebase these changes and recreate these changes into a branch of DMPonline (due to the way commits have been made elsewhere a simple rebase may be challenging) and create a pull request to DMPonline_v4. Additional configurability could be useful to those rebranding DMPonline too.**
+Recreated in [dmp_agnostic](https://github.com/softwaresaved/smp-service/tree/dmp_agnostic) branch. Submitted to DMPonline as [pull request 166](https://github.com/DigitalCurationCentre/DMPonline_v4/pull/166).
 
-With these changes in place, the only remaining references in the user interface to DMP or data management plan or DMPonline are within configuration files:
+and
+
+Recreated in [config_properties](https://github.com/softwaresaved/smp-service/tree/config_properties) branch. Submitted to DMPonline as [pull request 167](https://github.com/DigitalCurationCentre/DMPonline_v4/pull/167).
+
+After applying config_properties and dmp_agnostic, the only remaining references in the user interface to DMP or data management plan or DMPonline arise from within...
+
+Configuration files:
 
     config/environments/development.rb
     config/environments/production.rb
+    config/environments/test.rb
     config/initializers/active_admin.rb
     config/locales/devise.en.yml
     config/locales/en.yml
     db/seeds.rb
 
-Or files that relate to DMPonline and Digital Curation Centre-specific branding:
+Additional files that include DMPonline and Digital Curation Centre-specific branding/content:
 
-    public/403.html
+    app/views/home/index.html.erb 
+    app/views/layouts/_dmponline_header.html.erb
+    app/views/layouts/_dmponline_footer.html.erb
+    app/views/static_pages/news.html.erb
     public/_index.html
+    public/403.html
 
-These will be addressed below.
+Additional files with references for existing DMPonline 3 users:
+
+    app/admin/user.rb
+    app/views/existing_users/index.html.erb
+    app/views/layouts/_dmponline_footer.html.erb
+    app/views/projects/index.html.erb
 
 ### Make Google Map configurable
 
@@ -286,7 +300,7 @@ As this Google Map link is the only DCC-specific part of app/views/contact_us/co
 
 Commit: [2f6d48e653b53726d43880c26e16d233cd474702](https://github.com/softwaresaved/smp-service/commit/2f6d48e653b53726d43880c26e16d233cd474702).
 
-**TODO: rebase these changes and recreate these changes into a branch of DMPonline (due to the way commits have been made elsewhere a simple rebase may be challenging) and create a pull request to DMPonline_v4. Additional configurability could be useful to those rebranding DMPonline too.**
+Recreated in [configurable_map](https://github.com/softwaresaved/smp-service/tree/configurable_map) branch and then merged into [config_properties](https://github.com/softwaresaved/smp-service/tree/config_properties) above.
 
 ### Remove link to DMPonline News
 
@@ -310,7 +324,7 @@ This means that the news page is still available if someone views news.html dire
 
 [DMP Builder](https://dmp.library.ualberta.ca) adopted a similar solution, commenting out the link with the [news.html](https://dmp.library.ualberta.ca/news.html) page still being accessible.
 
-**TODO: Could remove all trace of News in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK.**
+Could remove all trace of News in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK.
 
 ### Remove screencast
 
@@ -335,13 +349,13 @@ These are used within app/views/home/index.html.erb:
     <embed src="<%= asset_path('index.files/html5video/flashfox.swf')%>" width="100%" height="200" style="position:relative;"  flashVars="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster=<%= asset_path('screencast.jpg')%>&amp;src=<%= asset_path('index.files/html5video/screencast.mp4')%>"	allowFullScreen="true" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer_en" />
     <img alt="screencast" src="<%= asset_path('screencast.jpg')%>" style="position:absolute;left:0;" width="100%" title="<%= t('screencast_error_text')%>" />
 
-indes.html.erb was edited to remove screencast.
+index.html.erb was edited to remove screencast.
 
 Commit: [820ef77e150d93f1bcdcb87db78373b910534f28](https://github.com/softwaresaved/smp-service/commit/820ef77e150d93f1bcdcb87db78373b910534f28).
 
 The video files are still present, for now.
 
-**TODO: Could remove all trace of these videos in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK. Alternatively, update the screencast with an SMP service-specific one.**
+Could remove all trace of these videos in future development of the SMP service, so long as SMP service is kept "downstream" of DMPonline this should be OK. Alternatively, update the screencast with an SMP service-specific one.
 
 ### Resolve Export as docx and htmltoword 0.2.0 gem issue
 
@@ -377,7 +391,7 @@ Another user of htmltoword 0.2.0 has raised this as an [issue](https://github.co
 
 Commit: [3ddd70fa0f68e7fecb9ce0463d3ab4b84ca73ecc](https://github.com/softwaresaved/smp-service/commit/3ddd70fa0f68e7fecb9ce0463d3ab4b84ca73ecc)
 
-**TODO: recreate this change into a branch of DMPonline.**
+Recreated in [htmltoword018](https://github.com/softwaresaved/smp-service/tree/htmltoword018) branch. Submitted to DMPonline as [pull request 163](https://github.com/DigitalCurationCentre/DMPonline_v4/pull/163).
 
 ### Resolve flash not showing for reCAPTCHA failures
 
@@ -389,7 +403,7 @@ Changing :error to :alert solves this problem.
 
 Commit: [d550325c55b40fa0d8a1319d65a25ddf9559d10a](https://github.com/softwaresaved/smp-service/commit/d550325c55b40fa0d8a1319d65a25ddf9559d10a)
 
-**TODO: recreate this change into a branch of DMPonline.**
+Recreated in [fix_recaptcha_flash](https://github.com/softwaresaved/smp-service/tree/fix_recaptcha_flash) branch. Submitted to DMPonline as [pull request 161](https://github.com/DigitalCurationCentre/DMPonline_v4/pull/161).
 
 ### Update branding
 
@@ -544,7 +558,7 @@ with:
 
 Commit: [0e29256e38486ea86342dcaa461cdccc04594d5b](https://github.com/softwaresaved/smp-service/commit/0e29256e38486ea86342dcaa461cdccc04594d5b)
 
-**TODO: DMPonline should use this generic icon name to make rebranding easier.**
+Recreated in [generic_favicon](https://github.com/softwaresaved/smp-service/tree/generic_favicon) branch. Submitted to DMPonline as [pull request 162](https://github.com/DigitalCurationCentre/DMPonline_v4/pull/162).
 
 ### Rationalise how seeds.rb is structured
 
@@ -609,3 +623,5 @@ If using Shibboleth then the deployer also needs to configure:
       config.shibboleth_login = 'https://localhost/Shibboleth.sso/Login'
 
 For the prototype SMP service, therefore, no changes will be commited for these files and file updates will be held privately.
+
+---

@@ -11,6 +11,7 @@ The work seeks to use the [Digital Curation Centre](http://www.dcc.ac.uk)'s [DMP
 * [DMPonline deployment and usage experiences](./DMPonlineDeployUseReview.md)
 * [DMPonline testing experiences](./DMPonlineTestReview.md)
 * [Customing DMPonline into a prototype SMP service](./CustomiseDMPonlineForSMP.md) - how DMPonline was customised into a prototype SMP service.
+* [DMPonline pull requests](./PullRequests.md) - summary of changes fed back to DMPonline as pull requests.
 
 DMPonline documents (produced as a side-effect of the above):
 
