@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -563,7 +564,9 @@ questions = {
     number: 1,
     guidance: "<p class='guidance_header'>Questions to consider:</p> <ul> <li>What type, format and volume of data?</li> <li>Do your chosen formats and software enable sharing and long-term access to the data?</li> <li>Are there any existing data that you can reuse?</li> </ul> <p class='guidance_header'>Guidance:</p> <p>Give a brief description of the data, including any existing data or third-party sources that will be used, in each case noting its content, type and coverage. Outline and justify your choice of format and consider the implications of data format and data volumes in terms of storage, backup and access.</p>",
     themes: ["Existing Data", "Data Volumes", "Data Type", "Data Format"],
-    format: "Text area"
+#    format: "Check box",
+    format: "Radio buttons",
+    options: ["Big data", "Linked data", "Relational data"],
   },
   "How will the data be collected or created?" => {
     text: "How will the data be collected or created?",
@@ -571,6 +574,8 @@ questions = {
     number: 2,
     guidance: "<p class='guidance_header'>Questions to consider:</p> <ul> <li>What standards or methodologies will you use?</li> <li>How will you structure and name your folders and files?</li> <li>How will you handle versioning?</li> <li>What quality assurance processes will you adopt?</li> </ul> <p class='guidance_header'>Guidance:</p> <p>Outline how the data will be collected/created and which community data standards (if any) will be used. Consider how the data will be organised during the project, mentioning for example naming conventions, version control and folder structures. Explain how the consistency and quality of data collection will be controlled and documented. This may include processes such as calibration, repeat samples or measurements, standardised data capture or recording, data entry validation, peer review of data or representation with controlled vocabularies.</p>",
     themes: ["Data Capture Methods", "Data Quality"],
+#    format: "Radio buttons",
+#    options: ["Manual", "Sensor", "Web service"]
     format: "Text field"
   },
   "What documentation and metadata will accompany the data?" => {
@@ -728,6 +733,19 @@ questions.each do |q, details|
   question.section = Section.find_by_title(details[:section])
   details[:themes].each do |theme|
     question.themes << Theme.find_by_title(theme)
+  end
+  if (details[:format].eql? 'Radio buttons') or (details[:format].eql? 'Check box')
+    i = 1
+    details[:options].each do |opt|
+      option = Option.new
+      option.text = opt
+      option.number = i
+      i += 1
+      option.save!
+      question.options << option
+    end
+    question.options[0].is_default = true
+    question.multiple_choice = true
   end
   question.save!
 end
