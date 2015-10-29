@@ -48,26 +48,6 @@ $( document ).ready(function() {
 		$("#confirm-template").text($("#project_dmptemplate_id :selected").text());
 	});
 
-	$("#project-confirmation-dialog").on("show", function(){
-		if ($("#confirm-institution").text() == "") {
-			$("#confirm-institution").text("None");
-		}
-		if ($("#confirm-funder").text() == "") {
-			$("#confirm-funder").text("None");
-		}
-		if ($("#confirm-template").text() == "") {
-			$("#confirm-template").closest("div").hide();
-		}
-		else {
-			$("#confirm-template").closest("div").show();
-		}
-		$("#confirm-guidance").empty();
-		$("input:checked").each(function(){
-			$("#confirm-guidance").append("<li id='confirm-"+$(this).attr("id")+"'>"+$(this).parent().text()+"</li>");
-		});
-		$('.select2-choice').hide();
-	});
-
 	$("#new-project-cancelled").click(function (){
 		$("#project-confirmation-dialog").modal("hide");
 		$('.select2-choice').show();
@@ -77,21 +57,9 @@ $( document ).ready(function() {
 		$("#new_project").submit();
 	});
 
-    //for the default template alert
 	$("#default-template-confirmation-dialog").on("show", function(){
-		$('.select2-choice').hide();
-	});
-
-	$("#default-template-cancelled").click(function (){
-		$("#default-template-confirmation-dialog").modal("hide");
-		$('.select2-choice').show();
-	});
-
-	$("#default-template-confirmed").click(function (){
-		$("#default_tag").val('true');
 		$("#new_project").submit();
 	});
-
 
 	function update_template_options() {
 		var options = {};
