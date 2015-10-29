@@ -2,7 +2,7 @@ module Settings
   class PlanList < RailsSettings::SettingObject
 
     # TODO: can these be taken from somewhere else rather than hard-coded here?
-    DEFAULT_COLUMNS = %i( name owner shared last_edited )
+    DEFAULT_COLUMNS = %i( name owner last_edited )
     ALL_COLUMNS = DEFAULT_COLUMNS + %i( template_owner identifier grant_number principal_investigator data_contact description )
 
     validate do
