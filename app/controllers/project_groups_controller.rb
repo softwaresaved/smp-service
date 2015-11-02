@@ -23,11 +23,9 @@ class ProjectGroupsController < ApplicationController
 							else
 								@project_group.user = User.find_by_email(params[:project_group][:email])
 								@project_group.save
-								UserMailer.sharing_notification(@project_group).deliver
 								logger.debug("Email sent from here?")
 							end
 						else
-							UserMailer.sharing_notification(@project_group).deliver
 							logger.debug("Email sent from there?")
 						end
 						flash[:notice] = message
@@ -66,7 +64,6 @@ class ProjectGroupsController < ApplicationController
 			respond_to do |format|
 				if @project_group.update_attributes(params[:project_group])
 					flash[:notice] = 'Sharing details successfully updated.'
-					UserMailer.permissions_change_notification(@project_group).deliver
 					format.html { redirect_to :controller => 'projects', :action => 'share', :id => @project_group.project.slug }
 					format.json { head :no_content }
 				else
@@ -87,7 +84,6 @@ class ProjectGroupsController < ApplicationController
 			@project_group.destroy
 			respond_to do |format|
 				flash[:notice] = 'Access removed'
-				UserMailer.project_access_removed_notification(user, project).deliver
 				format.html { redirect_to :controller => 'projects', :action => 'share', :id => @project_group.project.slug }
 				format.json { head :no_content }
 			end
