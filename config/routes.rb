@@ -35,34 +35,6 @@ DMPonline4::Application.routes.draw do
 		end
 	end
  
- 	resources :guidances, :path => 'org/admin/guidance' do
-  	member do
-  		get 'admin_show'
-  		get 'admin_index'
-			get 'admin_edit'
-			get 'admin_new'
-			delete 'admin_destroy' 
-			post 'admin_create'
-			put 'admin_update'
-			
-			get 'update_phases', :as => 'update_phases'
-  		get 'update_versions', :as => 'update_versions'
-  		get 'update_sections', :as => 'update_sections'
-  		get 'update_questions', :as => 'update_questions'
-   	end
-  end
- 
- 	resources :guidance_groups, :path => 'org/admin/guidancegroup' do
- 		member do
- 			get 'admin_show'
- 			get 'admin_new'
- 			get 'admin_edit'
- 			delete 'admin_destroy' 
-			post 'admin_create'
-			put 'admin_update'
-  	end
-  end
- 
  	resource :organisation 
  
   #resources :splash_logs
@@ -100,11 +72,6 @@ DMPonline4::Application.routes.draw do
   resources :versions
   resources :sections
   resources :questions
-  resources :question_themes
-
-  
-  resources :themes
-  
   resources :answers
   resources :plan_sections
   
@@ -132,7 +99,6 @@ DMPonline4::Application.routes.draw do
 	end
 	collection do
 		get 'possible_templates'
-		get 'possible_guidance'
 	end
   end
     
