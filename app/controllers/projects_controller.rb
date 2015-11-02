@@ -5,9 +5,6 @@ class ProjectsController < ApplicationController
 	# GET /projects.json
 	def index
 		if user_signed_in? then
-			if (current_user.shibboleth_id.nil? || current_user.shibboleth_id.length == 0) && !cookies[:show_shib_link].nil? && cookies[:show_shib_link] == "show_shib_link" then
-				flash.notice = "#{t('helpers.shibboleth_invite_text')} #{view_context.link_to t('helpers.shibboleth_invite_link_text'), user_omniauth_shibboleth_path}".html_safe
-			end
 
 			@projects = current_user.projects.filter(params[:filter])
 			@has_projects = current_user.projects.any? # unfiltered count

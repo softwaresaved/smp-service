@@ -10,9 +10,6 @@
 		</div>
 	</li>
 	<% if extended then %>
-		<% unless session[:shibboleth_data].nil? %>
-			<%= f.hidden_field :shibboleth_id, :value => session[:shibboleth_data][:uid] %>
-		<% end %>
 		<li>
 			<%= f.text_field :firstname, placeholder: t('helpers.first_name'), :as => :string, :class => 'text_field' %>
 		</li>

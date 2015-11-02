@@ -72,11 +72,6 @@ class RegistrationsController < Devise::RegistrationsController
     	successfully_updated = @user.update_without_password(params[:user])
     end
 
-    #unlink shibboleth from user's details
-    if params[:unlink_flag] == 'true' then
-      @user.update_attributes(:shibboleth_id => "")
-    end
-
     if successfully_updated
   		if confirm then
   			@user.skip_confirmation!

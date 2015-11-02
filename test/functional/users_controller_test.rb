@@ -18,7 +18,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: { email: @user.email, firstname: @user.firstname, last_login: @user.last_login, login_count: @user.login_count, orcid_id: @user.orcid_id, password: @user.password, shibboleth_id: @user.shibboleth_id, user_status_id: @user.user_status_id, surname: @user.surname, user_type_id: @user.user_type_id }
+      post :create, user: { email: @user.email, firstname: @user.firstname, last_login: @user.last_login, login_count: @user.login_count, orcid_id: @user.orcid_id, password: @user.password, user_status_id: @user.user_status_id, surname: @user.surname, user_type_id: @user.user_type_id }
     end
 
     assert_redirected_to user_path(assigns(:user))
@@ -35,7 +35,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should update user" do
-    put :update, id: @user, user: { email: @user.email, firstname: @user.firstname, last_login: @user.last_login, login_count: @user.login_count, orcid_id: @user.orcid_id, password: @user.password, shibboleth_id: @user.shibboleth_id, user_status_id: @user.user_status_id, surname: @user.surname, user_type_id: @user.user_type_id }
+    put :update, id: @user, user: { email: @user.email, firstname: @user.firstname, last_login: @user.last_login, login_count: @user.login_count, orcid_id: @user.orcid_id, password: @user.password, user_status_id: @user.user_status_id, surname: @user.surname, user_type_id: @user.user_type_id }
     assert_redirected_to user_path(assigns(:user))
   end
 

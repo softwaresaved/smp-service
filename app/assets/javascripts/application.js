@@ -116,33 +116,6 @@ $( document ).ready(function() {
 		$("#user_organisation_id").change();
 	});
     
-    
-    //alert dialog for unlink Shibbileth account 
-   	$("#unlink-institutional-credentials-dialog").on("show", function(){
-		$('.select2-choice').hide();
-	});
-
-	$("#unlink-shibboleth-cancelled").click(function (){
-		$("#unlink-institutional-credentials-dialog").modal("hide");
-		$('.select2-choice').show();
-	});
-
-	$("#unlink-shibboleth-confirmed").click(function (){
-        $("#unlink_flag").val('true');
-		$("#edit_user").submit();
-		
-	});
-
-
-	/*$('#continue-to-new').click(function(e){
-		var destination = $(this).attr("href");
-		var n = destination.lastIndexOf('=');
-		destination = decodeURIComponent(destination.substring(n + 1));
-		$.post('splash_logs', {destination: destination} );
-		$("#3-or-4-splash").modal('hide');
-		return false;
-	});*/
-
 });
 
 function validateEmail(sEmail) {

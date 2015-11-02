@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:shibboleth]
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable
 
     #associations between tables
     belongs_to :user_type
@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
     attr_accessible :role_ids
 
     attr_accessible :password_confirmation, :encrypted_password, :remember_me, :id, :email, :firstname, :last_login,
-     :login_count, :orcid_id, :password, :shibboleth_id, :user_status_id,
+     :login_count, :orcid_id, :password, :user_status_id,
      :surname, :user_type_id, :organisation_id, :skip_invitation, :other_organisation,
      :accept_terms, :role_ids, :dmponline3
 

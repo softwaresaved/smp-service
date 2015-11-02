@@ -6,10 +6,6 @@ DMPonline4::Application.routes.draw do
   end 
   resources :contacts, :controllers => {:contacts => 'contacts'}
   
-  # WAYFless access point - use query param idp
-  get 'auth/shibboleth' => 'users/omniauth_shibboleth_request#redirect', :as => 'user_omniauth_shibboleth'
-  get 'auth/shibboleth/assoc' => 'users/omniauth_shibboleth_request#associate', :as => 'user_shibboleth_assoc'
-  
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'home#index'

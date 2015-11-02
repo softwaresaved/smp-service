@@ -339,7 +339,6 @@ ActiveRecord::Schema.define(:version => 20140707143840) do
     t.string   "email",                  :default => "", :null => false
     t.string   "password"
     t.string   "orcid_id"
-    t.string   "shibboleth_id"
     t.integer  "user_type_id"
     t.integer  "user_status_id"
     t.integer  "login_count"

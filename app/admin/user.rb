@@ -13,7 +13,7 @@ ActiveAdmin.register User do
 	 
 	
 	index do   # :password_confirmation, :encrypted_password, :remember_me, :id, :email,
-		# :firstname, :last_login, :login_count, :orcid_id, :password, :shibboleth_id, 
+		# :firstname, :last_login, :login_count, :orcid_id, :password,
 		#:user_status_id, :surname, :user_type_id, :organisation_id, :skip_invitation,
 		# :other_organisation, :accept_terms, :role_ids, :dmponline3
 
@@ -69,7 +69,6 @@ ActiveAdmin.register User do
   				(user.roles.map{|ro| link_to ro.name, [:admin, ro]}).join(', ').html_safe
   			end
   			row :dmponline3
-  			row :shibboleth_id
   			row :last_sign_in_at
   			row :sign_in_count 
 
@@ -83,7 +82,6 @@ ActiveAdmin.register User do
   			f.input :surname
   			f.input :email
   			f.input :orcid_id
-  			f.input :shibboleth_id
   			f.input :organisation_id ,:label => I18n.t('admin.org_title'), 
   						:as => :select, 
   						:collection => Organisation.find_all_by_parent_id(nil, :order => 'name ASC').map{|orgp|[orgp.name, orgp.id]}
