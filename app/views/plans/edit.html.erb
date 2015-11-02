@@ -4,6 +4,10 @@
 <%= render :partial => "/projects/project_title", locals: {project: @plan.project} %>
 
 
+
+
+
+
 <!-- progress bar -->
 <% status = @plan.status %>
 <div class="progress">
@@ -37,6 +41,90 @@
 
 <!-- plan main container -->
 <div class="project-tabs-body">
+
+
+
+
+
+
+
+
+		<div class="div_left">
+			<p>
+				<%= t('helpers.project.project_details_text_html')%>
+			</p>	
+		</div>
+
+		<!-- display project details -->
+		<div class="dmp_details">
+			<table class="dmp_details_table">
+				<tr>
+					<td class="first"><%= t('helpers.project.project_name') %></td>
+
+					<td><%= @plan.project.title %></td>
+				</tr>
+				<tr>
+					<td class="first"><%= t('helpers.project.project_identifier') %></td>
+					<td>
+						<% if !@plan.project.identifier.nil? && @plan.project.identifier != "" then %>
+							<%= @plan.project.identifier %>
+						<%else%>
+							 -
+						<%end%>	
+					</td>
+				</tr>
+				<tr>
+					<td class="first"><%= t('helpers.plan.project.grant_title') %></td>
+					<td>
+						<% if !@plan.project.grant_number.nil? && @plan.project.grant_number!= "" then %>
+							<%= @plan.project.grant_number %>
+						<%else%>
+							-	
+						<%end%>	
+					</td>
+				</tr>
+				<tr>
+					<td class="first"><%= t('helpers.plan.project.principal_investigator') %></td>
+					<td><% if !@plan.project.principal_investigator.nil? && @plan.project.principal_investigator != "" then%>
+							<%= @plan.project.principal_investigator %>
+						<%else%>
+							 -
+						<%end%>	
+					</td>
+				</tr>
+				<% if !@plan.project.principal_investigator_identifier.nil? && @plan.project.principal_investigator_identifier != "" then %>
+					<tr>
+						<td class="first"><%= t('helpers.project.principal_investigator_id') %></td>
+						<td>
+							<%= @plan.project.principal_investigator_identifier %>
+						</td>
+					</tr>
+				<%end%>		
+				<tr>
+					<td class="first"><%= t('helpers.project.project_data_contact') %></td>
+					<td><% if !@plan.project.data_contact.nil? && @plan.project.data_contact != "" then%>
+							<%= @plan.project.data_contact %>
+						<%else%>
+							 -
+						<%end%>	
+					</td>
+				</tr>
+				<tr>
+					<td class="first"><%= t('helpers.desc') %></td>
+					<td><% if !@plan.project.description.nil? && @plan.project.description != "" then%>
+							<%= @plan.project.description %>
+						<%else%>
+							 -
+						<%end%>	
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+
+
+
     <div class="accordion" id="sections-accordion">
     	<% sections = @plan.sections %>
     	<% sections.each do |section| %>
