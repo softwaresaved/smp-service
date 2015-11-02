@@ -2,11 +2,7 @@
 <html>
 	<head>
 		<title>
-			<% if @plan.project.dmptemplate.phases.count > 1 then %>
-				<%= "#{@plan.project.title} - #{@plan.title}" %>
-			<% else %>
-				<%= @plan.project.title %>
-			<% end %>
+		  <%= @plan.project.title %>
 		</title>
 		<style>
 			html { font-family: <%= @formatting[:font_face].tr('"', '') -%>; font-size: <%= @formatting[:font_size] -%>pt; }

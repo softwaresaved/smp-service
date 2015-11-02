@@ -40,8 +40,8 @@ class Plan < ActiveRecord::Base
 	def title
 		logger.debug "Title in settings: #{self.settings(:export).title}"
 		if self.settings(:export).title == ""
-            if !self.version.nil? && !self.version.phase.nil? && !self.version.phase.title? then
-                return self.version.phase.title
+            if !self.version.nil? && !self.version.title? then
+                return self.version.title
             else
                 return I18n.t('helpers.plan.export.default_title')
 			end
@@ -161,7 +161,7 @@ class Plan < ActiveRecord::Base
 	def details
 		details = {
 			"project_title" => project.title,
-			"phase_title" => version.phase.title,
+			"version_title" => version.title,
 			"sections" => {}
 		}
 		sections.sort_by(&:"number").each do |s|

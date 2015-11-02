@@ -19,7 +19,6 @@ class ExportedPlan < ActiveRecord::Base
   # Getters to match Settings::Dmptemplate::VALID_ADMIN_FIELDS
   def project_name
     name = self.plan.project.title
-    name += " - #{self.plan.title}" if self.plan.project.dmptemplate.phases.count > 1
     name
   end
 
@@ -89,7 +88,7 @@ class ExportedPlan < ActiveRecord::Base
   end
 
   def as_txt
-    output = "#{self.plan.project.title}\n\n#{self.plan.version.phase.title}\n"
+    output = "#{self.plan.project.title}\n"
 
     self.sections.each do |section|
       output += "\n#{section.title}\n"

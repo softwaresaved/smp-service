@@ -1,7 +1,7 @@
 xml.instruct!
 xml.plan("id" => @plan.id) do
 	xml.project(@plan.project.title, "id" => @plan.project.id)
-	xml.phase(@plan.version.phase.title, "id" => @plan.version.phase.id)
+	xml.version(@plan.version.title, "id" => @plan.version.id)
 
 	details = @exported_plan.admin_details
 	if details.present?

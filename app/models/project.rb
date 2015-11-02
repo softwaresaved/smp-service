@@ -184,7 +184,7 @@ class Project < ActiveRecord::Base
 	end
 
 	def shared?
-		self.project_groups.count > 1
+          self.project_groups.count > 1
 	end
 
 	alias_method :shared, :shared?
@@ -205,13 +205,16 @@ class Project < ActiveRecord::Base
 	end
 
 	def create_plans
-		dmptemplate.phases.each do |phase|
-			latest_published_version = phase.latest_published_version
-			unless latest_published_version.nil?
-				new_plan = Plan.new
-				new_plan.version = latest_published_version
-				plans << new_plan
-			end
-		end
-	end
+          latest_published_version = nil
+          dmptemplate.versions.order("number DESC").each do |version|
+            if version.published then
+              latest_published_version = version
+            end
+          end
+          unless latest_published_version.nil?
+            new_plan = Plan.new
+            new_plan.version = latest_published_version
+            plans << new_plan
+          end
+      end
 end

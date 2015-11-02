@@ -2,15 +2,14 @@ class Dmptemplate < ActiveRecord::Base
     attr_accessible :organisation_id, :description, :published, :title, :user_id, :locale, :is_default
   
     #associations between tables
-    has_many :phases
-    has_many :versions, :through => :phases
+    has_many :versions
     has_many :sections, :through => :versions
     has_many :questions, :through => :sections
     has_many :projects
     
     belongs_to :organisation
       
-    accepts_nested_attributes_for :phases
+    accepts_nested_attributes_for :versions
     accepts_nested_attributes_for :organisation
     accepts_nested_attributes_for :projects
 
@@ -74,15 +73,13 @@ class Dmptemplate < ActiveRecord::Base
 	#verify if a then has customisation by current user's org
 	def has_customisations?(org_id, temp)
 		if temp.organisation_id != org_id then
-			temp.phases.each do |phase|
-				phase.versions.each do |version|
+				temp.versions.each do |version|
 					version.sections.each do |section|
 						return true if section.organisation_id == org_id 
 											
 					end	
 				end
 				return false 
-			end
 		else
 			return false 	
 		end	
@@ -91,10 +88,12 @@ class Dmptemplate < ActiveRecord::Base
 	
 	# verify if there are any publish version for the template
 	def has_published_versions?
-		phases.each do |phase|
-			return true if !phase.latest_published_version.nil?
-		end
-		return false 
+                versions.order("number DESC").each do |version|
+                        if version.published then
+                                return true
+                        end
+                end
+                return false
 	end
 
 end

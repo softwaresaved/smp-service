@@ -1,5 +1,5 @@
 json.project_title @exported_plan.plan.project.title
-json.phase_title @exported_plan.plan.version.phase.title
+json.version_title @exported_plan.plan.version.title
 
 details = @exported_plan.admin_details
 

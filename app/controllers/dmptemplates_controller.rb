@@ -36,32 +36,6 @@ class DmptemplatesController < ApplicationController
     render(:file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false)
   end
 
-  # PHASES
-
-  #show and edit a phase of the template
-  def admin_phase
-  end
-	
-  #preview a phase
-  def admin_previewphase
-  end
-
-  #add a new phase to a template
-  def admin_addphase
-  end
-
-  #create a phase
-  def admin_createphase
-  end
-
-  #update a phase of a template
-  def admin_updatephase
-  end
-
-  #delete a version, sections and questions
-  def admin_destroyphase
-  end
-
   # VERSIONS
   
   #update a version of a template

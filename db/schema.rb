@@ -170,19 +170,6 @@ ActiveRecord::Schema.define(:version => 20140707143840) do
     t.datetime "updated_at",      :null => false
   end
 
-  create_table "phases", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.integer  "number"
-    t.integer  "dmptemplate_id"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
-    t.string   "slug"
-  end
-
-  add_index "phases", ["dmptemplate_id"], :name => "index_phases_on_dmptemplate_id"
-  add_index "phases", ["slug"], :name => "index_phases_on_slug", :unique => true
-
   create_table "plan_sections", :force => true do |t|
     t.integer  "user_id"
     t.integer  "section_id"
@@ -387,11 +374,11 @@ ActiveRecord::Schema.define(:version => 20140707143840) do
     t.text     "description"
     t.boolean  "published"
     t.integer  "number"
-    t.integer  "phase_id"
+    t.integer  "dmptemplate_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "versions", ["phase_id"], :name => "index_versions_on_phase_id"
+  add_index "versions", ["dmptemplate_id"], :name => "index_versions_on_dmptemplate_id"
 
 end

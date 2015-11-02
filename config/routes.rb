@@ -40,23 +40,17 @@ DMPonline4::Application.routes.draw do
  			get 'admin_index'
  			get 'admin_template'
 			get 'admin_new'
-			get 'admin_addphase'
-			get 'admin_phase'
-			get 'admin_previewphase'
 			get 'admin_cloneversion'
 			delete 'admin_destroy' 
 			delete 'admin_destroyversion'
-			delete 'admin_destroyphase'
 			delete 'admin_destroysection'
 			delete 'admin_destroyquestion'
 			delete 'admin_destroysuggestedanswer'
 			post 'admin_create'
-			post 'admin_createphase'
 			post 'admin_createsection'
 			post 'admin_createquestion'
 			post 'admin_createsuggestedanswer'
 			put 'admin_update'
-			put 'admin_updatephase'
 			put 'admin_updateversion'
 			put 'admin_updatesection'
 			put 'admin_updatequestion'
@@ -64,7 +58,6 @@ DMPonline4::Application.routes.draw do
   	end
   end
    
-  resources :phases
   resources :versions
   resources :sections
   resources :questions

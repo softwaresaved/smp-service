@@ -22,12 +22,12 @@
 				<div class="accordion" id="project-accordion">
 					<div class="accordion-group">
 						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#project-accordion" href="#<%= plan.version.phase.id %>">
-								<h3><%= plan.version.phase.title %><span class="plus-laranja"> </span>
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#project-accordion" href="#<%= plan.version.id %>">
+								<h3><%= plan.version.title %><span class="plus-laranja"> </span>
 								</h3>
 							</a>
 						</div>
-						<div id="<%= plan.version.phase.id %>" class="accordion-project collapse">
+						<div id="<%= plan.version.id %>" class="accordion-project collapse">
 							<div class="accordion-inner">
 								<%= render :partial => "/shared/export_links", locals: {plan: plan} %>
 							</div>

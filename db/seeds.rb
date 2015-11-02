@@ -131,44 +131,13 @@ templates.each do |organisation_abbreviation, org_templates|
   end
 end
 
-phases = {
-  "SSI Guide Template" => [
-    {
-      title: "SSI Guide SMP",
-    }
-  ],
-  "SSI Extended Template" => [
-    {
-      title: "SSI Extended SMP",
-    },
-  ],
-  "Software Evaluation Service" => [
-    {
-      title: "Software Evaluation Service",
-    },
-  ],
-}
-
-phases.each do |template_title, template_phases|
-  template = Dmptemplate.find_by_title(template_title)
-  phase_number = 1
-  template_phases.each do |details|
-    phase = Phase.new
-    phase.title = details[:title]
-    phase.number = phase_number
-    phase_number += 1
-    phase.dmptemplate = template
-    phase.save!
-  end
-end
-
 versions = {
-  "SSI Guide SMP" => [
+  "SSI Guide Template" => [
     {
       title: "SSI Guide SMP Version 1",
     },
   ],
-  "SSI Extended SMP" => [
+  "SSI Extended Template" => [
     {
       title: "SSI Extended SMP Version 1",
     },
@@ -180,16 +149,16 @@ versions = {
   ],
 }
 
-versions.each do |phase_title, phase_versions|
-  phase = Phase.find_by_title(phase_title)
+versions.each do |template_title, template_versions|
+  dmptemplate = Dmptemplate.find_by_title(template_title)
   version_number = 1
-  phase_versions.each do |details|
+  template_versions.each do |details|
     version = Version.new
     version.title = details[:title]
     version.number = version_number
     version_number += 1
-    version.phase = phase
-    version.published = phase.dmptemplate.published
+    version.dmptemplate = dmptemplate
+    version.published = dmptemplate.published
     version.save!
   end
 end

@@ -9,7 +9,7 @@
 		<% end %>
 		<%= link_to t('helpers.project.tab_plan'), project %>
 	   		</li>
-    <!-- Plans (phases)-->
+    <!-- Plans-->
     <% project.plans.each do |plan| %>
 		<% if active == plan.id then %>
 			<li class="active">
@@ -17,9 +17,9 @@
 			<li>
 		<% end %>
 		<% if active == "show_project" || active == "export_page" then %>
-			<%= link_to plan.version.phase.title, [:edit, @project, plan]%>
+			<%= link_to plan.version.title, [:edit, @project, plan]%>
 		<% else %>
-			<%= link_to plan.version.phase.title, [:edit, @plan.project, plan]%>
+			<%= link_to plan.version.title, [:edit, @plan.project, plan]%>
 		<% end %>   
 		</li>
     <% end %>
