@@ -62,13 +62,6 @@
                 <% suggested_answer = question.suggested_answers.find_by_organisation_id(@plan.project.organisation_id) %>
                 <% if !suggested_answer.nil? && suggested_answer.text != "" then %>
                     <div class="suggested-answer-div">
-                        <span class="suggested-answer-intro">
-                            <% if suggested_answer.is_example? then %>
-                                <%= t('org_admin.questions.example_answer_label')%>
-                            <%else%>
-                                <%= t('org_admin.questions.suggested_answer_label')%>
-                            <%end%>
-                        </span>
                         <div class="suggested-answer-border">
                             <p class="suggested-answer">
                                 <%= raw suggested_answer.text %>

@@ -13,18 +13,8 @@ class OrganisationsController < ApplicationController
   # GET /organisations/1
   # GET /organisations/1.json
   def admin_show
-  	if user_signed_in? && current_user.is_org_admin? then
-	    @organisation = Organisation.find(params[:id])
-	
-	    respond_to do |format|
-	      format.html # show.html.erb
-	      format.json { render json: @organisation }
-	    end
-    else
-			render(:file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false)
-		end 
-		
-  end
+    render(:file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false)
+  end 
 
   # GET /organisations/new
   # GET /organisations/new.json
@@ -39,16 +29,7 @@ class OrganisationsController < ApplicationController
 
   # GET /organisations/1/edit
   def admin_edit
-  	if user_signed_in? && current_user.is_org_admin? then
-	    	@organisation = Organisation.find(params[:id])
-	    	
-	    	respond_to do |format|
-	      	format.html # edit.html.erb
-	      	format.json { render json: @organisation }
-	      end
-	   else
-			render(:file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false)
-		end  	
+    render(:file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false)
   end
 
   # POST /organisations
@@ -70,21 +51,7 @@ class OrganisationsController < ApplicationController
   # PUT /organisations/1
   # PUT /organisations/1.json
   def admin_update
-    @organisation = Organisation.find(params[:id])
-		
-		if user_signed_in? && current_user.is_org_admin? then
-	    respond_to do |format|
-	      if @organisation.update_attributes(params[:organisation])
-	        format.html { redirect_to admin_show_organisation_path(params[:id]), notice: I18n.t("admin.org_updated_message")  }
-	        format.json { head :no_content }
-	      else
-	        format.html { render action: "edit" }
-	        format.json { render json: @organisation.errors, status: :unprocessable_entity }
-	      end
-	    end
-  	else
-  	  render(:file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false)
-		end  	
+    render(:file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false)
   end
 
   # DELETE /organisations/1

@@ -10,9 +10,6 @@ roles = [
   { 
     name: "admin"
   },
-  { 
-    name: "org_admin"
-  },
 ]
 
 roles.each do |details|
