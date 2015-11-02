@@ -67,22 +67,6 @@
 				<td><%= raw question.guidance %></td>
 			</tr>
 		<%end%>
-		<!-- Themes -->
-		<% themes_q = question.themes %>
-		<%if !themes_q.nil? then%>
-			<tr>
-				<td class="first_template"><%= t('org_admin.questions.themes_label')%></td>
-				<td><% i = 1%>
-					<% themes_q.each do |t|%>
-						<%= t.title %>
-						<% if themes_q.count > i then%> 
-							,	
-							<% i +=1 %>		
-						<% end %>
-					<%end%>
-				</td>
-			</tr>
-		<%end%>
 	</table>
 	<br/>
 	<!-- Add suggested or example answers to a funders template-->

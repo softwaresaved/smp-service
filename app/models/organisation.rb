@@ -3,7 +3,6 @@ class Organisation < ActiveRecord::Base
 	#associations between tables
 	has_many :dmptemplates
 	belongs_to :organisation_type
-	has_many :guidance_groups
 	has_many :sections
 	has_many :users
 	has_many :user_org_roles
@@ -45,10 +44,6 @@ class Organisation < ActiveRecord::Base
 		organisations_list = []
 		org_types.each do |ot|
 			new_org_obejct = OrganisationType.find_by_name(ot)
-
-			org_with_guidance = GuidanceGroup.joins(new_org_obejct.organisations)
-
-			organisations_list = organisations_list + org_with_guidance
 		end
 		return organisations_list
 	end
@@ -63,14 +58,6 @@ class Organisation < ActiveRecord::Base
 		else
 			return sections.find_all_by_version_id(version_id) + parent.all_sections(version_id)
 		end
-	end
-
-	def all_guidance_groups
-		ggs = guidance_groups
-		children.each do |c|
-			ggs = ggs + c.all_guidance_groups
-		end
-		return ggs
 	end
 
 	def root

@@ -153,29 +153,6 @@
 				</div>
 			</div>
 		<% end %>
-		<!--guidance from themes, institution themes and/or direct to the question-->
-		<% @plan.guidance_for_question(question).each_pair do |group,themes| %>
-			<% themes.each_pair do |theme,guidances| %>
-				<% guidances.each do |guidance| %>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-guidance-link" data-toggle="collapse" data-parent="#<%= question.id %>-guidance" href="#collapse-guidance-<%= group.id%>-<%= guidance.id%>-<%= question.id %>">
-								<div class="accordion_heading_text">
-								<% if theme == "no_theme" then %>
-									<%= group.name.chomp(" guidance") %> guidance for this question
-								<% else %>
-									<%= group.name.chomp(" guidance") %> guidance on <%= theme.title %>
-								<% end %>
-								</div>
-								<span class="plus-laranja"> </span></a>
-						</div>
-						<div id="collapse-guidance-<%= group.id%>-<%= guidance.id%>-<%= question.id %>" class="guidance-accordion-body collapse">
-							<div class="accordion-inner"><%= raw guidance.text %></div>
-						</div>
-					</div>
-				<% end %>
-			<% end %>
-		<% end %>
 	</div>
 </div>
 <!--display or not the break line between questions-->

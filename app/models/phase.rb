@@ -13,7 +13,7 @@ class Phase < ActiveRecord::Base
 	accepts_nested_attributes_for :versions, :allow_destroy => true 
 	accepts_nested_attributes_for :dmptemplate
  
-	attr_accessible :description, :number, :title, :dmptemplate_id, :external_guidance_url
+	attr_accessible :description, :number, :title, :dmptemplate_id
 	
 	friendly_id :title, use: :slugged, :use => :history
   

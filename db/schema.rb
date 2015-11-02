@@ -74,11 +74,6 @@ ActiveRecord::Schema.define(:version => 20140707143840) do
     t.boolean  "is_default"
   end
 
-  create_table "dmptemplates_guidance_groups", :id => false, :force => true do |t|
-    t.integer "dmptemplate_id"
-    t.integer "guidance_group_id"
-  end
-
   create_table "exported_plans", :force => true do |t|
     t.integer  "plan_id"
     t.integer  "user_id"
@@ -118,32 +113,6 @@ ActiveRecord::Schema.define(:version => 20140707143840) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
   add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
-
-  create_table "guidance_groups", :force => true do |t|
-    t.string   "name"
-    t.integer  "organisation_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.boolean  "optional_subset"
-  end
-
-  create_table "guidance_in_group", :id => false, :force => true do |t|
-    t.integer "guidance_id",       :null => false
-    t.integer "guidance_group_id", :null => false
-  end
-
-  add_index "guidance_in_group", ["guidance_id", "guidance_group_id"], :name => "index_guidance_in_group_on_guidance_id_and_guidance_group_id"
-
-  create_table "guidances", :force => true do |t|
-    t.text     "text"
-    t.integer  "file_id"
-    t.integer  "guidance_group_id"
-    t.integer  "theme_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-    t.integer  "dmptemplate_id"
-    t.integer  "question_id"
-  end
 
   create_table "option_warnings", :force => true do |t|
     t.integer  "organisation_id"
@@ -209,7 +178,6 @@ ActiveRecord::Schema.define(:version => 20140707143840) do
     t.datetime "created_at",            :null => false
     t.datetime "updated_at",            :null => false
     t.string   "slug"
-    t.string   "external_guidance_url"
   end
 
   add_index "phases", ["dmptemplate_id"], :name => "index_phases_on_dmptemplate_id"
@@ -241,13 +209,6 @@ ActiveRecord::Schema.define(:version => 20140707143840) do
     t.datetime "updated_at",            :null => false
     t.boolean  "project_administrator"
   end
-
-  create_table "project_guidance", :id => false, :force => true do |t|
-    t.integer "project_id",        :null => false
-    t.integer "guidance_group_id", :null => false
-  end
-
-  add_index "project_guidance", ["project_id", "guidance_group_id"], :name => "index_project_guidance_on_project_id_and_guidance_group_id"
 
   create_table "projects", :force => true do |t|
     t.string   "title"
@@ -295,13 +256,6 @@ ActiveRecord::Schema.define(:version => 20140707143840) do
     t.integer  "question_format_id"
   end
 
-  create_table "questions_themes", :id => false, :force => true do |t|
-    t.integer "question_id", :null => false
-    t.integer "theme_id",    :null => false
-  end
-
-  add_index "questions_themes", ["question_id", "theme_id"], :name => "index_questions_themes_on_question_id_and_theme_id"
-
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.integer  "resource_id"
@@ -348,19 +302,6 @@ ActiveRecord::Schema.define(:version => 20140707143840) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.boolean  "is_example"
-  end
-
-  create_table "themes", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.string   "locale"
-  end
-
-  create_table "themes_in_guidance", :id => false, :force => true do |t|
-    t.integer "theme_id"
-    t.integer "guidance_id"
   end
 
   create_table "user_org_roles", :force => true do |t|

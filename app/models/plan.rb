@@ -78,65 +78,6 @@ class Plan < ActiveRecord::Base
 		return sections.uniq.sort_by &:number
 	end
 
-	def guidance_for_question(question)
-		guidances = {}
-		# If project org isn't nil, get guidance by theme from any "non-subset" groups belonging to project org
-		unless project.organisation.nil? then
-			project.organisation.guidance_groups.each do |group|
-				if !group.optional_subset && (group.dmptemplates.pluck(:id).include?(project.dmptemplate_id) || group.dmptemplates.count == 0) then
-					group.guidances.each do |guidance|
-						guidance.themes.where("id IN (?)", question.theme_ids).each do |theme|
-							guidances = self.add_guidance_to_array(guidances, group, theme, guidance)
-						end
-					end
-				end
-			end
-		end
-		# Get guidance by theme from any guidance groups selected on creation
-		project.guidance_groups.each do |group|
-			if group.dmptemplates.pluck(:id).include?(project.dmptemplate_id) || group.dmptemplates.count == 0 then
-				group.guidances.each do |guidance|
-					guidance.themes.where("id IN (?)", question.theme_ids).each do |theme|
-						guidances = self.add_guidance_to_array(guidances, group, theme, guidance)
-					end
-				end
-			end
-		end
-		# Get guidance by question where guidance group was selected on creation or if group is organisation default
-		question.guidances.each do |guidance|
-			guidance.guidance_groups.each do |group|
-				if (group.organisation == project.organisation && !group.optional_subset) || project.guidance_groups.include?(group) then
-					guidances = self.add_guidance_to_array(guidances, group, nil, guidance)
-				end
-			end
-		end
-		return guidances
-	end
-
-	def add_guidance_to_array(guidance_array, guidance_group, theme, guidance)
-		
-		if guidance_array[guidance_group].nil? then
-			guidance_array[guidance_group] = {}
-		end
-		if theme.nil? then
-			if guidance_array[guidance_group]["no_theme"].nil? then
-				guidance_array[guidance_group]["no_theme"] = []
-			end
-			if !guidance_array[guidance_group]["no_theme"].include?(guidance) then
-				guidance_array[guidance_group]["no_theme"].push(guidance)
-			end
-		else
-			if guidance_array[guidance_group][theme].nil? then
-				guidance_array[guidance_group][theme] = []
-			end
-			if !guidance_array[guidance_group][theme].include?(guidance) then
-				guidance_array[guidance_group][theme].push(guidance)
-			end
-		end
-		
-        return guidance_array
-	end
-
 	def warning(option_id)
 		if project.organisation.nil?
 			return nil

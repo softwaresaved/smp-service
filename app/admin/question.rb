@@ -2,7 +2,7 @@ ActiveAdmin.register Question do
 
 	menu :priority => 1, :label => proc{I18n.t('admin.question')}, :parent =>  "Templates management"
 
-	index do  #:default_value, :dependency_id, :dependency_text, :guidance, :number, :parent_id, 
+	index do  #:default_value, :dependency_id, :dependency_text, :number, :parent_id, 
 		#:suggested_answer, :text, :question_type, :section_id
         column I18n.t('admin.question'), :sortable => :text do |descr|
             if !descr.text.nil? then
@@ -66,9 +66,6 @@ ActiveAdmin.register Question do
                     dep_text.dependency_text.html_safe
                 end
             end	
-            row I18n.t('admin.themes') do
-	 		 	(question.themes.map{|t_q| link_to t_q.title, [:admin, t_q]}).join(', ').html_safe
-	 		end	
             row :created_at
             row :updated_at
 	 		
@@ -102,15 +99,6 @@ ActiveAdmin.register Question do
   			f.input :question_format_id, :label => "Select question format",
   					:as => :select,
   					:collection => QuestionFormat.order('title').map{|format| [format.title, format.id]}								
-        end
-        f.inputs "Themes" do
-  			f.input :theme_ids, :label => "Selected themes",
-                    :as => :select,
-                    :multiple => true,
-                    :include_blank => "None", 
-                    :collection => Theme.order('title').map{|the| [the.title, the.id]}	,
-                    :hint => 'Choose all themes that apply.'
-                    
         end
 	 	f.actions  
     end	

@@ -2,7 +2,6 @@ $( document ).ready(function() {
 
 	$("#project_funder_id").change(function () {
 		update_template_options();
-		update_guidance_options();
 		if ($(this).val().length > 0) {
 			$("#other-funder-name").hide();
 			$("#project_funder_name").val("");
@@ -19,7 +18,6 @@ $( document ).ready(function() {
 		e.preventDefault();
 		$("#project_funder_id").select2("val", "");
 		update_template_options();
-		update_guidance_options();
 		$("#institution-control-group").show();
 		$("#create-plan-button").show();
 		$("#other-funder-name").show();
@@ -32,19 +30,16 @@ $( document ).ready(function() {
 
 	$("#project_institution_id").change(function () {
 		update_template_options();
-		update_guidance_options();
 		$("#confirm-institution").text($("#project_institution_id").select2('data').text);
 	});
 
 	$("#no-institution").click(function() {
 		$("#project_institution_id").select2("val", "");
 		update_template_options();
-		update_guidance_options();
 		$("#confirm-institution").text("None");
 	});
 
 	$("#project_dmptemplate_id").change(function (f) {
-		update_guidance_options();
 		$("#confirm-template").text($("#project_dmptemplate_id :selected").text());
 	});
 
@@ -94,33 +89,5 @@ $( document ).ready(function() {
 		}
 		$("#confirm-template").text("");
 		$("#project_dmptemplate_id").change();
-	}
-
-	function update_guidance_options() {
-		var institution = $("#project_institution_id").select2('val');
-		var template = $("#project_dmptemplate_id :selected").val();
-		$.ajax({
-			type: 'GET',
-			url: "possible_guidance.json?institution="+institution+"&template="+template,
-			dataType: 'json',
-			async: false, //Needs to be synchronous, otherwise end up mixing up answers
-			success: function(data) {
-				options = data;
-			}
-		});
-		options_container = $("#guidance-control-group");
-		options_container = options_container.find(".choices-group");
-		options_container.empty();
-		var count = 0;
-		for (var id in options) {
-			options_container.append("<li class='choice'><label for='project_guidance_group_ids_"+id+"'><input id='project_guidance_group_ids_"+id+"' name='project[guidance_group_ids][]' type='checkbox' value='"+id+"' />"+options[id]+"</label></li>");
-			count++;
-		}
-		if (count > 0) {
-			$("#guidance-control-group").show();
-		}
-		else {
-			$("#guidance-control-group").hide();
-		}
 	}
 });

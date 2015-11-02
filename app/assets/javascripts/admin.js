@@ -18,10 +18,9 @@ $( document ).ready(function() {
 		
 	//set the tinymce popover help text
 	$(".template_desc_popover, .phase_desc_popover, .version_desc_popover, .section_desc_popover, .question_format_popover," +
-			" .default_answer_popover, .suggested_answer_popover, .question_guidance_popover, .question_themes_popover," +
-			" .question_options_popover, .guidance_group_title_popover, .guidance_group_template_popover," +
-			" .guidance_group_subset_popover, .guidance_text_popover, .guidance_apply_to_popover, .guidance_by_themes_popover," +
-			" .guidance_by_question_popover, .guidance_group_select_popover, .org_abbr_popover").on('click', function(e) {
+			" .default_answer_popover, .suggested_answer_popover, .question_guidance_popover, " +
+			" .question_options_popover," +
+			" .guidance_by_question_popover, .org_abbr_popover").on('click', function(e) {
 	    e.preventDefault();
 	}).popover();
 	
@@ -87,7 +86,7 @@ $( document ).ready(function() {
 	}).trigger('change');
 
 
-	//Code to show/hide divs on new guidance (by themes or by question)
+	//Code to show/hide divs on new guidance (by question)
 	$('#g_options').on("change", function (){
 		var g_t_q = $(this).val();
 
@@ -95,11 +94,9 @@ $( document ).ready(function() {
 
 		if (g_t_q == 1){
 			$(".guindace_by_question").hide();
-			$(".guindance_by_theme").show();
 		}
 		else if (g_t_q == 2){
 			$(".guindace_by_question").show();
-			$(".guindance_by_theme").hide();
 			//check if editing
 			if( e_g_q_f != 2){
 				$('#phases_select').hide();
@@ -268,132 +265,7 @@ $( document ).ready(function() {
 		 $('#edit_suggested_answer_div_'+ q_id).show();
 		 $('#show_suggested_answer_div_'+ q_id).hide();
 		 e.preventDefault();
-	 });
-     
-     
-    //Add new guidance Alerts 
-    $("#return_to_new_guidance").click(function(){
-        $('#new_guidance_alert_dialog').modal("hide");
-    });
-    
-    
-    $('#new_guidance_submit').click( function(e){
-       // $('#new_guidance_alert_dialog').on("hide", function(){
-            
-        var alert_message = [];
-        //verify if text area is not nil
-        var editorContent = tinyMCE.get('guidance-text').getContent();
-        if (editorContent == ''){
-            alert_message.push("add guidance text");
-        }  
-        //verify dropdown with questions has a selected option if guidance for a question being used 
-        if ($('#g_options').val() == '2') {
-            if ($('#questions_select').val() == '' || isNaN($('#questions_select').val())){
-                alert_message.push("select a question");
-                
-            }
-        }
-
-        //verify dropdown with questions has a selected option if guidance for a question being used 
-        if ($('#g_options').val() == '1' ){
-            if($('#guidance_theme_ids').val() == undefined || $('#guidance_theme_ids').val() == ''){
-                alert_message.push("select at least one theme");
-            }
-        }
-        //verify if guidance group is selected 
-        if ( ($('#guidance_guidance_group_ids').val() == '') || $('#guidance_guidance_group_ids').val() == undefined ) {
-            alert_message.push("select a guidance group");
-            
-        }
-        
-        if(alert_message.length == 0){
-            //clear dropdowns before submission
-            $('#new_guidance_alert_dialog').modal("hide");
-           
-            if ($('#g_options').val() == '2'){
-                $('#guidance_theme_ids').val(null);
-            }
-            if($('#g_options').val() == '1'){
-                $('#questions_select').val(null);
-            }
-            $('#new_guidance_form').submit();
-           return false;
-         
-        }
-        else if (alert_message.length != 0){
-            var message = '';
-            $('#new_guidance_alert_dialog').on("show", function(){
-                
-                $("#missing_fields_new_guidance").empty();
-                $.each(alert_message, function(key, value){
-                    message += "<li> "+value+"</li>";
-                });
-                $("#missing_fields_new_guidance").append(message);
-            });
-            delete message;
-        }
-        delete alert_message;
-        e.preventDefault();
-    });
-   
-    //edit guidance alerts
-    $("#return_to_edit_guidance").click(function(){
-        $('#edit_guidance_alert_dialog').modal("hide");
-    });
-    
-    
-    $('#edit_guidance_submit').click( function(e){
-       // $('#new_guidance_alert_dialog').on("hide", function(){
-            
-        var alert_message = [];
-        //verify if text area is not nil
-        var editorContent = tinyMCE.get('guidance-text').getContent();
-        if (editorContent == ''){
-            alert_message.push("add guidance text");
-        }  
-        //verify dropdown with questions has a selected option if guidance for a question being used 
-        if ($('#g_options').val() == '2') {
-            if ($('#questions_select').val() == '' || isNaN($('#questions_select').val())){
-                alert_message.push("select a question");
-            }
-        }
-        //verify dropdown with questions has a selected option if guidance for a question being used 
-        if ($('#g_options').val() == '1' ){
-            if($('#guidance_theme_ids').val() == undefined || $('#guidance_theme_ids').val() == ''){
-                alert_message.push("select at least one theme");
-            }
-        }
-        //verify if guidance group is selected 
-        if ( ($('#guidance_guidance_group_ids').val() == '') || $('#guidance_guidance_group_ids').val() == undefined  ) {
-            alert_message.push("select a guidance group");
-        }
-        
-        if(alert_message.length == 0){
-            //clear dropdowns before submission
-            $('#edit_guidance_alert_dialog').modal("hide");
-           
-            if ($('#g_options').val() == '2'){ $('#guidance_theme_ids').val(null);}
-            if($('#g_options').val() == '1'){$('#questions_select').val(null);}
-            $('#edit_guidance_form').submit();
-           return false;
-        }
-        else if (alert_message.length != 0){
-            var message = '';
-            $('#edit_guidance_alert_dialog').on("show", function(){
-                
-                $("#missing_fields_edit_guidance").empty();
-                $.each(alert_message, function(key, value){
-                    message += "<li> "+value+"</li>";
-                });
-                $("#missing_fields_edit_guidance").append(message);
-            });
-            delete message;
-        }
-        delete alert_message;
-        e.preventDefault();
-    });
-   
-     
+	 });     
  });
 
 

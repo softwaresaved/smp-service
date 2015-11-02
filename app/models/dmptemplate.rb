@@ -1,5 +1,5 @@
 class Dmptemplate < ActiveRecord::Base
-    attr_accessible :organisation_id, :description, :published, :title, :user_id, :locale, :is_default, :guidance_group_ids 
+    attr_accessible :organisation_id, :description, :published, :title, :user_id, :locale, :is_default
   
     #associations between tables
     has_many :phases
@@ -7,13 +7,9 @@ class Dmptemplate < ActiveRecord::Base
     has_many :sections, :through => :versions
     has_many :questions, :through => :sections
     has_many :projects
-    has_many :guidances
     
     belongs_to :organisation
       
-	has_and_belongs_to_many :guidance_groups, join_table: "dmptemplates_guidance_groups"
-	
-    accepts_nested_attributes_for :guidance_groups
     accepts_nested_attributes_for :phases
     accepts_nested_attributes_for :organisation
     accepts_nested_attributes_for :projects
