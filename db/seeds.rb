@@ -691,16 +691,19 @@ questions = {
       {
         text: "Question 1.1...?",
         format: "Radio buttons",
+        guidance: "Question 1.1 answer",
         options: ["Yes", "No"]
       },
       {
         text: "Question 1.2...?",
         format: "Radio buttons",
+        guidance: "Question 1.2 answer",
         options: ["Yes", "No", "Not applicable"]
       },
       {
         text: "Question 1.3...?",
         format: "Radio buttons",
+        guidance: "Question 1.3 answer",
         options: ["Yes", "No"]
       },
     ],
@@ -708,16 +711,19 @@ questions = {
       {
         text: "Question 2.1...?",
         format: "Radio buttons",
+        guidance: "Question 2.1 answer",
         options: ["Yes", "No", "Not applicable"]
       },
       {
         text: "Question 2.2...?",
         format: "Radio buttons",
+        guidance: "Question 2.2 answer",
         options: ["Yes", "No"]
       },
       {
         text: "Question 2.3...?",
         format: "Radio buttons",
+        guidance: "Question 2.3 answer",
         options: ["Yes", "No"]
       },
     ],
