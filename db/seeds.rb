@@ -108,6 +108,13 @@ templates = {
       description: "An extended SSI template complemented with guidance and advice",
       published: true,
       locale: "en",
+      is_default: false
+    },
+    {
+      title: "Software Evaluation Service",
+      description: "SSI's software evaluation service",
+      published: true,
+      locale: "en",
       is_default: true
     },
   ],
@@ -138,6 +145,11 @@ phases = {
       title: "SSI Extended SMP",
     },
   ],
+  "Software Evaluation Service" => [
+    {
+      title: "Software Evaluation Service",
+    },
+  ],
 }
 
 phases.each do |template_title, template_phases|
@@ -162,6 +174,11 @@ versions = {
   "SSI Extended SMP" => [
     {
       title: "SSI Extended SMP Version 1",
+    },
+  ],
+  "Software Evaluation Service" => [
+    {
+      title: "Software Evaluation Service",
     },
   ],
 }
@@ -252,6 +269,18 @@ sections = {
     {
       title: "Resourcing and Responsibility",
       description: "Implementing and resourcing the software management plan",
+      organisation: "SSI"
+    },
+  ],
+  "Software Evaluation Service" => [
+    {
+      title: "Section 1",
+      description: "Section 1 is about section 1",
+      organisation: "SSI"
+    },
+    {
+      title: "Section 2",
+      description: "Section 2 is about section 2",
       organisation: "SSI"
     },
   ],
@@ -656,8 +685,45 @@ questions = {
         format: "Text area"
       },
     ],
-  }
+  },
+  "Software Evaluation Service" => {
+    "Section 1" => [
+      {
+        text: "Question 1.1...?",
+        format: "Radio buttons",
+        options: ["Yes", "No"]
+      },
+      {
+        text: "Question 1.2...?",
+        format: "Radio buttons",
+        options: ["Yes", "No", "Not applicable"]
+      },
+      {
+        text: "Question 1.3...?",
+        format: "Radio buttons",
+        options: ["Yes", "No"]
+      },
+    ],
+    "Section 2" => [
+      {
+        text: "Question 2.1...?",
+        format: "Radio buttons",
+        options: ["Yes", "No", "Not applicable"]
+      },
+      {
+        text: "Question 2.2...?",
+        format: "Radio buttons",
+        options: ["Yes", "No"]
+      },
+      {
+        text: "Question 2.3...?",
+        format: "Radio buttons",
+        options: ["Yes", "No"]
+      },
+    ],
+  },
 }
+                       
 
 questions.each do |version_title, version_sections|
   version = Version.find_by_title(version_title)
