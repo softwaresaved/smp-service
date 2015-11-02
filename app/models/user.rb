@@ -70,11 +70,7 @@ class User < ActiveRecord::Base
   		else
   			user_org_role = self.user_org_roles.first
   			user_org_role.organisation_id = new_organisation_id
-        user_org_role.save
-  			org_admin_role = roles.find_by_name("org_admin")
-  			unless org_admin_role.nil? then
-  				roles.delete(org_admin_role)
-  			end
+                  user_org_role.save
   		end
     end
 	end
@@ -110,11 +106,6 @@ class User < ActiveRecord::Base
 	def is_admin?
 		admin = roles.find_by_name("admin")
 		return !admin.nil?
-	end
-
-	def is_org_admin?
-		org_admin = roles.find_by_name("org_admin")
-		return !org_admin.nil?
 	end
     
     def org_type
